@@ -12,8 +12,14 @@ class UpazilaSeeder extends Seeder
     public function run(): void
     {
         Upazila::insert([
-            ['name' => 'Jessore Sadar'],
-            ['name' => 'Jhikargacha'],
+            ['name' => 'পটুয়াখালী সদর'],
+            ['name' => 'কলাপাড়া'],
+            ['name' => 'গলাচিপা'],
+            ['name' => 'দশমিনা'],
+            ['name' => 'দুমকী'],
+            ['name' => 'বাউফল'],
+            ['name' => 'মির্জাগঞ্জ'],
+            ['name' => 'রাঙ্গাবালি'],
         ]);
     }
 }

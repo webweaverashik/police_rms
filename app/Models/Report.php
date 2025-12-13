@@ -2,25 +2,91 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * Class Report
+ *
+ * Represents a political program report recorded by police authorities.
+ * Each report contains information about a political program, its location,
+ * organizers, participants, and current status.
+ */
 class Report extends Model
 {
-    protected $fillable = ['parliament_seat_id', 'thana_id', 'political_party_id', 'candidate_name', 'program_type_id', 'program_date_time', 'program_chair', 'tentative_attendee_count', 'program_status', 'final_attendee_count', 'description'];
+    /**
+     * The attributes that are mass assignable.
+     *
+     * These fields are filled during report creation and update.
+     */
+    use HasFactory;
+    
+    protected $fillable = [
+        'parliament_seat_id',
+        'upazila_id',
+        'zone_id',
+        'political_party_id',
+        'candidate_name',
+        'program_type_id',
+        'program_date_time',
+        'program_chair',
+        'tentative_attendee_count',
+        'program_status',
+        'final_attendee_count',
+        'description',
+        'created_by',
+    ];
 
-    public function thana()
+    /*
+    |--------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Get the thana (police station) where the program was held.
+     */
+    public function upazila()
     {
-        return $this->belongsTo(Thana::class);
+        return $this->belongsTo(Upazila::class);
     }
-    public function party()
+
+    /**
+     * Get the zone (police station) where the program was held.
+     */
+    public function zone()
+    {
+        return $this->belongsTo(Zone::class);
+    }
+
+    /**
+     * Get the political party associated with the program.
+     */
+    public function politicalParty()
     {
         return $this->belongsTo(PoliticalParty::class, 'political_party_id');
     }
-    public function seat()
+
+    /**
+     * Get the parliamentary seat under which the program took place.
+     */
+    public function parliamentSeat()
     {
         return $this->belongsTo(ParliamentSeat::class);
     }
+
+    /**
+     * Get the type of program (e.g., rally, meeting, human chain).
+     */
     public function programType()
     {
         return $this->belongsTo(ProgramType::class);
+    }
+
+    /**
+     * Reports created by this user.
+     */
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

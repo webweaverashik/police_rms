@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->foreignId('parliament_seat_id')->constrained();
-            $table->foreignId('thana_id')->constrained();
+            $table->foreignId('upazila_id')->constrained();
+            $table->foreignId('zone_id')->constrained();
             $table->foreignId('political_party_id')->constrained();
             $table->string('candidate_name');
             $table->foreignId('program_type_id')->constrained();
@@ -24,9 +25,9 @@ return new class extends Migration
             $table->enum('program_status', ['done', 'ongoing', 'upcoming']);
             $table->integer('final_attendee_count')->nullable();
             $table->text('description')->nullable();
+            $table->foreignId('created_by')->constrained('users')->restrictOnDelete();
             $table->timestamps();
         });
-
     }
 
     /**

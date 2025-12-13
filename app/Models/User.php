@@ -1,7 +1,6 @@
 <?php
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,55 +8,106 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = ['name', 'bp_number', 'designation_id', 'role_id', 'mobile_no', 'email', 'password', 'is_active'];
+    /*
+    |--------------------------------------------------------------------------
+    | Mass Assignment
+    |--------------------------------------------------------------------------
+    */
+    protected $fillable = [
+        'name',
+        'bp_number',
+        'designation_id',
+        'role_id',
+        'mobile_no',
+        'email',
+        'password',
+        'is_active',
+    ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = ['password', 'remember_token'];
+    /*
+    |--------------------------------------------------------------------------
+    | Hidden Attributes
+    |--------------------------------------------------------------------------
+    */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password'          => 'hashed',
-        ];
-    }
+    /*
+    |--------------------------------------------------------------------------
+    | Attribute Casting
+    |--------------------------------------------------------------------------
+    */
+    protected $casts = [
+        'is_active'         => 'boolean',
+        'email_verified_at' => 'datetime',
+        'deleted_at'        => 'datetime',
+    ];
 
-    /* --- Relationships --- */
+    /*
+    |--------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------
+    */
+
+    /** User → Role */
     public function role()
     {
         return $this->belongsTo(Role::class);
     }
 
+    /** User → Designation */
     public function designation()
     {
         return $this->belongsTo(Designation::class);
     }
 
-    public function thanas()
+    /** User → Multiple Zones */
+    public function zones()
     {
-        return $this->belongsToMany(Thana::class, 'user_thana');
+        return $this->belongsToMany(Zone::class, 'user_zone');
     }
 
+    /** User → Login Activities */
     public function loginActivities()
     {
         return $this->hasMany(LoginActivity::class);
+    }
+
+    /**
+     * Reports created by this user.
+     */
+    public function reports()
+    {
+        return $this->hasMany(Report::class, 'created_by');
+    }
+
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Helper Methods
+    |--------------------------------------------------------------------------
+    */
+
+    /** Check specific role */
+    public function hasRole(string $roleName): bool
+    {
+        return $this->role && $this->role->name === $roleName;
+    }
+
+    /** Super Admin shortcut */
+    public function isSuperAdmin(): bool
+    {
+        return $this->hasRole('super_admin');
+    }
+
+    /** Check active status */
+    public function isActive(): bool
+    {
+        return $this->is_active === true;
     }
 
 }
