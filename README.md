@@ -259,6 +259,6 @@ For technical support or enhancements, contact the system administrator or devel
 
 ## ✅ Status
 
-**Project Status:** Active Development
-**Version:** 1.0
-**Deployment:** Web + Android WebView
+* **Project Status:** Active Development
+* **Version:** 1.0
+* **Deployment:** Web + Android WebView
