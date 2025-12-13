@@ -10,7 +10,7 @@ Built with **Laravel (Backend)** and **Blade + Vanilla JavaScript (Frontend)**, 
 The **Police Report Management System (PRMS)** allows authorized police officials to:
 
 * Enter and manage political program reports
-* Monitor activities by thana, party, program type, and parliamentary seat
+* Monitor activities by zone, party, program type, and parliamentary seat
 * Maintain accountability through login activity tracking
 * Enforce strict role-based access control
 
@@ -50,7 +50,7 @@ This system is designed for **government and law-enforcement environments**, foc
 
 * Role-based access
 * Designation-based identity
-* Multi-thana assignment
+* Multi-zone assignment
 * Account activation/deactivation
 
 ### 🧾 Report Management
@@ -58,20 +58,20 @@ This system is designed for **government and law-enforcement environments**, foc
 * Political program reporting
 * Status tracking (Done / Ongoing / Upcoming)
 * Attendee count (tentative & final)
-* Linked to thana, party, seat, and program type
+* Linked to zone, party, seat, and program type
 
 ### 📊 Dashboard
 
 * Program statistics
-* Reports by status, party, and thana
+* Reports by status, party, and zone
 * Visual summaries using charts
 
 ### 🧠 Master Data
 
 * Roles
 * Designations
-* Thanas
-* Upazillas
+* Zones
+* Upazilas
 * Parliamentary Seats
 * Political Parties
 * Program Types
@@ -92,13 +92,13 @@ This system is designed for **government and law-enforcement environments**, foc
 * `users`
 * `roles`
 * `designations`
-* `thanas`
-* `upazillas`
+* `zones`
+* `upazilas`
 * `parliament_seats`
 * `political_parties`
 * `program_types`
 * `reports`
-* `user_thana` (pivot)
+* `user_zone` (pivot)
 * `login_activities`
 
 All tables use **foreign key constraints** to maintain data integrity.
@@ -108,10 +108,10 @@ All tables use **foreign key constraints** to maintain data integrity.
 ## 🔗 Relationships (High Level)
 
 * A **User** belongs to a **Role** and a **Designation**
-* A **User** can be assigned to multiple **Thanas**
+* A **User** can be assigned to multiple **Zones**
 * A **Report** belongs to:
 
-  * Thana
+  * Zone
   * Political Party
   * Parliamentary Seat
   * Program Type
