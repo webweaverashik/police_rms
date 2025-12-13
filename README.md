@@ -21,7 +21,7 @@ This system is designed for **government and law-enforcement environments**, foc
 ## 🧱 Technology Stack
 
 | Layer          | Technology                           |
-| -- |  |
+| -------------- | ------------------------------------ |
 | Backend        | Laravel                              |
 | Frontend       | Blade Templates + Vanilla JavaScript |
 | Database       | MySQL                                |
@@ -32,13 +32,15 @@ This system is designed for **government and law-enforcement environments**, foc
 
 
 
+
 ## 👥 User Roles
 
 | Role            | Description                                    |
-|  | - |
+| --------------- | ---------------------------------------------- |
 | **Super Admin** | Full system control                            |
 | **Data Viewer** | View-only access (SP, OC, UNO)                 |
 | **Data Entry**  | Create reports (Inspector, SI, ASI, Constable) |
+
 
 
 
