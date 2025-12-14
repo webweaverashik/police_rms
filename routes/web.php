@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\PasswordController;
 
@@ -24,7 +25,7 @@ Route::middleware(['auth', 'isLoggedIn'])->group(function () {
     })->name('logout.get');
 
     // ------- Custom routes start -------
-
+    Route::resource('reports', ReportController::class);
     // ------- Custom routes end -------
 
 });

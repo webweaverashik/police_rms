@@ -6,7 +6,7 @@
 
 @extends('layouts.app')
 
-@section('title', 'Dashboard')
+@section('title', 'ড্যাশবোর্ড')
 
 @section('header-title')
     <div data-kt-swapper="true" data-kt-swapper-mode="{default: 'prepend', lg: 'prepend'}"
@@ -14,7 +14,7 @@
         class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
         <!--begin::Title-->
         <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 align-items-center my-0">
-            Dashboard
+            ড্যাশবোর্ড
         </h1>
         <!--end::Title-->
         <!--begin::Separator-->
@@ -25,7 +25,7 @@
             <!--begin::Item-->
             <li class="breadcrumb-item text-muted">
                 <a href="#" class="text-muted text-hover-primary">
-                    Home </a>
+                    হোম </a>
             </li>
             <!--end::Item-->
             <!--begin::Item-->
@@ -35,7 +35,7 @@
             <!--end::Item-->
             <!--begin::Item-->
             <li class="breadcrumb-item text-muted">
-                Dashboards </li>
+                এডমিন ড্যাশবোর্ড </li>
             <!--end::Item-->
         </ul>
         <!--end::Breadcrumb-->
@@ -143,13 +143,7 @@
                             <!--begin::Display range-->
                             <div class="text-gray-600 fw-bold">Loading date range...</div>
                             <!--end::Display range-->
-                            <i class="ki-duotone ki-calendar-8 fs-1 ms-2 me-0">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                                <span class="path3"></span>
-                                <span class="path4"></span>
-                                <span class="path5"></span>
-                                <span class="path6"></span>
+                            <i class="ki-outline ki-calendar-8 fs-1 ms-2 me-0">
                             </i>
                         </div>
                         <!--end::Daterangepicker-->
@@ -234,10 +228,7 @@
                                                 <!--begin::Icon-->
                                                 <span class="cursor-pointer" data-bs-toggle="tooltip"
                                                     data-bs-placement="top" title="Held by Dr. Ana">
-                                                    <i class="ki-duotone ki-information fs-1 text-warning">
-                                                        <span class="path1"></span>
-                                                        <span class="path2"></span>
-                                                        <span class="path3"></span>
+                                                    <i class="ki-outline ki-information fs-1 text-warning">
                                                     </i>
                                                 </span>
                                                 <!--end::Icon-->
@@ -330,10 +321,7 @@
                                                 <!--begin::Icon-->
                                                 <span class="cursor-pointer" data-bs-toggle="tooltip"
                                                     data-bs-placement="top" title="Held by Dr. Lebron">
-                                                    <i class="ki-duotone ki-information fs-1 text-warning">
-                                                        <span class="path1"></span>
-                                                        <span class="path2"></span>
-                                                        <span class="path3"></span>
+                                                    <i class="ki-outline ki-information fs-1 text-warning">
                                                     </i>
                                                 </span>
                                                 <!--end::Icon-->
@@ -426,10 +414,7 @@
                                                 <!--begin::Icon-->
                                                 <span class="cursor-pointer" data-bs-toggle="tooltip"
                                                     data-bs-placement="top" title="Held by Dr. Natali">
-                                                    <i class="ki-duotone ki-information fs-1 text-warning">
-                                                        <span class="path1"></span>
-                                                        <span class="path2"></span>
-                                                        <span class="path3"></span>
+                                                    <i class="ki-outline ki-information fs-1 text-warning">
                                                     </i>
                                                 </span>
                                                 <!--end::Icon-->
@@ -522,11 +507,7 @@
                                                 <!--begin::Icon-->
                                                 <span class="cursor-pointer" data-bs-toggle="tooltip"
                                                     data-bs-placement="top" title="Held by Dr. Kevin">
-                                                    <i class="ki-duotone ki-information fs-1 text-warning">
-                                                        <span class="path1"></span>
-                                                        <span class="path2"></span>
-                                                        <span class="path3"></span>
-                                                    </i>
+                                                    <i class="ki-outline ki-information fs-1 text-warning"></i>
                                                 </span>
                                                 <!--end::Icon-->
                                             </td>
@@ -618,11 +599,7 @@
                                                 <!--begin::Icon-->
                                                 <span class="cursor-pointer" data-bs-toggle="tooltip"
                                                     data-bs-placement="top" title="Held by Dr. Emma">
-                                                    <i class="ki-duotone ki-information fs-1 text-warning">
-                                                        <span class="path1"></span>
-                                                        <span class="path2"></span>
-                                                        <span class="path3"></span>
-                                                    </i>
+                                                    <i class="ki-outline ki-information fs-1 text-warning"></i>
                                                 </span>
                                                 <!--end::Icon-->
                                             </td>
@@ -684,7 +661,7 @@
                         <!--end::Link-->
                         <!--begin::Link-->
                         <a class="btn btn-sm bg-white btn-color-white bg-opacity-20"
-                            href="pages/careers/list.html">Nurse</a>
+                            href="#">Nurse</a>
                         <!--end::Link-->
                     </div>
                     <!--end::Links-->
@@ -748,14 +725,7 @@
                             <!--begin::Display range-->
                             <span class="text-gray-600 fw-bold">Loading date range...</span>
                             <!--end::Display range-->
-                            <i class="ki-duotone ki-calendar-8 text-gray-500 lh-0 fs-2 ms-2 me-0">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                                <span class="path3"></span>
-                                <span class="path4"></span>
-                                <span class="path5"></span>
-                                <span class="path6"></span>
-                            </i>
+                            <i class="ki-outline ki-calendar-8 text-gray-500 lh-0 fs-2 ms-2 me-0"></i>
                         </div>
                         <!--end::Daterangepicker-->
                     </div>
@@ -779,11 +749,7 @@
                                             <!--begin::Symbol-->
                                             <div class="symbol symbol-50px me-4">
                                                 <span class="symbol-label">
-                                                    <i class="ki-duotone ki-timer fs-2qx text-primary">
-                                                        <span class="path1"></span>
-                                                        <span class="path2"></span>
-                                                        <span class="path3"></span>
-                                                    </i>
+                                                    <i class="ki-outline ki-timer fs-2qx text-primary"></i>
                                                 </span>
                                             </div>
                                             <!--end::Symbol-->
@@ -815,11 +781,7 @@
                                             <!--begin::Symbol-->
                                             <div class="symbol symbol-50px me-4">
                                                 <span class="symbol-label">
-                                                    <i class="ki-duotone ki-element-11 fs-2qx text-primary">
-                                                        <span class="path1"></span>
-                                                        <span class="path2"></span>
-                                                        <span class="path3"></span>
-                                                        <span class="path4"></span>
+                                                    <i class="ki-outline ki-element-11 fs-2qx text-primary">
                                                     </i>
                                                 </span>
                                             </div>
@@ -852,10 +814,7 @@
                                             <!--begin::Symbol-->
                                             <div class="symbol symbol-50px me-4">
                                                 <span class="symbol-label">
-                                                    <i class="ki-duotone ki-abstract-24 fs-2qx text-primary">
-                                                        <span class="path1"></span>
-                                                        <span class="path2"></span>
-                                                    </i>
+                                                    <i class="ki-outline ki-abstract-24 fs-2qx text-primary"></i>
                                                 </span>
                                             </div>
                                             <!--end::Symbol-->
@@ -956,11 +915,7 @@
                                             <!--begin::Symbol-->
                                             <div class="symbol symbol-50px me-4">
                                                 <span class="symbol-label">
-                                                    <i class="ki-duotone ki-element-11 fs-2qx text-primary">
-                                                        <span class="path1"></span>
-                                                        <span class="path2"></span>
-                                                        <span class="path3"></span>
-                                                        <span class="path4"></span>
+                                                    <i class="ki-outline ki-element-11 fs-2qx text-primary">
                                                     </i>
                                                 </span>
                                             </div>
@@ -993,10 +948,7 @@
                                             <!--begin::Symbol-->
                                             <div class="symbol symbol-50px me-4">
                                                 <span class="symbol-label">
-                                                    <i class="ki-duotone ki-abstract-24 fs-2qx text-primary">
-                                                        <span class="path1"></span>
-                                                        <span class="path2"></span>
-                                                    </i>
+                                                    <i class="ki-outline ki-abstract-24 fs-2qx text-primary"></i>
                                                 </span>
                                             </div>
                                             <!--end::Symbol-->
@@ -1027,11 +979,7 @@
                                             <!--begin::Symbol-->
                                             <div class="symbol symbol-50px me-4">
                                                 <span class="symbol-label">
-                                                    <i class="ki-duotone ki-timer fs-2qx text-primary">
-                                                        <span class="path1"></span>
-                                                        <span class="path2"></span>
-                                                        <span class="path3"></span>
-                                                    </i>
+                                                    <i class="ki-outline ki-timer fs-2qx text-primary"></i>
                                                 </span>
                                             </div>
                                             <!--end::Symbol-->
@@ -1146,16 +1094,16 @@
                             <a href="#kt_sliders_widget_3_slider"
                                 class="carousel-control-prev position-relative me-5 active" role="button"
                                 data-bs-slide="prev">
-                                <i class="ki-duotone ki-left-square fs-2x text-gray-500">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
+                                <i class="ki-outline ki-left-square fs-2x text-gray-500">
+
+
                                 </i>
                             </a>
                             <a href="#kt_sliders_widget_3_slider" class="carousel-control-next position-relative me-1"
                                 role="button" data-bs-slide="next">
-                                <i class="ki-duotone ki-right-square fs-2x text-gray-500">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
+                                <i class="ki-outline ki-right-square fs-2x text-gray-500">
+
+
                                 </i>
                             </a>
                         </div>
@@ -1344,28 +1292,28 @@
                                                     <!--begin::Print-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-printer fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
-                                                            <span class="path3"></span>
-                                                            <span class="path4"></span>
-                                                            <span class="path5"></span>
+                                                        <i class="ki-outline ki-printer fs-3">
+
+
+
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Print-->
                                                     <!--begin::Chat-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-sms fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
+                                                        <i class="ki-outline ki-sms fs-3">
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Chat-->
                                                     <!--begin::Attach-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm">
-                                                        <i class="ki-duotone ki-paper-clip fs-3"></i>
+                                                        <i class="ki-outline ki-paper-clip fs-3"></i>
                                                     </a>
                                                     <!--end::Attach-->
                                                 </div>
@@ -1399,28 +1347,28 @@
                                                     <!--begin::Print-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-printer fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
-                                                            <span class="path3"></span>
-                                                            <span class="path4"></span>
-                                                            <span class="path5"></span>
+                                                        <i class="ki-outline ki-printer fs-3">
+
+
+
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Print-->
                                                     <!--begin::Chat-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-sms fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
+                                                        <i class="ki-outline ki-sms fs-3">
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Chat-->
                                                     <!--begin::Attach-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm">
-                                                        <i class="ki-duotone ki-paper-clip fs-3"></i>
+                                                        <i class="ki-outline ki-paper-clip fs-3"></i>
                                                     </a>
                                                     <!--end::Attach-->
                                                 </div>
@@ -1455,28 +1403,28 @@
                                                     <!--begin::Print-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-printer fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
-                                                            <span class="path3"></span>
-                                                            <span class="path4"></span>
-                                                            <span class="path5"></span>
+                                                        <i class="ki-outline ki-printer fs-3">
+
+
+
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Print-->
                                                     <!--begin::Chat-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-sms fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
+                                                        <i class="ki-outline ki-sms fs-3">
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Chat-->
                                                     <!--begin::Attach-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm">
-                                                        <i class="ki-duotone ki-paper-clip fs-3"></i>
+                                                        <i class="ki-outline ki-paper-clip fs-3"></i>
                                                     </a>
                                                     <!--end::Attach-->
                                                 </div>
@@ -1510,28 +1458,28 @@
                                                     <!--begin::Print-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-printer fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
-                                                            <span class="path3"></span>
-                                                            <span class="path4"></span>
-                                                            <span class="path5"></span>
+                                                        <i class="ki-outline ki-printer fs-3">
+
+
+
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Print-->
                                                     <!--begin::Chat-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-sms fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
+                                                        <i class="ki-outline ki-sms fs-3">
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Chat-->
                                                     <!--begin::Attach-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm">
-                                                        <i class="ki-duotone ki-paper-clip fs-3"></i>
+                                                        <i class="ki-outline ki-paper-clip fs-3"></i>
                                                     </a>
                                                     <!--end::Attach-->
                                                 </div>
@@ -1565,28 +1513,28 @@
                                                     <!--begin::Print-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-printer fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
-                                                            <span class="path3"></span>
-                                                            <span class="path4"></span>
-                                                            <span class="path5"></span>
+                                                        <i class="ki-outline ki-printer fs-3">
+
+
+
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Print-->
                                                     <!--begin::Chat-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-sms fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
+                                                        <i class="ki-outline ki-sms fs-3">
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Chat-->
                                                     <!--begin::Attach-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm">
-                                                        <i class="ki-duotone ki-paper-clip fs-3"></i>
+                                                        <i class="ki-outline ki-paper-clip fs-3"></i>
                                                     </a>
                                                     <!--end::Attach-->
                                                 </div>
@@ -1647,28 +1595,28 @@
                                                     <!--begin::Print-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-printer fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
-                                                            <span class="path3"></span>
-                                                            <span class="path4"></span>
-                                                            <span class="path5"></span>
+                                                        <i class="ki-outline ki-printer fs-3">
+
+
+
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Print-->
                                                     <!--begin::Chat-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-sms fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
+                                                        <i class="ki-outline ki-sms fs-3">
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Chat-->
                                                     <!--begin::Attach-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm">
-                                                        <i class="ki-duotone ki-paper-clip fs-3"></i>
+                                                        <i class="ki-outline ki-paper-clip fs-3"></i>
                                                     </a>
                                                     <!--end::Attach-->
                                                 </div>
@@ -1702,28 +1650,28 @@
                                                     <!--begin::Print-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-printer fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
-                                                            <span class="path3"></span>
-                                                            <span class="path4"></span>
-                                                            <span class="path5"></span>
+                                                        <i class="ki-outline ki-printer fs-3">
+
+
+
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Print-->
                                                     <!--begin::Chat-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-sms fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
+                                                        <i class="ki-outline ki-sms fs-3">
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Chat-->
                                                     <!--begin::Attach-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm">
-                                                        <i class="ki-duotone ki-paper-clip fs-3"></i>
+                                                        <i class="ki-outline ki-paper-clip fs-3"></i>
                                                     </a>
                                                     <!--end::Attach-->
                                                 </div>
@@ -1758,28 +1706,28 @@
                                                     <!--begin::Print-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-printer fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
-                                                            <span class="path3"></span>
-                                                            <span class="path4"></span>
-                                                            <span class="path5"></span>
+                                                        <i class="ki-outline ki-printer fs-3">
+
+
+
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Print-->
                                                     <!--begin::Chat-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-sms fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
+                                                        <i class="ki-outline ki-sms fs-3">
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Chat-->
                                                     <!--begin::Attach-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm">
-                                                        <i class="ki-duotone ki-paper-clip fs-3"></i>
+                                                        <i class="ki-outline ki-paper-clip fs-3"></i>
                                                     </a>
                                                     <!--end::Attach-->
                                                 </div>
@@ -1813,28 +1761,28 @@
                                                     <!--begin::Print-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-printer fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
-                                                            <span class="path3"></span>
-                                                            <span class="path4"></span>
-                                                            <span class="path5"></span>
+                                                        <i class="ki-outline ki-printer fs-3">
+
+
+
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Print-->
                                                     <!--begin::Chat-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-sms fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
+                                                        <i class="ki-outline ki-sms fs-3">
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Chat-->
                                                     <!--begin::Attach-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm">
-                                                        <i class="ki-duotone ki-paper-clip fs-3"></i>
+                                                        <i class="ki-outline ki-paper-clip fs-3"></i>
                                                     </a>
                                                     <!--end::Attach-->
                                                 </div>
@@ -1894,28 +1842,28 @@
                                                     <!--begin::Print-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-printer fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
-                                                            <span class="path3"></span>
-                                                            <span class="path4"></span>
-                                                            <span class="path5"></span>
+                                                        <i class="ki-outline ki-printer fs-3">
+
+
+
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Print-->
                                                     <!--begin::Chat-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-sms fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
+                                                        <i class="ki-outline ki-sms fs-3">
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Chat-->
                                                     <!--begin::Attach-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm">
-                                                        <i class="ki-duotone ki-paper-clip fs-3"></i>
+                                                        <i class="ki-outline ki-paper-clip fs-3"></i>
                                                     </a>
                                                     <!--end::Attach-->
                                                 </div>
@@ -1950,28 +1898,28 @@
                                                     <!--begin::Print-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-printer fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
-                                                            <span class="path3"></span>
-                                                            <span class="path4"></span>
-                                                            <span class="path5"></span>
+                                                        <i class="ki-outline ki-printer fs-3">
+
+
+
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Print-->
                                                     <!--begin::Chat-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-sms fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
+                                                        <i class="ki-outline ki-sms fs-3">
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Chat-->
                                                     <!--begin::Attach-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm">
-                                                        <i class="ki-duotone ki-paper-clip fs-3"></i>
+                                                        <i class="ki-outline ki-paper-clip fs-3"></i>
                                                     </a>
                                                     <!--end::Attach-->
                                                 </div>
@@ -2005,28 +1953,28 @@
                                                     <!--begin::Print-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-printer fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
-                                                            <span class="path3"></span>
-                                                            <span class="path4"></span>
-                                                            <span class="path5"></span>
+                                                        <i class="ki-outline ki-printer fs-3">
+
+
+
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Print-->
                                                     <!--begin::Chat-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-sms fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
+                                                        <i class="ki-outline ki-sms fs-3">
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Chat-->
                                                     <!--begin::Attach-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm">
-                                                        <i class="ki-duotone ki-paper-clip fs-3"></i>
+                                                        <i class="ki-outline ki-paper-clip fs-3"></i>
                                                     </a>
                                                     <!--end::Attach-->
                                                 </div>
@@ -2060,28 +2008,28 @@
                                                     <!--begin::Print-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-printer fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
-                                                            <span class="path3"></span>
-                                                            <span class="path4"></span>
-                                                            <span class="path5"></span>
+                                                        <i class="ki-outline ki-printer fs-3">
+
+
+
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Print-->
                                                     <!--begin::Chat-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm me-3">
-                                                        <i class="ki-duotone ki-sms fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
+                                                        <i class="ki-outline ki-sms fs-3">
+
+
                                                         </i>
                                                     </a>
                                                     <!--end::Chat-->
                                                     <!--begin::Attach-->
                                                     <a href="#"
                                                         class="btn btn-icon btn-color-muted btn-bg-light btn-active-color-primary btn-sm">
-                                                        <i class="ki-duotone ki-paper-clip fs-3"></i>
+                                                        <i class="ki-outline ki-paper-clip fs-3"></i>
                                                     </a>
                                                     <!--end::Attach-->
                                                 </div>
@@ -2133,7 +2081,7 @@
                         <div class="d-flex align-items-center flex-row-fluid flex-wrap">
                             <!--begin:Author-->
                             <div class="flex-grow-1 me-2">
-                                <a href="pages/user-profile/overview.html"
+                                <a href="#"
                                     class="text-gray-800 text-hover-primary fs-6 fw-bold">UI/UX Design</a>
                                 <span class="text-muted fw-semibold d-block fs-7">40+ Courses</span>
                             </div>
@@ -2141,9 +2089,9 @@
                             <!--begin::Actions-->
                             <a href="#"
                                 class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px">
-                                <i class="ki-duotone ki-arrow-right fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
+                                <i class="ki-outline ki-arrow-right fs-2">
+
+
                                 </i>
                             </a>
                             <!--begin::Actions-->
@@ -2165,7 +2113,7 @@
                         <div class="d-flex align-items-center flex-row-fluid flex-wrap">
                             <!--begin:Author-->
                             <div class="flex-grow-1 me-2">
-                                <a href="pages/user-profile/overview.html"
+                                <a href="#"
                                     class="text-gray-800 text-hover-primary fs-6 fw-bold">QA Analysis</a>
                                 <span class="text-muted fw-semibold d-block fs-7">18 Courses</span>
                             </div>
@@ -2173,9 +2121,9 @@
                             <!--begin::Actions-->
                             <a href="#"
                                 class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px">
-                                <i class="ki-duotone ki-arrow-right fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
+                                <i class="ki-outline ki-arrow-right fs-2">
+
+
                                 </i>
                             </a>
                             <!--begin::Actions-->
@@ -2197,7 +2145,7 @@
                         <div class="d-flex align-items-center flex-row-fluid flex-wrap">
                             <!--begin:Author-->
                             <div class="flex-grow-1 me-2">
-                                <a href="pages/user-profile/overview.html"
+                                <a href="#"
                                     class="text-gray-800 text-hover-primary fs-6 fw-bold">Web Development</a>
                                 <span class="text-muted fw-semibold d-block fs-7">120+ Courses</span>
                             </div>
@@ -2205,9 +2153,9 @@
                             <!--begin::Actions-->
                             <a href="#"
                                 class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px">
-                                <i class="ki-duotone ki-arrow-right fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
+                                <i class="ki-outline ki-arrow-right fs-2">
+
+
                                 </i>
                             </a>
                             <!--begin::Actions-->
@@ -2229,7 +2177,7 @@
                         <div class="d-flex align-items-center flex-row-fluid flex-wrap">
                             <!--begin:Author-->
                             <div class="flex-grow-1 me-2">
-                                <a href="pages/user-profile/overview.html"
+                                <a href="#"
                                     class="text-gray-800 text-hover-primary fs-6 fw-bold">Marketing</a>
                                 <span class="text-muted fw-semibold d-block fs-7">50+ Courses.</span>
                             </div>
@@ -2237,9 +2185,9 @@
                             <!--begin::Actions-->
                             <a href="#"
                                 class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px">
-                                <i class="ki-duotone ki-arrow-right fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
+                                <i class="ki-outline ki-arrow-right fs-2">
+
+
                                 </i>
                             </a>
                             <!--begin::Actions-->
@@ -2261,7 +2209,7 @@
                         <div class="d-flex align-items-center flex-row-fluid flex-wrap">
                             <!--begin:Author-->
                             <div class="flex-grow-1 me-2">
-                                <a href="pages/user-profile/overview.html"
+                                <a href="#"
                                     class="text-gray-800 text-hover-primary fs-6 fw-bold">Philosophy</a>
                                 <span class="text-muted fw-semibold d-block fs-7">24+ Courses</span>
                             </div>
@@ -2269,9 +2217,7 @@
                             <!--begin::Actions-->
                             <a href="#"
                                 class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px">
-                                <i class="ki-duotone ki-arrow-right fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
+                                <i class="ki-outline ki-arrow-right fs-2">
                                 </i>
                             </a>
                             <!--begin::Actions-->
@@ -2291,13 +2237,13 @@
 
 
 @push('vendor-js')
-<script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
-<script src="{{ asset('assets/plugins/custom/vis-timeline/vis-timeline.bundle.js') }}"></script>
-<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+    <script src="{{ asset('assets/plugins/custom/vis-timeline/vis-timeline.bundle.js') }}"></script>
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 @endpush
 
 @push('page-js')
