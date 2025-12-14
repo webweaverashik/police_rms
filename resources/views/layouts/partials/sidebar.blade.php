@@ -56,8 +56,7 @@
                     </div>
                     <!--end:Dashboard Menu item-->
 
-                    {{-- ----------------- Student & Admission Modules ----------------- --}}
-                    <!--begin:Student Info Menu item-->
+                    <!--begin:Report Info Menu item-->
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="report_info_menu">
                         <!--begin:Menu link-->
                         <span class="menu-link">
@@ -73,37 +72,42 @@
                         <div class="menu-sub menu-sub-accordion">
                             <!--begin:Menu item-->
                             <div class="menu-item">
-                                <!--begin:Menu link--><a class="menu-link" id="add_report_link" href="{{ route('reports.create') }}"><span
+                                <a class="menu-link" id="add_report_link" href="{{ route('reports.create') }}"><span
                                         class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                        class="menu-title">নতুন রিপোর্ট</span></a>
-                                <!--end:Menu link-->
+                                        class="menu-title">নতুন
+                                        রিপোর্ট</span></a>
                             </div>
                             <!--end:Menu item-->
 
 
                             <!--begin:Menu item-->
                             <div class="menu-item">
-                                <a class="menu-link" id="my_report_link" href="{{ route('reports.index') }}"><span class="menu-bullet"><span
-                                            class="bullet bullet-dot"></span></span><span
-                                        class="menu-title">আমার রিপোর্ট</span></a>
+                                <a class="menu-link" id="my_report_link" href="{{ route('reports.index') }}"><span
+                                        class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
+                                        class="menu-title">
+                                        @if (auth()->user()->role->name == 'Operator')
+                                            আমার রিপোর্ট
+                                        @else
+                                            সকল রিপোর্ট
+                                        @endif
+                                    </span></a>
                             </div>
                             <!--end:Menu item-->
 
                         </div>
                         <!--end:Menu sub-->
                     </div>
-                    <!--end: Student Info Menu item-->
+                    <!--end: Report Info Menu item-->
 
 
-                    <!--begin:Admission Menu item-->
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="admission_menu">
+                    <!--begin:Analytics Info Menu item-->
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="analytics_info_menu">
                         <!--begin:Menu link-->
                         <span class="menu-link">
                             <span class="menu-icon">
-                                {{-- <i class="fa-solid fa-building-columns fs-2"></i> --}}
-                                <i class="ki-outline ki-bank fs-2"></i>
+                                <i class="ki-outline ki-chart-simple-3 fs-1"></i>
                             </span>
-                            <span class="menu-title">Admission</span>
+                            <span class="menu-title">বিশ্লেষণ ও পরিসংখ্যান</span>
                             <span class="menu-arrow"></span>
                         </span>
                         <!--end:Menu link-->
@@ -112,48 +116,42 @@
                         <div class="menu-sub menu-sub-accordion">
                             <!--begin:Menu item-->
                             <div class="menu-item">
-                                <!--begin:Menu link--><a class="menu-link" id="new_admission_link" href="#"><span
+                                <a class="menu-link" id="status_report_link" href="{{ route('reports.create') }}"><span
                                         class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                        class="menu-title">New
-                                        Admission</span></a>
-                                <!--end:Menu link-->
+                                        class="menu-title">অবস্থা অনুযায়ী রিপোর্ট</span></a>
                             </div>
                             <!--end:Menu item-->
 
                             <!--begin:Menu item-->
                             <div class="menu-item">
-                                <!--begin:Menu link--><a class="menu-link" id="promote_students_link"
-                                    href="#"><span class="menu-bullet"><span
-                                            class="bullet bullet-dot"></span></span><span class="menu-title">Promote
-                                        Students</span></a>
-                                <!--end:Menu link-->
+                                <a class="menu-link" id="zone_report_link" href="{{ route('reports.index') }}"><span
+                                        class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
+                                        class="menu-title">জোনভিত্তিক সারসংক্ষেপ</span></a>
                             </div>
                             <!--end:Menu item-->
 
                             <!--begin:Menu item-->
                             <div class="menu-item">
-                                <!--begin:Menu link--><a class="menu-link" id="transfer_students_link"
-                                    href="#"><span class="menu-bullet"><span
-                                            class="bullet bullet-dot"></span></span><span class="menu-title">Transfer
-                                        Students</span></a>
-                                <!--end:Menu link-->
+                                <a class="menu-link" id="program_type_report_link"
+                                    href="{{ route('reports.index') }}"><span class="menu-bullet"><span
+                                            class="bullet bullet-dot"></span></span><span class="menu-title">কর্মসূচি
+                                        অনুযায়ী বিশ্লেষণ</span></a>
                             </div>
                             <!--end:Menu item-->
                         </div>
                         <!--end:Menu sub-->
                     </div>
-                    <!--end: Admission Menu item-->
+                    <!--end: Analytics Info Menu item-->
 
 
-                    <!--begin:Academic Menu item-->
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="academic_menu">
+                    <!--begin:Location Info Menu item-->
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="location_info_menu">
                         <!--begin:Menu link-->
                         <span class="menu-link">
                             <span class="menu-icon">
-                                <i class="ki-outline ki-book fs-2"></i>
-                                {{-- <i class="fa-solid fa-school fs-2"></i> --}}
+                                <i class="ki-outline ki-map fs-1"></i>
                             </span>
-                            <span class="menu-title">Academic</span>
+                            <span class="menu-title">অধিক্ষেত্র</span>
                             <span class="menu-arrow"></span>
                         </span>
                         <!--end:Menu link-->
@@ -162,144 +160,128 @@
                         <div class="menu-sub menu-sub-accordion">
                             <!--begin:Menu item-->
                             <div class="menu-item">
-                                <!--begin:Menu link--><a class="menu-link" id="institutions_link"
-                                    href="#"><span class="menu-bullet"><span
-                                            class="bullet bullet-dot"></span></span><span
-                                        class="menu-title">Institutions</span></a>
-                                <!--end:Menu link-->
+                                <a class="menu-link" id="zone_link" href="{{ route('reports.create') }}"><span
+                                        class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
+                                        class="menu-title">জোন</span></a>
                             </div>
                             <!--end:Menu item-->
 
                             <!--begin:Menu item-->
                             <div class="menu-item">
-                                <!--begin:Menu link--><a class="menu-link" id="class_link" href="#"><span
+                                <a class="menu-link" id="upazila_link" href="{{ route('reports.index') }}"><span
                                         class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                        class="menu-title">Class</span></a>
-                                <!--end:Menu link-->
+                                        class="menu-title">উপজেলা</span></a>
                             </div>
                             <!--end:Menu item-->
 
                             <!--begin:Menu item-->
                             <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" id="batches_link" href="#"><span
+                                <a class="menu-link" id="parliament_link" href="{{ route('reports.index') }}"><span
                                         class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                        class="menu-title">Batches</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" id="attendance_link" href="#"><span
-                                        class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                        class="menu-title">Attendance</span>
-                                </a>
-                                <!--end:Menu link-->
+                                        class="menu-title">সংসদীয় আসন</span></a>
                             </div>
                             <!--end:Menu item-->
                         </div>
                         <!--end:Menu sub-->
                     </div>
-                    <!--end: Academic Menu item-->
+                    <!--end: Location Info Menu item-->
 
-                    <!--begin:Settings Menu-->
-                    <div class="menu-item">
+
+                    <!--begin:Political Info Menu item-->
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="political_info_menu">
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="#" id="settings_link">
+                        <span class="menu-link">
                             <span class="menu-icon">
-                                <i class="ki-outline ki-setting-2 fs-2"></i>
+                                <i class="ki-outline ki-information fs-1"></i>
                             </span>
-                            <span class="menu-title">Settings</span>
-                        </a>
+                            <span class="menu-title">রাজনৈতিক তথ্য</span>
+                            <span class="menu-arrow"></span>
+                        </span>
                         <!--end:Menu link-->
-                    </div>
 
-                    {{-- @canany(['users.manage', 'settings.manage'])
-                        <!--begin:Settings Modules-->
-                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="settings_menu">
+                        <!--begin:Menu sub-->
+                        <div class="menu-sub menu-sub-accordion">
+                            <!--begin:Menu item-->
+                            <div class="menu-item">
+                                <!--begin:Menu link--><a class="menu-link" id="political_party_link"
+                                    href="{{ route('reports.create') }}"><span class="menu-bullet"><span
+                                            class="bullet bullet-dot"></span></span><span class="menu-title">রাজনৈতিক
+                                        দল</span></a>
+                                <!--end:Menu link-->
+                            </div>
+                            <!--end:Menu item-->
+
+                            <!--begin:Menu item-->
+                            <div class="menu-item">
+                                <a class="menu-link" id="program_type_link"
+                                    href="{{ route('reports.index') }}"><span class="menu-bullet"><span
+                                            class="bullet bullet-dot"></span></span><span class="menu-title">কর্মসূচির
+                                        ধরন</span></a>
+                            </div>
+                            <!--end:Menu item-->
+                        </div>
+                        <!--end:Menu sub-->
+                    </div>
+                    <!--end: Political Info Menu item-->
+
+                    {{-- @if (auth()->user()->role->name == 'Administrator') --}}
+                        <!--begin:User Info Menu item-->
+                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="user_info_menu">
                             <!--begin:Menu link-->
                             <span class="menu-link">
                                 <span class="menu-icon">
-                                    <i class="ki-outline ki-setting-2 fs-2"></i>
+                                    <i class="ki-outline ki-user-edit fs-1"></i>
                                 </span>
-                                <span class="menu-title">Settings</span>
+                                <span class="menu-title">ইউজার ম্যানেজমেন্ট</span>
                                 <span class="menu-arrow"></span>
                             </span>
                             <!--end:Menu link-->
 
                             <!--begin:Menu sub-->
                             <div class="menu-sub menu-sub-accordion">
-                                @can('users.manage')
-                                    <!--begin:Menu item-->
-                                    <div class="menu-item">
-                                        <!--begin:Menu link-->
-                                        <a class="menu-link" id="users_link" href="{{ route('users.index') }}"><span
-                                                class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                                class="menu-title">Users</span>
-                                        </a>
-                                        <!--end:Menu link-->
-                                    </div>
-                                    <!--end:Menu item-->
-                                @endcan
-
-                                <!--begin:Branch management item-->
-                                @can('branches.manage')
-                                    <div class="menu-item">
-                                        <!--begin:Menu link-->
-                                        <a class="menu-link" id="branch_link" href="{{ route('branch.index') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot">
-                                                </span>
-                                            </span>
-                                            <span class="menu-title">Branch</span>
-                                        </a>
-                                        <!--end:Menu link-->
-                                    </div>
-                                @endcan
-                                <!--end:Branch management item-->
-
-                                <!--begin:Bulk Admission item-->
-                                {{-- <div class="menu-item">
-                                    <!--begin:Menu link-->
-                                    <a class="menu-link" id="bulk_admission_link"
-                                        href="{{ route('bulk.admission.index') }}">
-                                        <span class="menu-bullet">
-                                            <span class="bullet bullet-dot">
-                                            </span>
-                                        </span>
-                                        <span class="menu-title">Bulk Admission</span>
-                                    </a>
+                                <!--begin:Menu item-->
+                                <div class="menu-item">
+                                    <!--begin:Menu link--><a class="menu-link" id="user_list_link"
+                                        href="{{ route('users.index') }}"><span class="menu-bullet"><span
+                                                class="bullet bullet-dot"></span></span><span
+                                            class="menu-title">ইউজার</span></a>
                                     <!--end:Menu link-->
-                                </div> --}}
-                    <!--end:Settings Menu-->
+                                </div>
+                                <!--end:Menu item-->
 
+                                <!--begin:Menu item-->
+                                <div class="menu-item">
+                                    <a class="menu-link" id="designation_link"
+                                        href="{{ route('designations.index') }}"><span class="menu-bullet"><span
+                                                class="bullet bullet-dot"></span></span><span class="menu-title">সকল
+                                            পদবী</span></a>
+                                </div>
+                                <!--end:Menu item-->
+                            </div>
+                            <!--end:Menu sub-->
+                        </div>
+                        <!--end: User Info Menu item-->
+                    {{-- @endif --}}
                 </div>
-                <!--end::Menu-->
+                <!--end::Menu wrapper-->
             </div>
-            <!--end::Scroll wrapper-->
+            <!--end::sidebar menu-->
+
+            <!--begin::Footer-->
+            <div class="app-sidebar-footer flex-column-auto pt-2 pb-6 px-6" id="kt_app_sidebar_footer">
+                <a href="{{ route('logout') }}"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                    class="btn btn-flex flex-center btn-custom btn-danger overflow-hidden text-nowrap px-0 h-40px w-100"
+                    data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click" title="সাইন আউট করুন">
+                    <span class="btn-label">
+                        সাইন আউট
+                    </span>
+                    <i class="ki-outline ki-document btn-icon fs-2 m-0"></i>
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </div>
+            <!--end::Footer-->
         </div>
-        <!--end::Menu wrapper-->
-    </div>
-    <!--end::sidebar menu-->
-
-    <!--begin::Footer-->
-    <div class="app-sidebar-footer flex-column-auto pt-2 pb-6 px-6" id="kt_app_sidebar_footer">
-        <a href="{{ route('logout') }}"
-            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-            class="btn btn-flex flex-center btn-custom btn-danger overflow-hidden text-nowrap px-0 h-40px w-100"
-            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click" title="সাইন আউট করুন">
-            <span class="btn-label">
-                সাইন আউট
-            </span>
-            <i class="ki-outline ki-document btn-icon fs-2 m-0"></i>
-        </a>
-
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
-    </div>
-    <!--end::Footer-->
-</div>

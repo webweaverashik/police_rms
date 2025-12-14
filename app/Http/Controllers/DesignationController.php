@@ -1,25 +1,17 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use App\Models\Report;
 use Illuminate\Http\Request;
 
-class ReportController extends Controller
+class DesignationController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        if (auth()->user()->role->name == 'Operator') {
-            $reports = Report::with(['upazila', 'zone', 'politicalParty', 'parliamentSeat', 'programType', 'createdBy:id,name'])
-                ->where('created_by', auth()->user()->id)
-                ->get();
-        } else {
-            $reports = Report::with(['upazila', 'zone', 'politicalParty', 'parliamentSeat', 'programType', 'createdBy:id,name'])->get();
-        }
-
-        return view('reports.index', compact('reports'));
+        //
     }
 
     /**
@@ -27,7 +19,7 @@ class ReportController extends Controller
      */
     public function create()
     {
-        return view('reports.create');
+        //
     }
 
     /**
@@ -43,9 +35,7 @@ class ReportController extends Controller
      */
     public function show(string $id)
     {
-        $report = Report::findOrFail($id);
-
-        return view('reports.show', compact('report'));
+        //
     }
 
     /**
