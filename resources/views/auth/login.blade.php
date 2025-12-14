@@ -5,7 +5,7 @@
 
 @section('content')
     <!--begin::Form-->
-    <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" action="{{ route('login') }}" method="POST">
+    <form class="form w-100" id="kt_sign_in_form" action="{{ route('login') }}" method="POST" novalidate>
         @csrf
         <!--begin::Heading-->
         <div class="text-center mb-11">
@@ -20,15 +20,15 @@
         <!--begin::Input group=-->
         <div class="fv-row mb-5">
             <!--begin::Email-->
-            <input type="text" placeholder="আপনার ইমেইল বা বিপি নং দিন" name="email" autocomplete="off"
-                class="form-control bg-transparent" />
+            <input type="text" placeholder="আপনার ইমেইল এড্রেস দিন" name="email" autocomplete="off"
+                class="form-control bg-transparent" required />
             <!--end::Email-->
         </div>
         <!--end::Input group=-->
         <div class="fv-row mb-3">
             <!--begin::Password-->
             <input type="password" placeholder="আপনার পাসওয়ার্ড লিখুন" name="password" autocomplete="off"
-                class="form-control bg-transparent" />
+                class="form-control bg-transparent" required />
             <!--end::Password-->
         </div>
         <!--end::Input group=-->
@@ -42,7 +42,7 @@
         <!--end::Wrapper-->
         <!--begin::Submit button-->
         <div class="d-grid">
-            <button type="submit" id="" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary" id="kt_sign_in_submit">
                 <!--begin::Indicator label-->
                 <span class="indicator-label">সাইন ইন</span>
                 <!--end::Indicator label-->
@@ -56,3 +56,8 @@
     </form>
     <!--end::Form-->
 @endsection
+
+
+@push('page-script')
+    <script src="{{ asset('js/auth/login.js') }}"></script>
+@endpush

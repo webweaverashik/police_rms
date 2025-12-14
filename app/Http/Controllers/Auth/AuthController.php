@@ -1,11 +1,12 @@
 <?php
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
+use App\Models\LoginActivity;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\LoginActivity;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -21,44 +22,60 @@ class AuthController extends Controller
     // Handle login
     public function login(Request $request)
     {
-        $request->validate([
+        // ✅ AJAX-friendly validation
+        $validator = Validator::make($request->all(), [
             'email'    => 'required|email',
             'password' => 'required',
         ]);
 
-        // Check if user exists (including soft-deleted users)
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => $validator->errors()->first(),
+            ], 422);
+        }
+
+        // Check user (including soft deleted)
         $user = User::withTrashed()->where('email', $request->email)->first();
 
         if (! $user) {
-            return back()->with('error', 'Invalid Account Details');
+            return response()->json([
+                'message' => 'এই ইমেইলে কোনো ইউজার নেই।',
+            ], 401);
         }
 
-        // Step 1: Check if the user is soft-deleted
         if ($user->trashed()) {
-            return back()->with('error', 'No associated user found.');
+            return response()->json([
+                'message' => 'আপনার আইডি বন্ধ রয়েছে।',
+            ], 403);
         }
 
-        // Step 2: Check if the user is active
         if ($user->is_active == 0) {
-            return back()->with('error', 'Login disabled. Please, contact admin.');
+            return response()->json([
+                'message' => 'আপনার আইডি সাময়িকভাবে বন্ধ রয়েছে। অনুগ্রহ করে এডমিনের সাথে যোগাযোগ করুন।',
+            ], 403);
         }
 
-        // Step 3: Attempt login if both checks pass
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            $user = Auth::user(); // Get authenticated user
-
-            // Log login activity
-            LoginActivity::create([
-                'user_id'    => $user->id,
-                'ip_address' => $request->ip(),
-                'user_agent' => $request->header('User-Agent'),
-                'device'     => $this->detectDevice($request->header('User-Agent')),
-            ]);
-
-            return redirect()->route('dashboard')->with('success', 'Login successful');
+        // Attempt login
+        if (! Auth::attempt($request->only('email', 'password'))) {
+            return response()->json([
+                'message' => 'ইউজার বা পাসওয়ার্ড ভুল হয়েছে।',
+            ], 401);
         }
 
-        return back()->with('error', 'Invalid Credentials');
+        // ✅ Login success
+        $user = Auth::user();
+
+        LoginActivity::create([
+            'user_id'    => $user->id,
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->header('User-Agent'),
+            'device'     => $this->detectDevice($request->header('User-Agent')),
+        ]);
+
+        return response()->json([
+            'message'  => 'সাইন ইন সফল হয়েছে।',
+            'redirect' => route('dashboard'),
+        ]);
     }
 
     // Helper function to detect device type
