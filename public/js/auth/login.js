@@ -70,7 +70,7 @@ var KTLoginSetup = function () {
 
                         if (status !== 'Valid') {
                               toastr.warning(
-                                    'দয়া করে সঠিক ইমেইল ও পাসওয়ার্ড দিন'
+                                    'দয়া করে ইমেইল ও পাসওয়ার্ড দিন'
                               );
                               return;
                         }
@@ -82,7 +82,7 @@ var KTLoginSetup = function () {
                               .then(response => {
 
                                     toastr.success(
-                                          response.data.message || 'Login successful'
+                                          response.data.message || 'সফলভাবে সাইন ইন হয়েছে।'
                                     );
 
                                     setTimeout(() => {
