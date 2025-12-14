@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Middleware;
 
 use Closure;
@@ -11,8 +10,8 @@ class IsLoggedIn
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'Session Expired');
+        if (! Auth::check()) {
+            return redirect()->route('login')->with('error', 'সেশন এক্সপায়ার্ড');
         }
 
         return $next($request);

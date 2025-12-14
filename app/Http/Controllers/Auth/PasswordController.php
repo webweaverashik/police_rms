@@ -38,7 +38,7 @@ class PasswordController extends Controller
         if (! $user) {
             return response()->json([
                 'status'  => 'error',
-                'message' => 'এই ইমেল ঠিকানার কোনও সক্রিয় অ্যাকাউন্ট আমরা খুঁজে পাইনি।',
+                'message' => 'এই ইমেইল আইডিতে কোনো সক্রিয় অ্যাকাউন্ট নেই।',
             ], 422);
         }
 
@@ -67,13 +67,13 @@ class PasswordController extends Controller
             if (str_contains($e->getMessage(), 'rate limit') || str_contains($e->getMessage(), 'too many')) {
                 return response()->json([
                     'status'  => 'error',
-                    'message' => 'আপনি প্রতি ৬০ সেকেন্ডে একবার পাসওয়ার্ড রিসেট করার অনুরোধ করতে পারবেন। অনুগ্রহ করে আপনার ইমেল চেক করুন অথবা পরে আবার চেষ্টা করুন।',
+                    'message' => 'আপনি প্রতি ৬০ সেকেন্ডে একবার পাসওয়ার্ড রিসেট করার অনুরোধ করতে পারবেন। অনুগ্রহ করে আপনার ইমেইল চেক করুন অথবা পরে আবার চেষ্টা করুন।',
                 ], 429); // 429 Too Many Requests
             }
 
             return response()->json([
                 'status'  => 'error',
-                'message' => 'ইমেল ঠিকানাটি ভুল বা পৌঁছানো যাচ্ছে না বলে মনে হচ্ছে। দয়া করে চেক করে আবার চেষ্টা করুন।',
+                'message' => 'ইমেইল এড্রেসটি ভুল অথবা মেইল যাচ্ছে না। দয়া করে চেক করে আবার চেষ্টা করুন।',
             ], 422);
         }
     }
@@ -130,7 +130,6 @@ class PasswordController extends Controller
             'token'    => 'required|string',
             'email'    => 'required|email',
             'password' => 'required|string|min:8|confirmed',
-            'toc'      => 'required|accepted', // Terms checkbox
         ]);
 
         $status = Password::reset(

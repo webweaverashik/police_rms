@@ -33,11 +33,7 @@
                 <!--begin::Search-->
                 <div class="app-navbar-item ms-1 ms-md-4">
                     <span class="badge badge-lg badge-info fs-5">
-                        @if (auth()->user()->branch_id)
-                            {{ auth()->user()->branch->branch_name }} Branch
-                        @else
-                            SuperAdmin
-                        @endif
+                        {{ auth()->user()->role->name }}
                     </span>
                 </div>
                 <!--end::Search-->
@@ -582,14 +578,14 @@
                 </div>
                 <!--end::Notifications-->
 
-                <!--begin::Clear Cache-->
+                {{-- <!--begin::Clear Cache-->
                 <div class="app-navbar-item ms-1 ms-md-4">
                     <a href="#" id="clear_cache_button" data-url="{{ route('clear.cache') }}"
                         data-bs-toggle="tooltip" data-bs-placement="bottom" title="Clear Cache"
                         class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px"><i
                             class="ki-outline ki-flash-circle fs-2"></i></a>
                 </div>
-                <!--end::Clear Cache-->
+                <!--end::Clear Cache--> --}}
 
                 <!--begin::Theme mode-->
                 <div class="app-navbar-item ms-1 ms-md-4">
@@ -651,8 +647,7 @@
                     <div class="cursor-pointer symbol symbol-35px"
                         data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
                         data-kt-menu-placement="bottom-end">
-                        <img src="{{ auth()->user()->photo_url ?? asset('assets/img/dummy.png') }}" class="rounded-3"
-                            alt="user" />
+                        <img src="{{ asset('assets/img/dummy.png') }}" class="rounded-3" alt="user" />
                     </div>
 
                     <!--begin::User account menu-->
@@ -663,16 +658,15 @@
                             <div class="menu-content d-flex align-items-center px-3">
                                 <!--begin::Avatar-->
                                 <div class="symbol symbol-50px me-5">
-                                    <img alt="Logo"
-                                        src="{{ auth()->user()->photo_url ?? asset('assets/img/dummy.png') }}" />
+                                    <img alt="Logo" src="{{ asset('assets/img/dummy.png') }}" />
                                 </div>
                                 <!--end::Avatar-->
                                 <!--begin::Username-->
                                 <div class="d-flex flex-column">
                                     <div class="fw-bold d-flex align-items-center fs-5">
                                         {{ auth()->user()->name }}
-                                        <span
-                                            class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">{{ ucfirst(auth()->user()->getRoleNames()->first()) }}</span>
+                                        {{-- <span
+                                            class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">{{ auth()->user()->role->name }}</span> --}}
                                     </div>
                                     <span class="fw-semibold text-muted fs-7">
                                         {{ auth()->user()->email }} </span>
@@ -687,14 +681,14 @@
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
                             <a href="#" class="menu-link px-5">
-                                My Profile
+                                আমার প্রোফাইল
                             </a>
                         </div>
                         <!--end::Menu item-->
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
                             <a href="#" class="menu-link px-5">
-                                <span class="menu-text">My Activity</span>
+                                <span class="menu-text">আমার একটিভিটি</span>
                                 <span class="menu-badge">
                                     <span class="badge badge-light-danger badge-circle fw-bold fs-7">3</span>
                                 </span>
@@ -710,7 +704,7 @@
                         <div class="menu-item px-5">
                             <a href="{{ route('logout') }}" class="menu-link px-5"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                Sign Out
+                                সাইন আউট
                             </a>
                         </div>
                         <!--end::Menu item-->

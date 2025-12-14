@@ -4,13 +4,12 @@
         <!--begin::Copyright-->
         <div class="text-gray-900 order-2 order-md-1">
             <span class="text-muted fw-semibold me-1">{{ date('Y') }} &copy;</span>
-            <a href="https://ashikur-rahman.com" target="_blank" class="text-gray-800 text-hover-primary">Ashikur
-                Rahman</a>
+            <a href="https://ashikur-rahman.com" target="_blank" class="text-gray-800 text-hover-primary">আশিকুর রহমান</a>
         </div>
         <!--end::Copyright-->
         <!--begin::Menu-->
         <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
-            <li class="menu-item"><a href="#" target="_blank" class="menu-link px-2">UCMS v2.0.1</a></li>
+            <li class="menu-item"><a href="#" target="_blank" class="menu-link px-2">PRMS v1.0.0</a></li>
         </ul>
         <!--end::Menu-->
     </div>

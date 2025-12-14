@@ -13,9 +13,9 @@ class AuthController extends Controller
     public function showLogin()
     {
         if (Auth::check()) {
-            return redirect()->route('dashboard')->with('warning', 'You are already logged in.');
+            return redirect()->route('dashboard')->with('warning', 'আপনি এখনও লগিন অবস্থায় আছেন।');
         }
-        return view('auth.login')->with('warning', 'Please login first.');
+        return view('auth.login')->with('warning', 'অনুগ্রহ পূর্বক পুনরায় লগিন করুন।');
     }
 
     // Handle login
@@ -77,6 +77,6 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('login')->with('success', 'Logged out successfully.');
+        return redirect()->route('login')->with('success', 'সফলভাবে সাইন আউট হয়েছে।');
     }
 }
