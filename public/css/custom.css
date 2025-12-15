@@ -15,13 +15,13 @@ body, * {
       opacity: 0.95 !important;
 }
 
-table.ucms-table {
+table.prms-table {
       /* border: 1px dashed #F1F1F4 !important; */
       border-collapse: collapse !important;
 }
 
-table.ucms-table th,
-table.ucms-table td {
+table.prms-table th,
+table.prms-table td {
       /* border: 1px dashed #F1F1F4 !important; */
       text-align: center !important;
       vertical-align: middle !important;

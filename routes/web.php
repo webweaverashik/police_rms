@@ -3,6 +3,8 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\DesignationController;
+use App\Http\Controllers\PoliticalPartyController;
+use App\Http\Controllers\ProgramTypeController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Mail;
@@ -25,6 +27,8 @@ Route::middleware(['auth', 'isLoggedIn'])->group(function () {
     // ------- Custom routes start -------
     Route::resource('users', UserController::class);
     Route::resource('designations', DesignationController::class);
+    Route::resource('political-parties', PoliticalPartyController::class);
+    Route::resource('program-types', ProgramTypeController::class);
     Route::resource('reports', ReportController::class);
     // ------- Custom routes end -------
 

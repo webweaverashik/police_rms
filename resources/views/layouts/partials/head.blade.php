@@ -2,8 +2,10 @@
     <title>@yield('title', 'ড্যাশবোর্ড') - পিআরএমএস</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="utf-8" />
-    <meta name="description" content="পুলিশ রিপোর্ট ম্যানেজমেন্ট সিস্টেম (PRMS) একটি ওয়েবভিত্তিক রিপোর্টিং অ্যাপ, যা রাজনৈতিক কর্মসূচি ও জনসমাগম সংক্রান্ত তথ্য ডিজিটালি এন্ট্রি, ম্যানেজ ও মনিটর করতে সহায়তা করে। Role-based access, zone-wise data filtering এবং structured reporting এর মাধ্যমে এটি দ্রুত, নির্ভুল ও নিরাপদ তথ্য ব্যবস্থাপনা নিশ্চিত করে।" />
-    <meta name="keywords" content="Police Report Management System, PRMS, police reporting software, political program reporting, law enforcement reporting system, zone wise reporting, role based access control, police dashboard, political meeting report, election program monitoring, government reporting system, Bangladesh police software" />
+    <meta name="description"
+        content="পুলিশ রিপোর্ট ম্যানেজমেন্ট সিস্টেম (PRMS) একটি ওয়েবভিত্তিক রিপোর্টিং অ্যাপ, যা রাজনৈতিক কর্মসূচি ও জনসমাগম সংক্রান্ত তথ্য ডিজিটালি এন্ট্রি, ম্যানেজ ও মনিটর করতে সহায়তা করে। Role-based access, zone-wise data filtering এবং structured reporting এর মাধ্যমে এটি দ্রুত, নির্ভুল ও নিরাপদ তথ্য ব্যবস্থাপনা নিশ্চিত করে।" />
+    <meta name="keywords"
+        content="Police Report Management System, PRMS, police reporting software, political program reporting, law enforcement reporting system, zone wise reporting, role based access control, police dashboard, political meeting report, election program monitoring, government reporting system, Bangladesh police software" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
@@ -25,4 +27,7 @@
     <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
+    <script>
+        // Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }
+    </script>
 </head>

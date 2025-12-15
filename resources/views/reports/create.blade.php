@@ -1,11 +1,10 @@
-@push('page-css')
-    <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
-@endpush
-
-
 @extends('layouts.app')
 
-@section('title', 'নতুন রিপোর্ট')
+
+@push('page-css')
+@endpush
+
+@section('title', 'নতুন প্রতিবেদন')
 
 @section('header-title')
     <div data-kt-swapper="true" data-kt-swapper-mode="{default: 'prepend', lg: 'prepend'}"
@@ -13,7 +12,7 @@
         class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
         <!--begin::Title-->
         <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 align-items-center my-0">
-            রিপোর্ট যুক্ত করুন
+            প্রতিবেদন যুক্ত করুন
         </h1>
         <!--end::Title-->
         <!--begin::Separator-->
@@ -24,7 +23,7 @@
             <!--begin::Item-->
             <li class="breadcrumb-item text-muted">
                 <a href="#" class="text-muted text-hover-primary">
-                    রিপোর্ট </a>
+                    প্রতিবেদন </a>
             </li>
             <!--end::Item-->
             <!--begin::Item-->
@@ -34,7 +33,7 @@
             <!--end::Item-->
             <!--begin::Item-->
             <li class="breadcrumb-item text-muted">
-                নতুন রিপোর্ট </li>
+                নতুন প্রতিবেদন </li>
             <!--end::Item-->
         </ul>
         <!--end::Breadcrumb-->
@@ -42,15 +41,15 @@
 @endsection
 
 @section('content')
-
+    <h1>সকল প্রতিবেদন</h1>
 @endsection
 
 
 @push('vendor-js')
-    <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 @endpush
 
 @push('page-js')
+
     <script>
         document.getElementById("report_info_menu").classList.add("here", "show");
         document.getElementById("add_report_link").classList.add("active");
