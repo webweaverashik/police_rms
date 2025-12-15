@@ -1,7 +1,12 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\ParliamentSeat;
+use App\Models\PoliticalParty;
+use App\Models\ProgramType;
 use App\Models\Report;
+use App\Models\Upazila;
+use App\Models\Zone;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -12,11 +17,11 @@ class ReportController extends Controller
     public function index()
     {
         if (auth()->user()->role->name == 'Operator') {
-            $reports = Report::with(['upazila', 'zone', 'politicalParty', 'parliamentSeat', 'programType', 'createdBy:id,name'])
+            $reports = Report::with(['upazila', 'zone', 'politicalParty', 'parliamentSeat', 'programType', 'createdBy:id,name,designation_id', 'createdBy.designation:id,name'])
                 ->where('created_by', auth()->user()->id)
                 ->get();
         } else {
-            $reports = Report::with(['upazila', 'zone', 'politicalParty', 'parliamentSeat', 'programType', 'createdBy:id,name'])->get();
+            $reports = Report::with(['upazila', 'zone', 'politicalParty', 'parliamentSeat', 'programType', 'createdBy:id,name,designation_id', 'createdBy.designation:id,name'])->get();
         }
 
         return view('reports.index', compact('reports'));
@@ -27,7 +32,13 @@ class ReportController extends Controller
      */
     public function create()
     {
-        return view('reports.create');
+        $upazilas         = Upazila::all();
+        $zones            = Zone::all();
+        $politicalParties = PoliticalParty::all();
+        $parliamentSeats  = ParliamentSeat::all();
+        $programTypes     = ProgramType::all();
+
+        return view('reports.create', compact('upazilas', 'zones', 'politicalParties', 'parliamentSeats', 'programTypes'));
     }
 
     /**

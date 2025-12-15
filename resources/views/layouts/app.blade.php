@@ -8,19 +8,20 @@
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar" data-kt-app-header-fixed="true"
     data-kt-app-header-fixed-mobile="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true"
     data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-header="true" data-kt-app-sidebar-push-toolbar="true"
-    data-kt-app-sidebar-push-footer="true" data-kt-app-page-loading-enabled="true" data-kt-app-page-loading="on" class="app-default">
+    data-kt-app-sidebar-push-footer="true" data-kt-app-page-loading-enabled="true" data-kt-app-page-loading="on"
+    class="app-default">
     <!--begin::Theme mode setup on page load-->
     @include('layouts.partials.theme_mode')
     <!--end::Theme mode setup on page load-->
 
-	<!--begin::Page loading(append to body)-->
-	<div class="page-loader">
-		<span class="spinner-border text-primary" role="status">
-			<span class="visually-hidden">Loading...</span>
-		</span>
-	</div>
-	<!--end::Page loading-->
-    
+    <!--begin::Page loading(append to body)-->
+    <div class="page-loader">
+        <span class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </span>
+    </div>
+    <!--end::Page loading-->
+
     <!--begin::App-->
     <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
         <!--begin::Page-->
@@ -48,7 +49,7 @@
                                     <div
                                         class="alert alert-dismissible bg-light-danger border border-danger border-dashed d-flex flex-column flex-sm-row w-100 p-5 mb-10">
                                         <!--begin::Icon-->
-                                        <i class="ki-duotone ki-message-text-2 fs-2hx text-danger me-4 mb-5 mb-sm-0">
+                                        <i class="ki-duotone ki-information fs-2hx text-danger me-4 mb-5 mb-sm-0">
                                             <span class="path1"></span>
                                             <span class="path2"></span>
                                             <span class="path3"></span>
@@ -57,12 +58,10 @@
 
                                         <!--begin::Content-->
                                         <div class="d-flex flex-column pe-0 pe-sm-10">
-                                            <h5 class="mb-1 text-danger">The following errors have been found.</h5>
-                                            <ul>
-                                                @foreach ($errors->all() as $error)
-                                                    <li class="text-danger fs-6">{{ $error }}</li>
-                                                @endforeach
-                                            </ul>
+                                            <h5 class="mb-1 text-danger">নিম্নোক্ত এররগুলো চেক করুন।</h5>
+                                            @foreach ($errors->all() as $error)
+                                                <li class="text-danger">{{ $error }}</li>
+                                            @endforeach
                                         </div>
                                         <!--end::Content-->
 
@@ -75,7 +74,7 @@
                                         <!--end::Close-->
                                     </div>
                                 @endif
-                                
+
                                 @yield('content')
                             </div>
                         </div>

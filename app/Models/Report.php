@@ -1,8 +1,8 @@
 <?php
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Report
@@ -19,7 +19,7 @@ class Report extends Model
      * These fields are filled during report creation and update.
      */
     use HasFactory;
-    
+
     protected $fillable = [
         'parliament_seat_id',
         'upazila_id',
@@ -28,6 +28,7 @@ class Report extends Model
         'candidate_name',
         'program_type_id',
         'program_date_time',
+        'program_special_guest',
         'program_chair',
         'tentative_attendee_count',
         'program_status',
@@ -87,6 +88,6 @@ class Report extends Model
      */
     public function createdBy()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'created_by')->withTrashed();
     }
 }

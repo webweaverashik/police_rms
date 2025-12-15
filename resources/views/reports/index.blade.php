@@ -73,12 +73,12 @@
                     <!--begin::Filter-->
                     <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click"
                         data-kt-menu-placement="bottom-end">
-                        <i class="ki-outline ki-filter fs-2"></i>Filter</button>
+                        <i class="ki-outline ki-filter fs-2"></i>ফিল্টার</button>
                     <!--begin::Menu 1-->
                     <div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true">
                         <!--begin::Header-->
                         <div class="px-7 py-5">
-                            <div class="fs-5 text-gray-900 fw-bold">Filter Options</div>
+                            <div class="fs-5 text-gray-900 fw-bold">ফিল্টার অপশন</div>
                         </div>
                         <!--end::Header-->
                         <!--begin::Separator-->
@@ -88,7 +88,7 @@
                         <div class="px-7 py-5" data-all-reports-table-filter="form">
                             <!--begin::Input group-->
                             <div class="mb-10">
-                                <label class="form-label fs-6 fw-semibold">Payment Type:</label>
+                                <label class="form-label fs-6 fw-semibold">উপজেলা:</label>
                                 <select class="form-select form-select-solid fw-bold" data-kt-select2="true"
                                     data-placeholder="Select option" data-allow-clear="true" data-hide-search="true">
                                     <option></option>
@@ -132,7 +132,7 @@
                     <div class="dropdown">
                         <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click"
                             data-kt-menu-placement="bottom-end">
-                            <i class="ki-outline ki-exit-up fs-2"></i>Export
+                            <i class="ki-outline ki-exit-up fs-2"></i>এক্সপোর্ট
                         </button>
 
                         <!--begin::Menu-->
@@ -141,25 +141,24 @@
                             data-kt-menu="true">
                             <!--begin::Menu item-->
                             <div class="menu-item px-3">
-                                <a href="#" class="menu-link px-3" data-row-export="copy">Copy to
-                                    clipboard</a>
+                                <a href="#" class="menu-link px-3" data-row-export="copy">ক্লিপবোর্ডে কপি করুন</a>
                             </div>
                             <div class="menu-item px-3">
-                                <a href="#" class="menu-link px-3" data-row-export="excel">Export as Excel</a>
+                                <a href="#" class="menu-link px-3" data-row-export="excel">Excel ফাইল ডাউনলোড</a>
+                            </div>
+                            {{-- <div class="menu-item px-3">
+                                <a href="#" class="menu-link px-3" data-row-export="csv">CSV ফাইল ডাউনলোড</a>
                             </div>
                             <div class="menu-item px-3">
-                                <a href="#" class="menu-link px-3" data-row-export="csv">Export as CSV</a>
-                            </div>
-                            <div class="menu-item px-3">
-                                <a href="#" class="menu-link px-3" data-row-export="pdf">Export as PDF</a>
-                            </div>
+                                <a href="#" class="menu-link px-3" data-row-export="pdf">PDF ফাইল ডাউনলোড</a>
+                            </div> --}}
                             <!--end::Menu item-->
                         </div>
                         <!--end::Menu-->
                     </div>
                     <!--end::Export dropdown-->
 
-                    @if (auth()->user()->role->name == 'Operator')
+                    @if (auth()->user()->role->name !== 'None')
                         <!--begin::Add subscription-->
                         <a href="{{ route('reports.create') }}" class="btn btn-primary">
                             <i class="ki-outline ki-plus fs-2"></i>নতুন রিপোর্ট</a>
@@ -179,7 +178,7 @@
             <!--begin::Table-->
             <table class="table table-hover align-middle table-row-dashed fs-6 gy-5 prms-table" id="kt_all_reports_table">
                 <thead>
-                    <tr class="fw-bold fs-7 gs-0">
+                    <tr class="fw-bold fs-6 gs-0">
                         <th>#</th>
                         <th>সংসদীয় আসন</th>
                         <th>উপজেলা</th>
@@ -193,95 +192,59 @@
                         <th>সম্ভাব্য উপস্থিতি</th>
                         <th>প্রোগ্রামের অবস্থা</th>
                         <th>মোট উপস্থিতি</th>
-                        <th class="not-export">একশন</th>
+                        <th>প্রতিবেদক</th>
+                        <th class="not-export w-100px">##</th>
                     </tr>
                 </thead>
-                <tbody class="text-gray-600 fw-semibold">
-                    {{-- @foreach ($reports as $transaction)
+                <tbody class="text-gray-800 fw-semibold">
+                    @foreach ($reports as $report)
                         <tr>
                             <td>{{ $loop->index + 1 }}</td>
+                            <td>{{ $report->parliamentSeat->name }}</td>
+                            <td>{{ $report->upazila->name }}</td>
+                            <td>{{ $report->zone->name }}</td>
+                            <td>{{ $report->politicalParty->name }}</td>
+                            <td>{{ $report->candidate_name }}</td>
+                            <td>{{ $report->program_special_guest }}</td>
+                            <td>{{ $report->program_chair }}</td>
+                            <td>{{ $report->programType->name }}</td>
                             <td>
-                                    {{ $transaction->paymentInvoice->invoice_number }}
+                                {{ $report->program_date_time }}
                             </td>
-
-                            <td>{{ $transaction->voucher_no }}</td>
-                            <td>{{ $transaction->amount_paid }}</td>
-                            <td class="d-none">
-                                @if ($transaction->payment_type === 'partial')
-                                    T_partial
-                                @elseif ($transaction->payment_type === 'full')
-                                    T_full_paid
-                                @elseif ($transaction->payment_type === 'discounted')
-                                    T_discounted
-                                @endif
-                            </td>
-
+                            <td>{{ $report->tentative_attendee_count }}</td>
+                            <td>{{ $report->program_status }}</td>
+                            <td>{{ $report->final_attendee_count }}</td>
+                            <td>{{ $report->createdBy->name }}, {{ $report->createdBy->designation->name }}</td>
                             <td>
-                                @if ($transaction->payment_type === 'partial')
-                                    <span class="badge badge-warning rounded-pill">Partial</span>
-                                @elseif ($transaction->payment_type === 'full')
-                                    <span class="badge badge-success rounded-pill">Full Paid</span>
-                                @elseif ($transaction->payment_type === 'discounted')
-                                    <span class="badge badge-info rounded-pill">Discounted</span>
-                                @endif
-                            </td>
+                                <a href="#" class="btn btn-light btn-active-light-primary btn-sm"
+                                    data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">একশন
+                                    <i class="ki-outline ki-down fs-5 m-0"></i></a>
+                                <!--begin::Menu-->
+                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-175px py-4"
+                                    data-kt-menu="true">
 
-                            <td>
-                                <a href="{{ route('students.show', $transaction->student->id) }}">
-                                    {{ $transaction->student->name }}, {{ $transaction->student->student_unique_id }}
-                                </a>
-                            </td>
+                                    <div class="menu-item px-3">
+                                        <a href="{{ route('reports.show', $report->id) }}" title="প্রতিবেদনটি দেখুন"
+                                            class="menu-link text-hover-primary px-3" target="_blank"><i
+                                                class="ki-outline ki-eye fs-3 me-2"></i> দেখুন</a>
+                                    </div>
 
-                            <td class="@if (!auth()->user()->hasRole('admin')) d-none @endif">
-                                @php
-                                    $branchName = $transaction->student->branch->branch_name;
-                                    $badgeColor = $branchColors[$branchName] ?? 'badge-light-secondary'; // Default color
-                                @endphp
-                                <span class="badge {{ $badgeColor }}">{{ $branchName }}</span>
-                            </td>
+                                    <div class="menu-item px-3">
+                                        <a href="#" title="প্রতিবেদনটি সংশোধন করুন"
+                                            class="menu-link text-hover-primary px-3"><i class="ki-outline ki-pencil fs-3 me-2"></i>
+                                            সংশোধন</a>
+                                    </div>
 
-
-                            <td>
-                                {{ $transaction->created_at->format('h:i:s A, d-M-Y') }}
-                            </td>
-
-                            <td>
-                                {{ $transaction->createdBy->name ?? 'System' }}
-                            </td>
-
-                            <td>
-                                @if ($transaction->is_approved === false)
-                                    @if ($canApproveTxn)
-                                        <a href="#" title="Approve Transaction"
-                                            class="btn btn-icon text-hover-success w-30px h-30px approve-txn me-2"
-                                            data-txn-id={{ $transaction->id }}>
-                                            <i class="bi bi-check-circle fs-2"></i>
-                                        </a>
-                                    @endif
-
-                                    @if ($canDeleteTxn)
-                                        <a href="#" title="Delete Transaction"
-                                            class="btn btn-icon text-hover-danger w-30px h-30px delete-txn"
-                                            data-txn-id={{ $transaction->id }}>
-                                            <i class="bi bi-trash fs-2"></i>
-                                        </a>
-                                    @endif
-
-                                    @if (!$canApproveTxn)
-                                        <span class="badge rounded-pill text-bg-secondary">Pending Approval</span>
-                                    @endif
-                                @else
-                                    @if ($canDownloadPayslip)
-                                        <a href="{{ route('transactions.download', $transaction->id) }}" target="_blank"
-                                            data-bs-toggle="tooltip" title="Download Payslip"
-                                            class="btn btn-icon text-hover-primary w-30px h-30px">
-                                            <i class="bi bi-download fs-2"></i>
-                                        </a>
-                                    @endif
-                                @endif
+                                    <div class="menu-item px-3">
+                                        <a href="#" class="menu-link px-3 text-hover-danger delete-report" title="প্রতিবেদনটি মুছে ফেলুন"
+                                            data-report-id="{{ $report->id }}"><i class="ki-outline ki-trash fs-3 me-2"></i>
+                                            মুছুন</a>
+                                    </div>
+                                </div>
+                                <!--end::Menu-->
                             </td>
                         </tr>
-                    @endforeach --}}
+                    @endforeach
                 </tbody>
             </table>
             <!--end::Table-->
@@ -294,6 +257,7 @@
 
 @push('vendor-js')
     <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
 @endpush
 
 @push('page-js')

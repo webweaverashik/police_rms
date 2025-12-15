@@ -17,10 +17,11 @@ return new class extends Migration
             $table->foreignId('upazila_id')->constrained();
             $table->foreignId('zone_id')->constrained();
             $table->foreignId('political_party_id')->constrained();
-            $table->string('candidate_name');
+            $table->string('candidate_name')->nullable();
             $table->foreignId('program_type_id')->constrained();
             $table->dateTime('program_date_time');
-            $table->string('program_chair');
+            $table->string('program_special_guest')->nullable();
+            $table->string('program_chair')->nullable();
             $table->integer('tentative_attendee_count')->nullable();
             $table->enum('program_status', ['done', 'ongoing', 'upcoming']);
             $table->integer('final_attendee_count')->nullable();

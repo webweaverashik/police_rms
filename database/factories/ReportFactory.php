@@ -38,6 +38,7 @@ class ReportFactory extends Factory
                 'upcoming' => $this->faker->dateTimeBetween('+1 day', '+15 days'),
             },
 
+            'program_special_guest'    => $this->faker->name,
             'program_chair'            => $this->faker->name,
             'tentative_attendee_count' => $this->faker->numberBetween(50, 3000),
             'program_status'           => $status,
