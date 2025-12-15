@@ -24,6 +24,8 @@ class Report extends Model
         'parliament_seat_id',
         'upazila_id',
         'zone_id',
+        'union_id',
+        'location_name',
         'political_party_id',
         'candidate_name',
         'program_type_id',

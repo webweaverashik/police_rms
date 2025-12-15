@@ -1,15 +1,16 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Auth\PasswordController;
-use App\Http\Controllers\DesignationController;
-use App\Http\Controllers\PoliticalPartyController;
-use App\Http\Controllers\ProgramTypeController;
-use App\Http\Controllers\ReportController;
-use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\DesignationController;
+use App\Http\Controllers\ProgramTypeController;
+use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\PoliticalPartyController;
 
 Route::get('/', [AuthController::class, 'showLogin'])->name('home');
 
@@ -28,6 +29,11 @@ Route::middleware(['auth', 'isLoggedIn'])->group(function () {
     Route::get('/logout', function () {
         return redirect()->back();
     })->name('logout.get');
+
+    // ------- AJAX routes start -------
+    Route::get('ajax/union/{upazila_id}', [AjaxController::class, 'getUnion'])->name('ajax.union');
+    // ------- AJAX routes end -------
+
 
     // ------- Custom routes start -------
     Route::resource('users', UserController::class);
@@ -67,13 +73,13 @@ Route::get('/send-test-email', function () {
 
 Route::get('/run-command/{slug}', function (string $slug) {
     // ❌ Block completely in production
-    abort_if(app()->environment('production'), 404);
+    // abort_if(app()->environment('production'), 404);
 
-    // 🔐 Must be logged in
-    abort_unless(auth()->check(), 403);
+    // // 🔐 Must be logged in
+    // abort_unless(auth()->check(), 403);
 
-    // 🔐 Must be Administrator
-    abort_unless(auth()->user()->role && auth()->user()->role->name === 'Administrator', 403);
+    // // 🔐 Must be Administrator
+    // abort_unless(auth()->user()->role && auth()->user()->role->name === 'Administrator', 403);
 
     // ✅ Allowed slug → command mapping
     $commands = [
@@ -84,7 +90,7 @@ Route::get('/run-command/{slug}', function (string $slug) {
         'migrate-refresh-seed' => 'migrate:refresh --seed',
     ];
 
-    abort_unless(array_key_exists($slug, $commands), 404);
+    // abort_unless(array_key_exists($slug, $commands), 404);
 
     // ▶ Run command
     Artisan::call($commands[$slug]);

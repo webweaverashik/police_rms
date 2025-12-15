@@ -26,7 +26,7 @@
         <!--begin::Authentication - Layout -->
         <div class="d-flex flex-column flex-lg-row flex-column-fluid">
             <!--begin::Aside--> <!-- 1st div: Left sidebar (show second on mobile) -->
-            <div class="d-flex flex-lg-row-fluid order-2 order-lg-1 mb-10 mb-lg-0 pb-10 pb-lg-0">
+            <div class="d-flex flex-lg-row-fluid mb-0 pb-0">
                 <!--begin::Content-->
                 <div class="d-flex flex-column flex-center pb-0 pb-lg-10 p-10 w-100">
                     <!--begin::Image--><a href="{{ route('home') }}">
@@ -42,7 +42,7 @@
                     </h1>
                     <!--end::Title-->
                     <!--begin::Text-->
-                    <div class="text-gray-700 fs-4 text-center fw-semibold w-lg-500px">পুলিশ রিপোর্ট ম্যানেজমেন্ট
+                    <div class="text-gray-700 fs-4 text-center fw-semibold w-lg-500px d-none d-md-block">পুলিশ রিপোর্ট ম্যানেজমেন্ট
                         সিস্টেম
                         (PRMS) একটি ওয়েবভিত্তিক রিপোর্টিং অ্যাপ, যা রাজনৈতিক কর্মসূচি ও জনসমাগম সংক্রান্ত তথ্য ডিজিটালি
                         এন্ট্রি, ম্যানেজ ও মনিটর করতে সহায়তা করে। Role-based access, zone-wise data filtering এবং
@@ -54,10 +54,9 @@
             </div>
             <!--begin::Aside-->
             <!--begin::Body--> <!-- 2nd div: Right content (show first on mobile) -->
-            <div
-                class="d-flex flex-column-fluid flex-lg-row-auto justify-content-center justify-content-lg-end p-12 order-1 order-lg-2">
+            <div class="d-flex flex-column-fluid flex-lg-row-auto justify-content-center justify-content-lg-end p-12">
                 <!--begin::Wrapper-->
-                <div class="bg-body d-flex flex-column flex-center rounded-4 w-md-600px p-10">
+                <div class="bg-body d-flex flex-column flex-center rounded-4 w-md-600px p-10 pt-0">
                     <!--begin::Content-->
                     <div class="d-flex flex-center flex-column align-items-stretch h-lg-0 w-350px w-md-400px">
                         <!--begin::Wrapper-->
@@ -69,7 +68,7 @@
                         <!--begin::Footer-->
                         <div class="mb-9">
                             <!--begin::Google link-->
-                            <a href="#"
+                            <a href="https://prms.infinityfreeapp.com/public/prms.apk"
                                 class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
                                 <img alt="Logo"
                                     src="{{ asset('assets/media/svg/brand-logos/google-play-store.svg') }}"

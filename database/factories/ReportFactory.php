@@ -5,6 +5,7 @@ use App\Models\ParliamentSeat;
 use App\Models\PoliticalParty;
 use App\Models\ProgramType;
 use App\Models\Report;
+use App\Models\Union;
 use App\Models\Upazila;
 use App\Models\User;
 use App\Models\Zone;
@@ -27,6 +28,7 @@ class ReportFactory extends Factory
             'parliament_seat_id'       => ParliamentSeat::inRandomOrder()->value('id'),
             'upazila_id'               => Upazila::inRandomOrder()->value('id'),
             'zone_id'                  => Zone::inRandomOrder()->value('id'),
+            'union_id'                 => Union::inRandomOrder()->value('id'),
             'political_party_id'       => PoliticalParty::inRandomOrder()->value('id'),
 
             'candidate_name'           => $this->faker->name,

@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('parliament_seat_id')->constrained();
             $table->foreignId('upazila_id')->constrained();
             $table->foreignId('zone_id')->constrained();
+            $table->foreignId('union_id')->constrained();
+            $table->string('location_name')->nullable();
             $table->foreignId('political_party_id')->constrained();
             $table->string('candidate_name')->nullable();
             $table->foreignId('program_type_id')->constrained();

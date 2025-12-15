@@ -1,14 +1,6 @@
 <?php
 namespace Database\Seeders;
 
-use Database\Seeders\DesignationSeeder;
-use Database\Seeders\ParliamentSeatSeeder;
-use Database\Seeders\PoliticalPartySeeder;
-use Database\Seeders\ProgramTypeSeeder;
-use Database\Seeders\RoleSeeder;
-use Database\Seeders\UpazilaSeeder;
-use Database\Seeders\UserSeeder;
-use Database\Seeders\ZoneSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -27,9 +19,12 @@ class DatabaseSeeder extends Seeder
             DesignationSeeder::class,
             ZoneSeeder::class,
             UpazilaSeeder::class,
+            UnionSeeder::class,
             ParliamentSeatSeeder::class,
             PoliticalPartySeeder::class,
             ProgramTypeSeeder::class,
+
+            // Users
             UserSeeder::class,
 
             // Reports

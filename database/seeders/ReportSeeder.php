@@ -1,12 +1,13 @@
 <?php
 namespace Database\Seeders;
 
-use App\Models\ParliamentSeat;
-use App\Models\PoliticalParty;
-use App\Models\ProgramType;
+use App\Models\Zone;
+use App\Models\Union;
 use App\Models\Report;
 use App\Models\Upazila;
-use App\Models\Zone;
+use App\Models\ProgramType;
+use App\Models\ParliamentSeat;
+use App\Models\PoliticalParty;
 use Illuminate\Database\Seeder;
 
 class ReportSeeder extends Seeder
@@ -18,6 +19,7 @@ class ReportSeeder extends Seeder
             ParliamentSeat::count() === 0 ||
             Upazila::count() === 0 ||
             Zone::count() === 0 ||
+            Union::count() === 0 ||
             PoliticalParty::count() === 0 ||
             ProgramType::count() === 0
         ) {
