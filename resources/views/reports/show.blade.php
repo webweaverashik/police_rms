@@ -105,21 +105,21 @@
                                 <!--begin::Row-->
                                 <tr>
                                     <td class="text-gray-600 fs-4">উপজেলা:</td>
-                                    <td>{{ $report->upazila->name }}</td>
+                                    <td class="fs-4">{{ $report->upazila->name }}</td>
                                 </tr>
                                 <!--end::Row-->
 
                                 <!--begin::Row-->
                                 <tr class="">
                                     <td class="text-gray-600 fs-4">ইউনিয়ন:</td>
-                                    <td>{{ $report->union->name }}</td>
+                                    <td class="fs-4">{{ $report->union->name }}</td>
                                 </tr>
                                 <!--end::Row-->
 
                                 <!--begin::Row-->
                                 <tr class="">
                                     <td class="text-gray-600 fs-4">থানা / জোন:</td>
-                                    <td>{{ $report->zone->name }}</td>
+                                    <td class="fs-4">{{ $report->zone->name }}</td>
                                 </tr>
                                 <!--end::Row-->
 
@@ -159,21 +159,21 @@
                                 <!--begin::Row-->
                                 <tr>
                                     <td class="text-gray-600 fs-4">প্রার্থীর নাম:</td>
-                                    <td>{{ $report->candidate_name }}</td>
+                                    <td class="fs-4">{{ $report->candidate_name }}</td>
                                 </tr>
                                 <!--end::Row-->
 
                                 <!--begin::Row-->
                                 <tr class="">
                                     <td class="text-gray-600 fs-4">প্রধান অতিথি:</td>
-                                    <td>{{ $report->program_special_guest ? $report->program_special_guest : '-' }}</td>
+                                    <td class="fs-4">{{ $report->program_special_guest ? $report->program_special_guest : '-' }}</td>
                                 </tr>
                                 <!--end::Row-->
 
                                 <!--begin::Row-->
                                 <tr class="">
                                     <td class="text-gray-600 fs-4">সভাপতি:</td>
-                                    <td>{{ $report->program_chair ? $report->program_chair : '-' }}</td>
+                                    <td class="fs-4">{{ $report->program_chair ? $report->program_chair : '-' }}</td>
                                 </tr>
                                 <!--end::Row-->
 
@@ -267,10 +267,10 @@
                     <!--begin::Input group-->
                     <div class="row mb-5">
                         <!--begin::Label-->
-                        <label class="col-lg-2 fw-semibold text-muted fs-4">প্রোগ্রামের ধরণ:</label>
+                        <label class="col-6 col-lg-2 fw-semibold text-muted fs-4">প্রোগ্রামের ধরণ:</label>
                         <!--end::Label-->
                         <!--begin::Col-->
-                        <div class="col-lg-10">
+                        <div class="col-6 col-lg-10">
                             <span class="fw-semibold fs-4 text-gray-800">{{ $report->programType->name }}</span>
                         </div>
                         <!--end::Col-->
@@ -280,10 +280,10 @@
                     <!--begin::Input group-->
                     <div class="row mb-5">
                         <!--begin::Label-->
-                        <label class="col-lg-2 fw-semibold text-muted fs-4">প্রোগ্রামের অবস্থা:</label>
+                        <label class="col-6 col-lg-2 fw-semibold text-muted fs-4">প্রোগ্রামের অবস্থা:</label>
                         <!--end::Label-->
                         <!--begin::Col-->
-                        <div class="col-lg-10">
+                        <div class="col-6 col-lg-10">
                             @php
                                 $statusMap = [
                                     'done' => ['label' => 'সম্পন্ন', 'class' => 'badge-success'],
@@ -302,10 +302,10 @@
                     <!--begin::Input group-->
                     <div class="row mb-5">
                         <!--begin::Label-->
-                        <label class="col-lg-2 fw-semibold text-muted fs-4">প্রোগ্রামের তারিখ ও সময়:</label>
+                        <label class="col-6 col-lg-2 fw-semibold text-muted fs-4">প্রোগ্রামের তারিখ ও সময়:</label>
                         <!--end::Label-->
                         <!--begin::Col-->
-                        <div class="col-lg-10">
+                        <div class="col-6 col-lg-10">
                             <span class="fw-semibold fs-4 text-gray-800">
                                 {{ $numto->bnNum($report->program_date_time->format('d')) }}-
                                 {{ $numto->bnNum($report->program_date_time->format('m')) }}-
@@ -322,10 +322,10 @@
                     <!--begin::Input group-->
                     <div class="row mb-5">
                         <!--begin::Label-->
-                        <label class="col-lg-2 fw-semibold text-muted fs-4">প্রোগ্রামের স্থান:</label>
+                        <label class="col-6 col-lg-2 fw-semibold text-muted fs-4">প্রোগ্রামের স্থান:</label>
                         <!--end::Label-->
                         <!--begin::Col-->
-                        <div class="col-lg-10">
+                        <div class="col-6 col-lg-10">
                             <span class="fw-semibold fs-4 text-gray-800">{{ $report->location_name }}</span>
                         </div>
                         <!--end::Col-->
@@ -335,10 +335,10 @@
                     <!--begin::Input group-->
                     <div class="row mb-5">
                         <!--begin::Label-->
-                        <label class="col-lg-2 fw-semibold text-muted fs-4">প্রোগ্রামের ধরণ:</label>
+                        <label class="col-6 col-lg-2 fw-semibold text-muted fs-4">প্রোগ্রামের ধরণ:</label>
                         <!--end::Label-->
                         <!--begin::Col-->
-                        <div class="col-lg-10">
+                        <div class="col-6 col-lg-10">
                             <span class="fw-semibold fs-4 text-gray-800">{{ $report->programType->name }}</span>
                         </div>
                         <!--end::Col-->
@@ -348,10 +348,10 @@
                     <!--begin::Input group-->
                     <div class="row mb-5">
                         <!--begin::Label-->
-                        <label class="col-lg-2 fw-semibold text-muted fs-4">সম্ভাব্য উপস্থিতি:</label>
+                        <label class="col-6 col-lg-2 fw-semibold text-muted fs-4">সম্ভাব্য উপস্থিতি:</label>
                         <!--end::Label-->
                         <!--begin::Col-->
-                        <div class="col-lg-10">
+                        <div class="col-6 col-lg-10">
                             <span
                                 class="fw-semibold fs-4 text-gray-800">{{ $report->tentative_attendee_count ? $numto->bnNum($report->tentative_attendee_count) . ' জন' : '-' }}</span>
                         </div>
@@ -362,10 +362,10 @@
                     <!--begin::Input group-->
                     <div class="row mb-5">
                         <!--begin::Label-->
-                        <label class="col-lg-2 fw-semibold text-muted fs-4">মোট উপস্থিতি:</label>
+                        <label class="col-6 col-lg-2 fw-semibold text-muted fs-4">মোট উপস্থিতি:</label>
                         <!--end::Label-->
                         <!--begin::Col-->
-                        <div class="col-lg-10">
+                        <div class="col-6 col-lg-10">
                             <span
                                 class="fw-semibold fs-4 text-gray-800">{{ $report->final_attendee_count ? $numto->bnNum($report->final_attendee_count) . ' জন' : '-' }}</span>
                         </div>

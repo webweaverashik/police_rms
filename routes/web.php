@@ -19,7 +19,11 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware(['auth', 'isLoggedIn'])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard.admin');
+        if (auth()->user()->role->name === 'Operator') {
+            return view('dashboard.operator');
+        } else {
+            return view('dashboard.admin');
+        }
     })->name('dashboard');
 
     // Only allow POST method for actual logout
@@ -35,6 +39,7 @@ Route::middleware(['auth', 'isLoggedIn'])->group(function () {
     // ------- AJAX routes end -------
 
     // ------- Custom routes start -------
+    Route::get('profile', [UserController::class, 'profile'])->name('profile');
     Route::resource('users', UserController::class);
     Route::resource('designations', DesignationController::class);
     Route::resource('political-parties', PoliticalPartyController::class);

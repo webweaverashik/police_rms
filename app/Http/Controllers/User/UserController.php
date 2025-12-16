@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
+use App\Models\User\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
@@ -37,6 +37,16 @@ class UserController extends Controller
     public function show(string $id)
     {
         //
+    }
+
+    /**
+     * Display the user profile page
+     */
+    public function profile()
+    {
+        $user = User::find(auth()->user()->id);
+
+        return view('users.profile', compact('user'));
     }
 
     /**

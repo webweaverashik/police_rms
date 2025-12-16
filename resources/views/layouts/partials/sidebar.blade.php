@@ -34,7 +34,7 @@
         <!--begin::Menu wrapper-->
         <div id="kt_app_sidebar_menu_wrapper" class="app-sidebar-wrapper">
             <!--begin::Scroll wrapper-->
-            <div id="kt_app_sidebar_menu_scroll" class="scroll-y my-5 mx-3" data-kt-scroll="true"
+            <div id="kt_app_sidebar_menu_scroll" class="scroll-y my-10 mx-3 " data-kt-scroll="true"
                 data-kt-scroll-activate="true" data-kt-scroll-height="auto"
                 data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer"
                 data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px"
@@ -50,7 +50,7 @@
                             <span class="menu-icon">
                                 <i class="ki-outline ki-chart-pie-4 fs-2"></i>
                             </span>
-                            <span class="menu-title">ড্যাশবোর্ড</span>
+                            <span class="menu-title fs-4">ড্যাশবোর্ড</span>
                         </a>
                         <!--end:Dashboard Menu link-->
                     </div>
@@ -63,7 +63,7 @@
                             <span class="menu-icon">
                                 <i class="ki-outline ki-filter-tablet fs-2"></i>
                             </span>
-                            <span class="menu-title">
+                            <span class="menu-title fs-4">
                                 @if (auth()->user()->role->name == 'Operator')
                                     আমার প্রতিবেদন
                                 @else
@@ -75,6 +75,23 @@
                     </div>
                     <!--end: Report Info Menu item-->
 
+                    <!--begin:User Profile Menu item-->
+                    @if (auth()->user()->role->name == 'Operator')
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ route('profile') }}" id="user_profile_menu">
+                                <span class="menu-icon">
+                                    <i class="ki-outline ki-user fs-2"></i>
+                                </span>
+                                <span class="menu-title fs-4">
+                                    আমার প্রোফাইল
+                                </span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                    @endif
+                    <!--end:User Profile Menu item-->
+
 
                     @if (auth()->user()->role->name == 'Administrator')
                         <!--begin:Analytics Info Menu item-->
@@ -84,7 +101,7 @@
                                 <span class="menu-icon">
                                     <i class="ki-outline ki-chart-simple-3 fs-1"></i>
                                 </span>
-                                <span class="menu-title">বিশ্লেষণ ও পরিসংখ্যান</span>
+                                <span class="menu-title fs-4">বিশ্লেষণ ও পরিসংখ্যান</span>
                                 <span class="menu-arrow"></span>
                             </span>
                             <!--end:Menu link-->
@@ -95,7 +112,7 @@
                                 <div class="menu-item">
                                     <a class="menu-link" id="status_report_link" href="#"><span
                                             class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                            class="menu-title">অবস্থা অনুযায়ী রিপোর্ট</span></a>
+                                            class="menu-title fs-4">অবস্থা অনুযায়ী রিপোর্ট</span></a>
                                 </div>
                                 <!--end:Menu item-->
 
@@ -103,7 +120,7 @@
                                 <div class="menu-item">
                                     <a class="menu-link" id="zone_report_link" href="#"><span
                                             class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                            class="menu-title">জোনভিত্তিক সারসংক্ষেপ</span></a>
+                                            class="menu-title fs-4">জোনভিত্তিক সারসংক্ষেপ</span></a>
                                 </div>
                                 <!--end:Menu item-->
 
@@ -111,7 +128,7 @@
                                 <div class="menu-item">
                                     <a class="menu-link" id="program_type_report_link" href="#"><span
                                             class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                            class="menu-title">কর্মসূচি
+                                            class="menu-title fs-4">কর্মসূচি
                                             অনুযায়ী বিশ্লেষণ</span></a>
                                 </div>
                                 <!--end:Menu item-->
@@ -127,7 +144,7 @@
                                 <span class="menu-icon">
                                     <i class="ki-outline ki-map fs-1"></i>
                                 </span>
-                                <span class="menu-title">প্রশাসনিক অধিক্ষেত্র</span>
+                                <span class="menu-title fs-4">প্রশাসনিক অধিক্ষেত্র</span>
                                 <span class="menu-arrow"></span>
                             </span>
                             <!--end:Menu link-->
@@ -136,8 +153,9 @@
                             <div class="menu-sub menu-sub-accordion">
                                 <!--begin:Menu item-->
                                 <div class="menu-item">
-                                    <a class="menu-link" id="zone_link" href="#"><span class="menu-bullet"><span
-                                                class="bullet bullet-dot"></span></span><span class="menu-title">থানা
+                                    <a class="menu-link" id="zone_link" href="#"><span
+                                            class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
+                                            class="menu-title fs-4">থানা
                                             /
                                             জোন</span></a>
                                 </div>
@@ -147,7 +165,7 @@
                                 <div class="menu-item">
                                     <a class="menu-link" id="upazila_link" href="#"><span
                                             class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                            class="menu-title">উপজেলা</span></a>
+                                            class="menu-title fs-4">উপজেলা</span></a>
                                 </div>
                                 <!--end:Menu item-->
 
@@ -155,7 +173,7 @@
                                 <div class="menu-item">
                                     <a class="menu-link" id="parliament_link" href="#"><span
                                             class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                            class="menu-title">সংসদীয় আসন</span></a>
+                                            class="menu-title fs-4">সংসদীয় আসন</span></a>
                                 </div>
                                 <!--end:Menu item-->
                             </div>
@@ -170,7 +188,7 @@
                                 <span class="menu-icon">
                                     <i class="ki-outline ki-information fs-1"></i>
                                 </span>
-                                <span class="menu-title">রাজনৈতিক তথ্য</span>
+                                <span class="menu-title fs-4">রাজনৈতিক তথ্য</span>
                                 <span class="menu-arrow"></span>
                             </span>
                             <!--end:Menu link-->
@@ -182,7 +200,7 @@
                                     <!--begin:Menu link--><a class="menu-link" id="political_party_link"
                                         href="{{ route('political-parties.index') }}"><span class="menu-bullet"><span
                                                 class="bullet bullet-dot"></span></span><span
-                                            class="menu-title">রাজনৈতিক
+                                            class="menu-title fs-4">রাজনৈতিক
                                             দল</span></a>
                                     <!--end:Menu link-->
                                 </div>
@@ -193,7 +211,7 @@
                                     <a class="menu-link" id="program_type_link"
                                         href="{{ route('program-types.index') }}"><span class="menu-bullet"><span
                                                 class="bullet bullet-dot"></span></span><span
-                                            class="menu-title">কর্মসূচির
+                                            class="menu-title fs-4">কর্মসূচির
                                             ধরণ</span></a>
                                 </div>
                                 <!--end:Menu item-->
@@ -212,7 +230,7 @@
                                 <span class="menu-icon">
                                     <i class="ki-outline ki-user-edit fs-1"></i>
                                 </span>
-                                <span class="menu-title">ইউজার ম্যানেজমেন্ট</span>
+                                <span class="menu-title fs-4">ইউজার ম্যানেজমেন্ট</span>
                                 <span class="menu-arrow"></span>
                             </span>
                             <!--end:Menu link-->
@@ -223,7 +241,8 @@
                                 <div class="menu-item">
                                     <!--begin:Menu link--><a class="menu-link" id="user_list_link"
                                         href="{{ route('users.index') }}"><span class="menu-bullet"><span
-                                                class="bullet bullet-dot"></span></span><span class="menu-title">সকল
+                                                class="bullet bullet-dot"></span></span><span
+                                            class="menu-title fs-4">সকল
                                             ইউজার</span></a>
                                     <!--end:Menu link-->
                                 </div>
@@ -233,7 +252,8 @@
                                 <div class="menu-item">
                                     <a class="menu-link" id="designation_link"
                                         href="{{ route('designations.index') }}"><span class="menu-bullet"><span
-                                                class="bullet bullet-dot"></span></span><span class="menu-title">সকল
+                                                class="bullet bullet-dot"></span></span><span
+                                            class="menu-title fs-4">সকল
                                             পদবী</span></a>
                                 </div>
                                 <!--end:Menu item-->
@@ -253,7 +273,7 @@
                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                     class="btn btn-flex flex-center btn-custom btn-danger overflow-hidden text-nowrap px-0 h-40px w-100"
                     data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click" title="সাইন আউট করুন">
-                    <span class="btn-label">
+                    <span class="btn-label fs-4">
                         সাইন আউট
                     </span>
                     <i class="ki-outline ki-document btn-icon fs-2 m-0"></i>

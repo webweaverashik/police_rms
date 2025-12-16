@@ -5,7 +5,7 @@
     <div class="app-container  container-fluid d-flex align-items-stretch justify-content-between "
         id="kt_app_header_container">
         <!--begin::Sidebar mobile toggle-->
-        <div class="d-flex align-items-center d-lg-none ms-n3 me-1 me-md-2" title="Show sidebar menu">
+        <div class="d-flex align-items-center d-lg-none ms-n3 me-1 me-md-2 @if (auth()->user()->role->name == "Operator") d-none @endif">
             <div class="btn btn-icon btn-active-color-primary w-35px h-35px" id="kt_app_sidebar_mobile_toggle">
                 <i class="ki-outline ki-abstract-14 fs-2 fs-md-1"></i>
             </div>
@@ -15,7 +15,7 @@
         <!--begin::Mobile logo-->
         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
             <a href="{{ route('dashboard') }}" class="d-lg-none">
-                <img alt="Logo" src="{{ asset('assets/img/icon.png') }}" class="h-30px" />
+                <img alt="Logo" src="{{ asset('assets/img/logo-light.png') }}" class="h-40px" />
             </a>
         </div>
         <!--end::Mobile logo-->
@@ -596,15 +596,24 @@
                 </div>
                 <!--end::Clear Cache--> --}}
 
+                <!--begin::Reload Button-->
+                <div class="app-navbar-item ms-2 ms-md-4 d-sm-none">
+                    <a href="#" id="reload_button"
+                        data-bs-toggle="tooltip" data-bs-placement="bottom" title="রিলোড করুন"
+                        class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px"><i
+                            class="bi bi-arrow-clockwise fs-2x fs-lg-2"></i></a>
+                </div>
+                <!--end::Reload Button-->
+
                 <!--begin::Theme mode-->
-                <div class="app-navbar-item ms-1 ms-md-4">
+                <div class="app-navbar-item ms-2 ms-md-4">
                     <!--begin::Menu toggle-->
                     <a href="#"
                         class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px"
                         data-kt-menu-trigger="{default:'click', lg: 'hover'}" data-kt-menu-attach="parent"
                         data-kt-menu-placement="bottom-end">
-                        <i class="ki-outline ki-night-day theme-light-show fs-1"></i> <i
-                            class="ki-outline ki-moon theme-dark-show fs-1"></i></a>
+                        <i class="ki-outline ki-night-day theme-light-show fs-2x fs-lg-1"></i> <i
+                            class="ki-outline ki-moon theme-dark-show fs-2x fs-lg-1"></i></a>
                     <!--begin::Menu toggle-->
                     <!--begin::Menu-->
                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-title-gray-700 menu-icon-gray-500 menu-active-bg menu-state-color fw-semibold py-4 fs-base w-150px"
@@ -648,7 +657,7 @@
                 <!--end::Theme mode-->
 
                 <!--begin::User menu-->
-                <div class="app-navbar-item ms-1 ms-md-4" id="kt_header_user_menu_toggle">
+                <div class="app-navbar-item ms-2 ms-md-4" id="kt_header_user_menu_toggle">
                     <!--begin::Menu wrapper-->
                     <div class="cursor-pointer symbol symbol-35px"
                         data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
@@ -685,18 +694,8 @@
 
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
-                            <a href="#" class="menu-link px-5">
+                            <a href="{{ route('profile') }}" class="menu-link px-5">
                                 আমার প্রোফাইল
-                            </a>
-                        </div>
-                        <!--end::Menu item-->
-                        <!--begin::Menu item-->
-                        <div class="menu-item px-5">
-                            <a href="#" class="menu-link px-5">
-                                <span class="menu-text">আমার একটিভিটি</span>
-                                <span class="menu-badge">
-                                    <span class="badge badge-light-danger badge-circle fw-bold fs-7">3</span>
-                                </span>
                             </a>
                         </div>
                         <!--end::Menu item-->
@@ -720,12 +719,12 @@
                 </div>
                 <!--end::User menu-->
                 <!--begin::Header menu toggle-->
-                <div class="app-navbar-item d-lg-none ms-2 me-n2" title="Show header menu">
+                {{-- <div class="app-navbar-item d-lg-none ms-2 me-n2" title="Show header menu">
                     <div class="btn btn-flex btn-icon btn-active-color-primary w-30px h-30px"
                         id="kt_app_header_menu_toggle">
                         <i class="ki-outline ki-element-4 fs-1"></i>
                     </div>
-                </div>
+                </div> --}}
                 <!--end::Header menu toggle-->
                 <!--begin::Aside toggle-->
                 <!--end::Header menu toggle-->

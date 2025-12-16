@@ -6,7 +6,7 @@
         content="পুলিশ রিপোর্ট ম্যানেজমেন্ট সিস্টেম (PRMS) একটি ওয়েবভিত্তিক রিপোর্টিং অ্যাপ, যা রাজনৈতিক কর্মসূচি ও জনসমাগম সংক্রান্ত তথ্য ডিজিটালি এন্ট্রি, ম্যানেজ ও মনিটর করতে সহায়তা করে। Role-based access, zone-wise data filtering এবং structured reporting এর মাধ্যমে এটি দ্রুত, নির্ভুল ও নিরাপদ তথ্য ব্যবস্থাপনা নিশ্চিত করে।" />
     <meta name="keywords"
         content="Police Report Management System, PRMS, police reporting software, political program reporting, law enforcement reporting system, zone wise reporting, role based access control, police dashboard, political meeting report, election program monitoring, government reporting system, Bangladesh police software" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="Police Report Management System (PRMS) | Zone-wise Political Program Reporting">

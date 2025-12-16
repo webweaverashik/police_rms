@@ -92,71 +92,16 @@
             new bootstrap.Tooltip(tooltipTriggerEl);
         });
 
-        // Clear Caches
+        // Reload Button
         document.addEventListener('DOMContentLoaded', function() {
-            const clearBtn = document.getElementById('clear_cache_button');
+            const reloadButton = document.getElementById('reload_button');
 
-            if (!clearBtn) return;
-
-            clearBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-
-                const clearUrl = clearBtn.dataset.url;
-
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: 'This will clear all caches.',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes, clear it!',
-                    cancelButtonText: 'Cancel',
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Show loading
-                        Swal.fire({
-                            title: 'Clearing cache...',
-                            text: 'Please wait a moment.',
-                            allowOutsideClick: false,
-                            didOpen: () => Swal.showLoading(),
-                        });
-
-                        const startTime = Date.now();
-
-                        fetch(clearUrl)
-                            .then(res => res.json())
-                            .then(data => {
-                                const elapsed = Date.now() - startTime;
-                                const minDelay = 1500; // 1.5 seconds minimum wait
-
-                                const waitTime = elapsed < minDelay ? minDelay - elapsed : 0;
-
-                                setTimeout(() => {
-                                    if (data.success) {
-                                        Swal.fire({
-                                            icon: 'success',
-                                            title: 'Cache Cleared!',
-                                            text: 'All caches have been cleared successfully.',
-                                            showConfirmButton: false,
-                                            timer: 2000,
-                                            willClose: () => location.reload()
-                                        });
-                                    } else {
-                                        throw new Error('Cache clear failed');
-                                    }
-                                }, waitTime);
-                            })
-                            .catch(() => {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Error!',
-                                    text: 'Something went wrong while clearing cache.',
-                                });
-                            });
-                    }
+            if (reloadButton) {
+                reloadButton.addEventListener('click', function(e) {
+                    e.preventDefault(); // stop # navigation
+                    window.location.reload(); // reload page
                 });
-            });
+            }
         });
     </script>
     <!--end::Custom Javascript-->

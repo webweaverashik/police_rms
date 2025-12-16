@@ -76,6 +76,42 @@
                                 @endif
 
                                 @yield('content')
+
+                                @if (auth()->user()->role->name == 'Operator')
+                                    <div class="fixed-bottom bg-white shadow-lg border-top py-3 px-4"
+                                        style="z-index: 1000;">
+                                        <div class="d-flex justify-content-around align-items-center">
+
+                                            @php $isHome = request()->routeIs('dashboard'); @endphp
+                                            <a href="{{ route('dashboard') }}"
+                                                class="d-flex flex-column align-items-center text-decoration-none">
+                                                <i
+                                                    class="ki-outline ki-home-2 fs-2 mb-1 {{ $isHome ? 'text-primary' : 'text-gray-500' }}"></i>
+                                                <span
+                                                    class="fs-6 fw-bold {{ $isHome ? 'text-primary' : 'text-gray-500' }}">হোম পেজ</span>
+                                            </a>
+
+                                            @php $isReports = request()->routeIs('reports.*'); @endphp
+                                            <a href="{{ route('reports.index') }}"
+                                                class="d-flex flex-column align-items-center text-decoration-none">
+                                                <i
+                                                    class="ki-outline ki-document fs-2 mb-1 {{ $isReports ? 'text-primary' : 'text-gray-500' }}"></i>
+                                                <span
+                                                    class="fs-6 fw-bold {{ $isReports ? 'text-primary' : 'text-gray-500' }}">আমার প্রতিবেদন</span>
+                                            </a>
+
+                                            @php $isProfile = request()->routeIs('profile'); @endphp
+                                            <a href="{{ route('profile') }}"
+                                                class="d-flex flex-column align-items-center text-decoration-none">
+                                                <i
+                                                    class="ki-outline ki-user fs-2 mb-1 {{ $isProfile ? 'text-primary' : 'text-gray-500' }}"></i>
+                                                <span
+                                                    class="fs-6 fw-bold {{ $isProfile ? 'text-primary' : 'text-gray-500' }}">আমার প্রোফাইল</span>
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <!--end::Content-->
