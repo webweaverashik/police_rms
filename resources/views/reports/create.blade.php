@@ -210,39 +210,6 @@
                         </div>
                     </div>
 
-                    <!-- Program Date & Time -->
-                    <div class="col-lg-4">
-                        <div class="mb-8 fv-row">
-                            <label class="required form-label fs-4">তারিখ ও সময়</label>
-                            <input name="program_date_time" id="program_date_time_picker" placeholder="তারিখ ও সময় সেট করুন"
-                                class="form-control form-control-solid fs-4" required>
-                        </div>
-                    </div>
-
-                    <!-- Tentative Attendee Count -->
-                    <div class="col-lg-4">
-                        <div class="mb-8 fv-row">
-                            <label class="form-label fs-4">সম্ভাব্য উপস্থিতি (জন) <span
-                                    class="text-muted fst-italic">(প্রযোজ্য ক্ষেত্রে)</span></label>
-                            <input type="number" name="tentative_attendee_count"
-                                class="form-control form-control-solid fs-4" placeholder="সম্ভাব্য উপস্থিতি সংখ্যা">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===================== Program Details ===================== -->
-        <div class="card card-flush py-4 mb-7">
-            <div class="card-header">
-                <div class="card-title">
-                    <h2>প্রোগ্রামের বিস্তারিত বিবরণ</h2>
-                </div>
-            </div>
-
-            <div class="card-body pt-0">
-                <div class="row">
-
                     <!-- Program Type -->
                     <div class="col-lg-4">
                         <div class="mb-8 fv-row">
@@ -259,7 +226,59 @@
                             </select>
                         </div>
                     </div>
+                    
+                    <!-- Program Date & Time -->
+                    <div class="col-lg-4">
+                        <div class="mb-8 fv-row">
+                            <label class="required form-label fs-4">তারিখ ও সময়</label>
+                            <input name="program_date_time" id="program_date_time_picker"
+                                placeholder="তারিখ ও সময় সেট করুন" class="form-control form-control-solid fs-4" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Tentative Attendee Count -->
+                    <div class="col-lg-4">
+                        <div class="mb-8 fv-row">
+                            <label class="form-label fs-4">সম্ভাব্য উপস্থিতি (জন) <span
+                                    class="text-muted fst-italic">(প্রযোজ্য ক্ষেত্রে)</span></label>
+                            <input type="number" name="tentative_attendee_count"
+                                class="form-control form-control-solid fs-4" placeholder="সম্ভাব্য উপস্থিতি সংখ্যা">
+                        </div>
+                    </div>
 
+                    <!-- Location -->
+                    <div class="col-lg-4">
+                        <div class="mb-8 fv-row">
+                            <label class="form-label fs-4 required">প্রোগ্রামের স্থান</label>
+                            <input type="text" name="location_name" class="form-control form-control-solid fs-4"
+                                placeholder="প্রোগ্রামের স্থান লিখুন">
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===================== Program Details ===================== -->
+        <div class="card card-flush py-4 mb-7">
+            <div class="card-header">
+                <div class="card-title">
+                    <h2>প্রোগ্রামের বিস্তারিত বিবরণ</h2>
+                </div>
+            </div>
+
+            <div class="card-body pt-0">
+                <div class="row">
+                    <!-- Location -->
+                    <div class="col-lg-5">
+                        <div class="mb-8 fv-row">
+                            <label class="form-label fs-4 required">প্রোগ্রামের বিষয়</label>
+                            <input type="text" name="program_title" class="form-control form-control-solid fs-4"
+                                placeholder="প্রোগ্রামের বিষয় লিখুন">
+                        </div>
+                    </div>
+                    
                     <!-- Program Status -->
                     <div class="col-lg-4">
                         <div class="mb-8 fv-row">
@@ -292,7 +311,7 @@
                     </div>
 
                     <!-- Final Attendee Count -->
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <div class="mb-8 fv-row">
                             <label class="form-label fs-4">মোট উপস্থিতি (জন) <span class="text-muted fst-italic">(প্রযোজ্য
                                     ক্ষেত্রে)</span></label>
@@ -301,11 +320,11 @@
                         </div>
                     </div>
 
-                    <!-- Description -->
+                    <!-- Program Description -->
                     <div class="col-lg-12">
                         <div class="mb-8 fv-row">
                             <label class="form-label fs-4 required">বিস্তারিত বর্ণনা</label>
-                            <textarea name="description" rows="6" class="form-control form-control-solid fs-4"
+                            <textarea name="program_description" rows="6" class="form-control form-control-solid fs-4"
                                 placeholder="প্রোগ্রামের বিস্তারিত লিখুন" required></textarea>
                         </div>
                     </div>
@@ -343,7 +362,6 @@
     <script src="{{ asset('js/reports/create.js') }}"></script>
 
     <script>
-        document.getElementById("report_info_menu").classList.add("here", "show");
-        document.getElementById("add_report_link").classList.add("active");
+        document.getElementById("report_info_menu").classList.add("active");
     </script>
 @endpush

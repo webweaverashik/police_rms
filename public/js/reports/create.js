@@ -91,6 +91,13 @@ var KTCreateReportForm = function () {
                                           },
                                     }
                               },
+                              'location_name': {
+                                    validators: {
+                                          notEmpty: {
+                                                message: 'প্রোগ্রামারের স্থান উল্লেখ করুন'
+                                          },
+                                    }
+                              },
                               'tentative_attendee_count': {
                                     validators: {
                                           greaterThan: {
@@ -121,7 +128,14 @@ var KTCreateReportForm = function () {
                                           }
                                     }
                               },
-                              'description': {
+                              'program_title': {
+                                    validators: {
+                                          notEmpty: {
+                                                message: 'প্রোগ্রামের বিষয় লিখুন।'
+                                          },
+                                    }
+                              },
+                              'program_description': {
                                     validators: {
                                           notEmpty: {
                                                 message: 'প্রোগ্রামের বিস্তারিত লিখুন।'

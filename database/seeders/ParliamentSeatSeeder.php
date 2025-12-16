@@ -1,8 +1,8 @@
 <?php
 namespace Database\Seeders;
 
-use App\Models\ParliamentSeat;
 use Illuminate\Database\Seeder;
+use App\Models\Political\ParliamentSeat;
 
 class ParliamentSeatSeeder extends Seeder
 {
@@ -12,10 +12,10 @@ class ParliamentSeatSeeder extends Seeder
     public function run(): void
     {
         ParliamentSeat::insert([
-            ['name' => '১১১ পটুয়াখালী-১', 'description' => 'মির্জাগঞ্জ উপজেলা, দুমকি উপজেলা এবং পটুয়াখালী সদর উপজেলা'],
-            ['name' => '১১২ পটুয়াখালী-২', 'description' => 'বাউফল উপজেলা ও পটুয়াখালী সদর উপজেলার লোহালিয়া ও কমলাপুর ইউনিয়ন'],
-            ['name' => '১১৩ পটুয়াখালী-৩', 'description' => 'দশমিনা উপজেলা এবং গলাচিপা উপজেলা'],
-            ['name' => '১১৪ পটুয়াখালী-৪', 'description' => 'কলাপাড়া উপজেলা এবং রাঙ্গাবালী উপজেলা'],
+            ['name' => 'পটুয়াখালী-১', 'description' => '১১১ পটুয়াখালী-১ আসনটি মির্জাগঞ্জ উপজেলা, দুমকি উপজেলা এবং পটুয়াখালী সদর উপজেলা নিয়ে গঠিত'],
+            ['name' => 'পটুয়াখালী-২', 'description' => '১১২ পটুয়াখালী-২ আসনটি বাউফল উপজেলা ও পটুয়াখালী সদর উপজেলার লোহালিয়া ও কমলাপুর ইউনিয়ন নিয়ে গঠিত'],
+            ['name' => 'পটুয়াখালী-৩', 'description' => '১১৩ পটুয়াখালী-৩ আসনটি দশমিনা উপজেলা এবং গলাচিপা উপজেলা  নিয়ে গঠিত'],
+            ['name' => 'পটুয়াখালী-৪', 'description' => '১১৪ পটুয়াখালী-৪ আসনটি কলাপাড়া উপজেলা এবং রাঙ্গাবালী উপজেলা  নিয়ে গঠিত'],
         ]);
     }
 }

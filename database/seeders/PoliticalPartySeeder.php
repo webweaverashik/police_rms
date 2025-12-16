@@ -1,8 +1,8 @@
 <?php
 namespace Database\Seeders;
 
-use App\Models\PoliticalParty;
 use Illuminate\Database\Seeder;
+use App\Models\Political\PoliticalParty;
 
 class PoliticalPartySeeder extends Seeder
 {

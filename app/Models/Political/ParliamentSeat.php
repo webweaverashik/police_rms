@@ -1,6 +1,7 @@
 <?php
-namespace App\Models;
+namespace App\Models\Political;
 
+use App\Models\Report\Report;
 use Illuminate\Database\Eloquent\Model;
 
 class ParliamentSeat extends Model

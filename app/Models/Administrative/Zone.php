@@ -1,6 +1,8 @@
 <?php
-namespace App\Models;
+namespace App\Models\Administrative;
 
+use App\Models\User\User;
+use App\Models\Report\Report;
 use Illuminate\Database\Eloquent\Model;
 
 class Zone extends Model

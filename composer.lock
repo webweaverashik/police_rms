@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "67279efd1961585dff599fc4ba041f0a",
+    "content-hash": "3f903a74218b51bc94783cbb3ad08616",
     "packages": [
         {
             "name": "brick/math",
@@ -5903,6 +5903,69 @@
                 "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/v2.4.0"
             },
             "time": "2025-12-02T11:56:42+00:00"
+        },
+        {
+            "name": "tusharkhan/banglafaker",
+            "version": "2.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tusharkhan/banglafaker.git",
+                "reference": "32549ef9b6ef88ed3ffbfc36760ede85cc3342a7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tusharkhan/banglafaker/zipball/32549ef9b6ef88ed3ffbfc36760ede85cc3342a7",
+                "reference": "32549ef9b6ef88ed3ffbfc36760ede85cc3342a7",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^9.48|^10.0|^11.0|^12.0",
+                "php": "^7.4|^8.0|^8.3"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^7.19|^8.0|^9.0",
+                "phpunit/phpunit": "^9.5|^10.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Banglafaker": "\\Tusharkhan\\BanglaFaker\\BanglaFakerFacade"
+                    },
+                    "providers": [
+                        "\\Tusharkhan\\BanglaFaker\\BanglaFakerServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Tusharkhan\\BanglaFaker\\": "src",
+                    "Tusharkhan\\BanglaFaker\\Lib\\": "Lib"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tushar Khan",
+                    "email": "tushar.khan0122@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Bangla tusharKhan/Faker Library for Laravel",
+            "homepage": "https://github.com/tusharkhan/banglafaker",
+            "keywords": [
+                "banglafaker",
+                "laravel-bangla-faker",
+                "tusharkhan"
+            ],
+            "support": {
+                "issues": "https://github.com/tusharkhan/banglafaker/issues",
+                "source": "https://github.com/tusharkhan/banglafaker/tree/2.1.1"
+            },
+            "time": "2025-06-01T12:05:42+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

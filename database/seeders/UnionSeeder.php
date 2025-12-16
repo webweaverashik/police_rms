@@ -2,9 +2,9 @@
 namespace Database\Seeders;
 
 use Carbon\Carbon;
-use App\Models\Union;
-use App\Models\Upazila;
 use Illuminate\Database\Seeder;
+use App\Models\Administrative\Union;
+use App\Models\Administrative\Upazila;
 
 class UnionSeeder extends Seeder
 {

@@ -1,16 +1,16 @@
 <?php
 
+use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\Political\PoliticalPartyController;
+use App\Http\Controllers\Report\ProgramTypeController;
+use App\Http\Controllers\Report\ReportController;
+use App\Http\Controllers\User\DesignationController;
+use App\Http\Controllers\User\UserController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\AjaxController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\ReportController;
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\DesignationController;
-use App\Http\Controllers\ProgramTypeController;
-use App\Http\Controllers\Auth\PasswordController;
-use App\Http\Controllers\PoliticalPartyController;
 
 Route::get('/', [AuthController::class, 'showLogin'])->name('home');
 
@@ -33,7 +33,6 @@ Route::middleware(['auth', 'isLoggedIn'])->group(function () {
     // ------- AJAX routes start -------
     Route::get('ajax/union/{upazila_id}', [AjaxController::class, 'getUnion'])->name('ajax.union');
     // ------- AJAX routes end -------
-
 
     // ------- Custom routes start -------
     Route::resource('users', UserController::class);

@@ -1,10 +1,15 @@
 <?php
-namespace App\Models;
+namespace App\Models\User;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\User\Role;
+use App\Models\Report\Report;
+use App\Models\User\Designation;
+use App\Models\User\LoginActivity;
+use App\Models\Administrative\Zone;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -99,9 +104,9 @@ class User extends Authenticatable
     }
 
     /** Super Admin shortcut */
-    public function isSuperAdmin(): bool
+    public function isAdmin(): bool
     {
-        return $this->hasRole('super_admin');
+        return $this->hasRole('অ্যাডমিন');
     }
 
     /** Check active status */

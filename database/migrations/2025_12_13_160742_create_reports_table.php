@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('upazila_id')->constrained();
             $table->foreignId('zone_id')->constrained();
             $table->foreignId('union_id')->constrained();
-            $table->string('location_name')->nullable();
+            $table->string('location_name');
             $table->foreignId('political_party_id')->constrained();
             $table->string('candidate_name')->nullable();
             $table->foreignId('program_type_id')->constrained();
@@ -27,7 +27,8 @@ return new class extends Migration
             $table->integer('tentative_attendee_count')->nullable();
             $table->enum('program_status', ['done', 'ongoing', 'upcoming']);
             $table->integer('final_attendee_count')->nullable();
-            $table->text('description')->nullable();
+            $table->text('program_title');
+            $table->text('program_description');
             $table->foreignId('created_by')->constrained('users')->restrictOnDelete();
             $table->timestamps();
         });

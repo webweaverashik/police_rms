@@ -158,7 +158,7 @@
                     </div>
                     <!--end::Export dropdown-->
 
-                    @if (auth()->user()->role->name !== 'None')
+                    @if (auth()->user()->role->name == 'Operator')
                         <!--begin::Add subscription-->
                         <a href="{{ route('reports.create') }}" class="btn btn-primary">
                             <i class="ki-outline ki-plus fs-2"></i>নতুন রিপোর্ট</a>
@@ -182,6 +182,7 @@
                         <th>#</th>
                         <th>সংসদীয় আসন</th>
                         <th>উপজেলা</th>
+                        <th>ইউনিয়ন</th>
                         <th>থানা/জোন</th>
                         <th>দলের নাম</th>
                         <th>প্রার্থীর নাম</th>
@@ -192,56 +193,95 @@
                         <th>সম্ভাব্য উপস্থিতি</th>
                         <th>প্রোগ্রামের অবস্থা</th>
                         <th>মোট উপস্থিতি</th>
-                        <th>প্রতিবেদক</th>
+                        <th class="@if (auth()->user()->role->name == 'Operator') d-none @endif">প্রতিবেদক</th>
                         <th class="not-export w-100px">##</th>
                     </tr>
                 </thead>
                 <tbody class="text-gray-800 fw-semibold">
+                    @php
+                        use Rakibhstu\Banglanumber\NumberToBangla;
+
+                        $numto = new NumberToBangla();
+                    @endphp
+
                     @foreach ($reports as $report)
                         <tr>
-                            <td>{{ $loop->index + 1 }}</td>
+                            <td>{{ $numto->bnNum($loop->index + 1) }}</td>
                             <td>{{ $report->parliamentSeat->name }}</td>
                             <td>{{ $report->upazila->name }}</td>
+                            <td>{{ $report->union->name }}</td>
                             <td>{{ $report->zone->name }}</td>
                             <td>{{ $report->politicalParty->name }}</td>
                             <td>{{ $report->candidate_name }}</td>
-                            <td>{{ $report->program_special_guest }}</td>
-                            <td>{{ $report->program_chair }}</td>
+                            <td>{{ $report->program_special_guest ? $report->program_special_guest : '-' }}</td>
+                            <td>{{ $report->program_chair ? $report->program_chair : '-' }}</td>
                             <td>{{ $report->programType->name }}</td>
                             <td>
-                                {{ $report->program_date_time }}
+                                {{ $numto->bnNum($report->program_date_time->format('d')) }}-
+                                {{ $numto->bnNum($report->program_date_time->format('m')) }}-
+                                {{ $numto->bnNum($report->program_date_time->format('Y')) }},
+                                {{ $numto->bnNum($report->program_date_time->format('h')) }}:
+                                {{ $numto->bnNum($report->program_date_time->format('i')) }}
+                                {{ $report->program_date_time->format('A') }}
                             </td>
-                            <td>{{ $report->tentative_attendee_count }}</td>
-                            <td>{{ $report->program_status }}</td>
-                            <td>{{ $report->final_attendee_count }}</td>
-                            <td>{{ $report->createdBy->name }}, {{ $report->createdBy->designation->name }}</td>
+
                             <td>
-                                <a href="#" class="btn btn-light btn-active-light-primary btn-sm"
-                                    data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">একশন
-                                    <i class="ki-outline ki-down fs-5 m-0"></i></a>
-                                <!--begin::Menu-->
-                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-175px py-4"
-                                    data-kt-menu="true">
+                                {{ $report->tentative_attendee_count ? $numto->bnNum($report->tentative_attendee_count) : '-' }}
+                            </td>
+                            <td>
+                                @php
+                                    $statusMap = [
+                                        'done' => ['label' => 'সম্পন্ন', 'class' => 'badge-success'],
+                                        'ongoing' => ['label' => 'চলমান', 'class' => 'badge-danger'],
+                                        'upcoming' => ['label' => 'আসন্ন', 'class' => 'badge-info'],
+                                    ];
+                                    $status = $statusMap[$report->program_status] ?? null;
+                                @endphp
 
-                                    <div class="menu-item px-3">
-                                        <a href="{{ route('reports.show', $report->id) }}" title="প্রতিবেদনটি দেখুন"
-                                            class="menu-link text-hover-primary px-3" target="_blank"><i
-                                                class="ki-outline ki-eye fs-3 me-2"></i> দেখুন</a>
-                                    </div>
+                                <span class="badge {{ $status['class'] }}">{{ $status['label'] }}</span>
+                            </td>
 
-                                    <div class="menu-item px-3">
-                                        <a href="#" title="প্রতিবেদনটি সংশোধন করুন"
-                                            class="menu-link text-hover-primary px-3"><i class="ki-outline ki-pencil fs-3 me-2"></i>
-                                            সংশোধন</a>
-                                    </div>
+                            <td>
+                                {{ $report->final_attendee_count ? $numto->bnNum($report->final_attendee_count) : '-' }}
+                            </td>
+                            <td class="@if (auth()->user()->role->name == 'Operator') d-none @endif">{{ $report->createdBy->name }},
+                                {{ $report->createdBy->designation->name }}</td>
+                            <td>
+                                @if (auth()->user()->role->name !== 'Operator')
+                                    <a href="#" class="btn btn-light btn-active-light-primary btn-sm"
+                                        data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">একশন
+                                        <i class="ki-outline ki-down fs-5 m-0"></i></a>
+                                    <!--begin::Menu-->
+                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-175px py-4"
+                                        data-kt-menu="true">
 
-                                    <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3 text-hover-danger delete-report" title="প্রতিবেদনটি মুছে ফেলুন"
-                                            data-report-id="{{ $report->id }}"><i class="ki-outline ki-trash fs-3 me-2"></i>
-                                            মুছুন</a>
+                                        <div class="menu-item px-3">
+                                            <a href="{{ route('reports.show', $report->id) }}" title="প্রতিবেদনটি দেখুন"
+                                                class="menu-link text-hover-primary px-3" target="_blank"><i
+                                                    class="ki-outline ki-eye fs-3 me-2"></i> দেখুন</a>
+                                        </div>
+
+                                        <div class="menu-item px-3">
+                                            <a href="#" title="প্রতিবেদনটি সংশোধন করুন"
+                                                class="menu-link text-hover-primary px-3"><i
+                                                    class="ki-outline ki-pencil fs-3 me-2"></i>
+                                                সংশোধন</a>
+                                        </div>
+
+                                        <div class="menu-item px-3">
+                                            <a href="#" class="menu-link px-3 text-hover-danger delete-report"
+                                                title="প্রতিবেদনটি মুছে ফেলুন" data-report-id="{{ $report->id }}"><i
+                                                    class="ki-outline ki-trash fs-3 me-2"></i>
+                                                মুছুন</a>
+                                        </div>
                                     </div>
-                                </div>
-                                <!--end::Menu-->
+                                    <!--end::Menu-->
+                                @else
+                                    <a href="{{ route('reports.show', $report->id) }}" title="প্রতিবেদনটি দেখুন" target="_blank"
+                                        class="btn btn-icon text-hover-primary w-30px h-30px edit-teacher me-2">
+                                        <i class="ki-outline ki-eye fs-2"></i>
+                                    </a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -257,14 +297,12 @@
 
 @push('vendor-js')
     <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
 @endpush
 
 @push('page-js')
     <script src="{{ asset('js/reports/index.js') }}"></script>
 
     <script>
-        document.getElementById("report_info_menu").classList.add("here", "show");
-        document.getElementById("my_report_link").classList.add("active");
+        document.getElementById("report_info_menu").classList.add("active");
     </script>
 @endpush

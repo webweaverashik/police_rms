@@ -1,6 +1,7 @@
 <?php
-namespace App\Models;
+namespace App\Models\Report;
 
+use App\Models\Report\Report;
 use Illuminate\Database\Eloquent\Model;
 
 class ProgramType extends Model

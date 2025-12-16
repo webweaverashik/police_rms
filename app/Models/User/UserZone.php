@@ -1,6 +1,8 @@
 <?php
-namespace App\Models;
+namespace App\Models\User;
 
+use App\Models\Administrative\Zone;
+use App\Models\User\User;
 use Illuminate\Database\Eloquent\Model;
 
 class UserZone extends Model

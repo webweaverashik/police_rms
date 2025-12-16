@@ -33,13 +33,22 @@
                 <!--begin::Search-->
                 <div class="app-navbar-item ms-1 ms-md-4">
                     <span class="badge badge-lg badge-info fs-5">
-                        {{ auth()->user()->role->name }}
+                        @php
+                            $roles = [
+                                'Administrator' => 'অ্যাডমিন',
+                                'Viewer' => 'পর্যবেক্ষক',
+                                'Operator' => 'তৈরিকারি',
+                            ];
+                        @endphp
+
+                        {{ $roles[auth()->user()->role->name] ?? auth()->user()->role->name }}
                     </span>
+
                 </div>
                 <!--end::Search-->
 
                 <!--begin::Notifications-->
-                <div class="app-navbar-item ms-1 ms-md-4">
+                {{-- <div class="app-navbar-item ms-1 ms-md-4">
                     <!--begin::Menu- wrapper-->
                     <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px"
                         data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
@@ -575,7 +584,7 @@
                     <!--end::Menu-->
 
                     <!--end::Menu wrapper-->
-                </div>
+                </div> --}}
                 <!--end::Notifications-->
 
                 {{-- <!--begin::Clear Cache-->
@@ -602,8 +611,7 @@
                         data-kt-menu="true" data-kt-element="theme-mode-menu">
                         <!--begin::Menu item-->
                         <div class="menu-item px-3 my-0">
-                            <a href="#" class="menu-link px-3 py-2" data-kt-element="mode"
-                                data-kt-value="light">
+                            <a href="#" class="menu-link px-3 py-2" data-kt-element="mode" data-kt-value="light">
                                 <span class="menu-icon" data-kt-element="icon">
                                     <i class="ki-outline ki-night-day fs-2"></i> </span>
                                 <span class="menu-title">
@@ -614,8 +622,7 @@
                         <!--end::Menu item-->
                         <!--begin::Menu item-->
                         <div class="menu-item px-3 my-0">
-                            <a href="#" class="menu-link px-3 py-2" data-kt-element="mode"
-                                data-kt-value="dark">
+                            <a href="#" class="menu-link px-3 py-2" data-kt-element="mode" data-kt-value="dark">
                                 <span class="menu-icon" data-kt-element="icon">
                                     <i class="ki-outline ki-moon fs-2"></i> </span>
                                 <span class="menu-title">
@@ -626,8 +633,7 @@
                         <!--end::Menu item-->
                         <!--begin::Menu item-->
                         <div class="menu-item px-3 my-0">
-                            <a href="#" class="menu-link px-3 py-2" data-kt-element="mode"
-                                data-kt-value="system">
+                            <a href="#" class="menu-link px-3 py-2" data-kt-element="mode" data-kt-value="system">
                                 <span class="menu-icon" data-kt-element="icon">
                                     <i class="ki-outline ki-screen fs-2"></i> </span>
                                 <span class="menu-title">
@@ -665,9 +671,8 @@
                                 <div class="d-flex flex-column">
                                     <div class="fw-bold d-flex align-items-center fs-5">
                                         {{ auth()->user()->name }}
-                                        {{-- <span
-                                            class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">{{ auth()->user()->role->name }}</span> --}}
                                     </div>
+                                    <span class="fw-semibold text-gray-700 fs-6">{{ auth()->user()->designation->name }}</span>
                                     <span class="fw-semibold text-muted fs-7">
                                         {{ auth()->user()->email }} </span>
                                 </div>

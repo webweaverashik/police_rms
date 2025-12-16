@@ -1,8 +1,8 @@
 <?php
 namespace Database\Seeders;
 
-use App\Models\Upazila;
 use Illuminate\Database\Seeder;
+use App\Models\Administrative\Upazila;
 
 class UpazilaSeeder extends Seeder
 {

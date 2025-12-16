@@ -52,7 +52,6 @@
 
 @push('page-js')
     <script>
-        document.getElementById("report_info_menu").classList.add("here", "show");
-        document.getElementById("my_report_link").classList.add("active");
+        document.getElementById("report_info_menu").classList.add("active");
     </script>
 @endpush

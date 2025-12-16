@@ -1,15 +1,16 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Report;
 
-use App\Models\ParliamentSeat;
-use App\Models\PoliticalParty;
-use App\Models\ProgramType;
-use App\Models\Report;
-use App\Models\Upazila;
-use App\Models\Zone;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\Report\Report;
+use App\Models\Report\ProgramType;
 use Illuminate\Support\Facades\DB;
+use App\Models\Administrative\Zone;
+use App\Http\Controllers\Controller;
+use App\Models\Administrative\Upazila;
+use App\Models\Political\ParliamentSeat;
+use App\Models\Political\PoliticalParty;
 
 class ReportController extends Controller
 {
@@ -19,12 +20,12 @@ class ReportController extends Controller
     public function index()
     {
         if (auth()->user()->role->name == 'Operator') {
-            $reports = Report::with(['upazila', 'zone', 'politicalParty', 'parliamentSeat', 'programType', 'createdBy:id,name,designation_id', 'createdBy.designation:id,name'])
+            $reports = Report::with(['upazila', 'zone', 'union', 'politicalParty', 'parliamentSeat', 'programType', 'createdBy:id,name,designation_id', 'createdBy.designation:id,name'])
                 ->where('created_by', auth()->user()->id)
                 ->latest('created_at')
                 ->get();
         } else {
-            $reports = Report::with(['upazila', 'zone', 'politicalParty', 'parliamentSeat', 'programType', 'createdBy:id,name,designation_id', 'createdBy.designation:id,name'])
+            $reports = Report::with(['upazila', 'zone', 'union', 'politicalParty', 'parliamentSeat', 'programType', 'createdBy:id,name,designation_id', 'createdBy.designation:id,name'])
                 ->latest('created_at')
                 ->get();
         }
@@ -37,6 +38,10 @@ class ReportController extends Controller
      */
     public function create()
     {
+        if (auth()->user()->role->name !== 'Operator') {
+            return redirect()->route('reports.index')->with('warning', 'আপনার রিপোর্ট তৈরির অনুমতি নেই।');
+        }
+
         $upazilas         = Upazila::all();
         $zones            = Zone::all();
         $politicalParties = PoliticalParty::all();
@@ -69,11 +74,13 @@ class ReportController extends Controller
                 'program_special_guest'    => $request->program_special_guest,
                 'program_chair'            => $request->program_chair,
                 'program_date_time'        => $programDateTime,
+                'location_name'            => $request->location_name,
                 'tentative_attendee_count' => $request->tentative_attendee_count ?: null,
                 'program_type_id'          => $request->program_type_id,
                 'program_status'           => $request->program_status,
                 'final_attendee_count'     => $request->final_attendee_count ?: null,
-                'description'              => $request->description,
+                'program_title'            => $request->program_title,
+                'program_description'      => $request->program_description,
                 'created_by'               => auth()->id(),
             ]);
 

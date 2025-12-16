@@ -1,6 +1,8 @@
 <?php
-namespace App\Models;
+namespace App\Models\Administrative;
 
+use App\Models\Report\Report;
+use App\Models\Administrative\Upazila;
 use Illuminate\Database\Eloquent\Model;
 
 class Union extends Model

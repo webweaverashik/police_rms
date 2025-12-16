@@ -2,8 +2,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\LoginActivity;
-use App\Models\User;
+use App\Models\User\LoginActivity;
+use App\Models\User\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -74,7 +74,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message'  => 'সাইন ইন সফল হয়েছে।',
-            'redirect' => route('dashboard'),
+            'redirect' => route('reports.index'),
         ]);
     }
 

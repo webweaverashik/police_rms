@@ -1,8 +1,8 @@
 <?php
 namespace Database\Seeders;
 
-use App\Models\Zone;
 use Illuminate\Database\Seeder;
+use App\Models\Administrative\Zone;
 
 class ZoneSeeder extends Seeder
 {

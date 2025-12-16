@@ -1,10 +1,10 @@
 <?php
 namespace Database\Seeders;
 
-use App\Models\Designation;
-use App\Models\Role;
-use App\Models\User;
-use App\Models\Zone;
+use App\Models\Administrative\Zone;
+use App\Models\User\Designation;
+use App\Models\User\Role;
+use App\Models\User\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -26,14 +26,14 @@ class UserSeeder extends Seeder
         | Designations
         |--------------------------------------------------------------------------
         */
-        $sp        = Designation::where('name', 'Superintendent of Police (SP)')->firstOrFail();
-        $adc       = Designation::where('name', 'Additional Superintendent of Police (ADC)')->firstOrFail();
-        $uno       = Designation::where('name', 'Upazila Nirbahi Officer (UNO)')->firstOrFail();
-        $oc        = Designation::where('name', 'Officer in Charge (OC)')->firstOrFail();
-        $inspector = Designation::where('name', 'Inspector')->firstOrFail();
-        $si        = Designation::where('name', 'Sub Inspector (SI)')->firstOrFail();
-        $asi       = Designation::where('name', 'Assistant Sub Inspector (ASI)')->firstOrFail();
-        $constable = Designation::where('name', 'Constable')->firstOrFail();
+        $sp        = Designation::where('name', 'পুলিশ সুপার (এসপি)')->firstOrFail();
+        $adc       = Designation::where('name', 'অতিরিক্ত পুলিশ সুপার')->firstOrFail();
+        $uno       = Designation::where('name', 'উপজেলা নির্বাহী কর্মকর্তা')->firstOrFail();
+        $oc        = Designation::where('name', 'অফিসার ইনচার্জ')->firstOrFail();
+        $inspector = Designation::where('name', 'ইন্সপেক্টর')->firstOrFail();
+        $si        = Designation::where('name', 'সাব-ইন্সপেক্টর')->firstOrFail();
+        $asi       = Designation::where('name', 'অ্যাসিস্ট্যান্ট সাব-ইন্সপেক্টর')->firstOrFail();
+        $constable = Designation::where('name', 'কনস্টেবল')->firstOrFail();
 
         /*
         |--------------------------------------------------------------------------
@@ -47,7 +47,7 @@ class UserSeeder extends Seeder
         $dumki           = Zone::where('name', 'দুমকি জোন')->firstOrFail();
         $patuakhaliSadar = Zone::where('name', 'পটুয়াখালী সদর জোন')->firstOrFail();
         $bauphal         = Zone::where('name', 'বাউফল জোন')->firstOrFail();
-        $mahpur          = Zone::where('name', 'মহিপুর জোন')->firstOrFail();
+        $mohipur         = Zone::where('name', 'মহিপুর জোন')->firstOrFail();
         $mirzaganj       = Zone::where('name', 'মির্জাগঞ্জ জোন')->firstOrFail();
         $rangabali       = Zone::where('name', 'রাঙ্গাবালী জোন')->firstOrFail();
 
@@ -59,7 +59,7 @@ class UserSeeder extends Seeder
         $admin = User::updateOrCreate(
             ['email' => 'admin@prms.gov'],
             [
-                'name'           => 'System Administrator',
+                'name'           => 'আইসিটি অ্যাডমিন',
                 'designation_id' => $sp->id,
                 'role_id'        => $adminRole->id,
                 'mobile_no'      => '01700000000',
@@ -77,7 +77,7 @@ class UserSeeder extends Seeder
             $dumki->id,
             $patuakhaliSadar->id,
             $bauphal->id,
-            $mahpur->id,
+            $mohipur->id,
             $mirzaganj->id,
             $rangabali->id,
         ]);
@@ -92,7 +92,7 @@ class UserSeeder extends Seeder
         $spUser = User::updateOrCreate(
             ['email' => 'sp@prms.gov'],
             [
-                'name'           => 'District SP',
+                'name'           => 'মোঃ আবু ইউসুফ',
                 'designation_id' => $sp->id,
                 'role_id'        => $viewerRole->id,
                 'mobile_no'      => '01700000001',
@@ -106,7 +106,7 @@ class UserSeeder extends Seeder
         $adcUser = User::updateOrCreate(
             ['email' => 'adc@prms.gov'],
             [
-                'name'           => 'Additional SP',
+                'name'           => 'মোঃ অপু সরোয়ার',
                 'designation_id' => $adc->id,
                 'role_id'        => $viewerRole->id,
                 'mobile_no'      => '01700000002',
@@ -120,7 +120,7 @@ class UserSeeder extends Seeder
         $unoUser = User::updateOrCreate(
             ['email' => 'uno@prms.gov'],
             [
-                'name'           => 'UNO',
+                'name'           => 'কাউছার হামিদ',
                 'designation_id' => $uno->id,
                 'role_id'        => $viewerRole->id,
                 'mobile_no'      => '01700000003',
@@ -134,7 +134,7 @@ class UserSeeder extends Seeder
         $ocUser = User::updateOrCreate(
             ['email' => 'oc@prms.gov'],
             [
-                'name'           => 'Officer in Charge',
+                'name'           => 'মো: সৈয়দুজ্জামান',
                 'designation_id' => $oc->id,
                 'role_id'        => $viewerRole->id,
                 'mobile_no'      => '01700000004',
@@ -154,7 +154,7 @@ class UserSeeder extends Seeder
         $inspectorUser = User::updateOrCreate(
             ['email' => 'inspector@prms.gov'],
             [
-                'name'           => 'Inspector',
+                'name'           => 'মোঃ মাসুদ হোসেন',
                 'designation_id' => $inspector->id,
                 'role_id'        => $operatorRole->id,
                 'mobile_no'      => '01700000005',
@@ -168,7 +168,7 @@ class UserSeeder extends Seeder
         $siUser = User::updateOrCreate(
             ['email' => 'si@prms.gov'],
             [
-                'name'           => 'Sub Inspector',
+                'name'           => 'আব্দুর রহিম মৃধা',
                 'designation_id' => $si->id,
                 'role_id'        => $operatorRole->id,
                 'mobile_no'      => '01700000006',
@@ -182,7 +182,7 @@ class UserSeeder extends Seeder
         $asiUser = User::updateOrCreate(
             ['email' => 'asi@prms.gov'],
             [
-                'name'           => 'Assistant Sub Inspector',
+                'name'           => 'মোঃ হুমায়ুন কবির',
                 'designation_id' => $asi->id,
                 'role_id'        => $operatorRole->id,
                 'mobile_no'      => '01700000007',
@@ -190,13 +190,13 @@ class UserSeeder extends Seeder
                 'is_active'      => true,
             ]
         );
-        $asiUser->zones()->sync([$mahpur->id]);
+        $asiUser->zones()->sync([$mohipur->id]);
 
         // Constable
         $constableUser = User::updateOrCreate(
             ['email' => 'constable@prms.gov'],
             [
-                'name'           => 'Constable',
+                'name'           => 'মোঃ নওশের আলী',
                 'designation_id' => $constable->id,
                 'role_id'        => $operatorRole->id,
                 'mobile_no'      => '01700000008',

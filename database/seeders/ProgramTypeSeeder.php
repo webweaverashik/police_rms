@@ -1,8 +1,8 @@
 <?php
 namespace Database\Seeders;
 
-use App\Models\ProgramType;
 use Illuminate\Database\Seeder;
+use App\Models\Report\ProgramType;
 
 class ProgramTypeSeeder extends Seeder
 {

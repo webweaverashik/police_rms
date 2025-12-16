@@ -1,14 +1,14 @@
 <?php
 namespace Database\Seeders;
 
-use App\Models\Zone;
-use App\Models\Union;
-use App\Models\Report;
-use App\Models\Upazila;
-use App\Models\ProgramType;
-use App\Models\ParliamentSeat;
-use App\Models\PoliticalParty;
+use App\Models\Report\Report;
 use Illuminate\Database\Seeder;
+use App\Models\Report\ProgramType;
+use App\Models\Administrative\Zone;
+use App\Models\Administrative\Union;
+use App\Models\Administrative\Upazila;
+use App\Models\Political\ParliamentSeat;
+use App\Models\Political\PoliticalParty;
 
 class ReportSeeder extends Seeder
 {
@@ -31,7 +31,7 @@ class ReportSeeder extends Seeder
 
         // Seed realistic reports
         Report::factory()
-            ->count(60)
+            ->count(50)
             ->create();
     }
 }

@@ -4,7 +4,7 @@
     <!--begin::Logo-->
     <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
         <!--begin::Logo image-->
-        <a href="{{ route('dashboard') }}">
+        <a href="{{ route('home') }}">
             <img alt="Logo" src="{{ asset('assets/img/logo-dark.png') }}" class="h-50px app-sidebar-logo-default" />
             <img alt="Logo" src="{{ asset('assets/img/icon.png') }}" class="h-20px app-sidebar-logo-minimize" />
         </a>
@@ -57,211 +57,191 @@
                     <!--end:Dashboard Menu item-->
 
                     <!--begin:Report Info Menu item-->
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="report_info_menu">
+                    <div class="menu-item">
                         <!--begin:Menu link-->
-                        <span class="menu-link">
+                        <a class="menu-link" href="{{ route('reports.index') }}" id="report_info_menu">
                             <span class="menu-icon">
-                                <i class="ki-outline ki-filter-tablet fs-1"></i>
+                                <i class="ki-outline ki-filter-tablet fs-2"></i>
                             </span>
-                            <span class="menu-title">প্রতিবেদন</span>
-                            <span class="menu-arrow"></span>
-                        </span>
+                            <span class="menu-title">
+                                @if (auth()->user()->role->name == 'Operator')
+                                    আমার প্রতিবেদন
+                                @else
+                                    সকল প্রতিবেদন
+                                @endif
+                            </span>
+                        </a>
                         <!--end:Menu link-->
-
-                        <!--begin:Menu sub-->
-                        <div class="menu-sub menu-sub-accordion">
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <a class="menu-link" id="add_report_link" href="{{ route('reports.create') }}"><span
-                                        class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                        class="menu-title">নতুন
-                                        প্রতিবেদন</span></a>
-                            </div>
-                            <!--end:Menu item-->
-
-
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <a class="menu-link" id="my_report_link" href="{{ route('reports.index') }}"><span
-                                        class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                        class="menu-title">
-                                        @if (auth()->user()->role->name == 'Operator')
-                                            আমার প্রতিবেদন
-                                        @else
-                                            সকল প্রতিবেদন
-                                        @endif
-                                    </span></a>
-                            </div>
-                            <!--end:Menu item-->
-
-                        </div>
-                        <!--end:Menu sub-->
                     </div>
                     <!--end: Report Info Menu item-->
 
 
-                    <!--begin:Analytics Info Menu item-->
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="analytics_info_menu">
-                        <!--begin:Menu link-->
-                        <span class="menu-link">
-                            <span class="menu-icon">
-                                <i class="ki-outline ki-chart-simple-3 fs-1"></i>
+                    @if (auth()->user()->role->name !== 'Operator')
+                        <!--begin:Analytics Info Menu item-->
+                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="analytics_info_menu">
+                            <!--begin:Menu link-->
+                            <span class="menu-link">
+                                <span class="menu-icon">
+                                    <i class="ki-outline ki-chart-simple-3 fs-1"></i>
+                                </span>
+                                <span class="menu-title">বিশ্লেষণ ও পরিসংখ্যান</span>
+                                <span class="menu-arrow"></span>
                             </span>
-                            <span class="menu-title">বিশ্লেষণ ও পরিসংখ্যান</span>
-                            <span class="menu-arrow"></span>
-                        </span>
-                        <!--end:Menu link-->
+                            <!--end:Menu link-->
 
-                        <!--begin:Menu sub-->
-                        <div class="menu-sub menu-sub-accordion">
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <a class="menu-link" id="status_report_link" href="#"><span
-                                        class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                        class="menu-title">অবস্থা অনুযায়ী রিপোর্ট</span></a>
-                            </div>
-                            <!--end:Menu item-->
+                            <!--begin:Menu sub-->
+                            <div class="menu-sub menu-sub-accordion">
+                                <!--begin:Menu item-->
+                                <div class="menu-item">
+                                    <a class="menu-link" id="status_report_link" href="#"><span
+                                            class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
+                                            class="menu-title">অবস্থা অনুযায়ী রিপোর্ট</span></a>
+                                </div>
+                                <!--end:Menu item-->
 
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <a class="menu-link" id="zone_report_link" href="#"><span
-                                        class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                        class="menu-title">জোনভিত্তিক সারসংক্ষেপ</span></a>
-                            </div>
-                            <!--end:Menu item-->
+                                <!--begin:Menu item-->
+                                <div class="menu-item">
+                                    <a class="menu-link" id="zone_report_link" href="#"><span
+                                            class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
+                                            class="menu-title">জোনভিত্তিক সারসংক্ষেপ</span></a>
+                                </div>
+                                <!--end:Menu item-->
 
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <a class="menu-link" id="program_type_report_link" href="#"><span
-                                        class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                        class="menu-title">কর্মসূচি
-                                        অনুযায়ী বিশ্লেষণ</span></a>
+                                <!--begin:Menu item-->
+                                <div class="menu-item">
+                                    <a class="menu-link" id="program_type_report_link" href="#"><span
+                                            class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
+                                            class="menu-title">কর্মসূচি
+                                            অনুযায়ী বিশ্লেষণ</span></a>
+                                </div>
+                                <!--end:Menu item-->
                             </div>
-                            <!--end:Menu item-->
+                            <!--end:Menu sub-->
                         </div>
-                        <!--end:Menu sub-->
-                    </div>
-                    <!--end: Analytics Info Menu item-->
+                        <!--end: Analytics Info Menu item-->
 
-
-                    <!--begin:Location Info Menu item-->
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="location_info_menu">
-                        <!--begin:Menu link-->
-                        <span class="menu-link">
-                            <span class="menu-icon">
-                                <i class="ki-outline ki-map fs-1"></i>
+                        <!--begin:Location Info Menu item-->
+                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="location_info_menu">
+                            <!--begin:Menu link-->
+                            <span class="menu-link">
+                                <span class="menu-icon">
+                                    <i class="ki-outline ki-map fs-1"></i>
+                                </span>
+                                <span class="menu-title">প্রশাসনিক অধিক্ষেত্র</span>
+                                <span class="menu-arrow"></span>
                             </span>
-                            <span class="menu-title">প্রশাসনিক অধিক্ষেত্র</span>
-                            <span class="menu-arrow"></span>
-                        </span>
-                        <!--end:Menu link-->
+                            <!--end:Menu link-->
 
-                        <!--begin:Menu sub-->
-                        <div class="menu-sub menu-sub-accordion">
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <a class="menu-link" id="zone_link" href="#"><span class="menu-bullet"><span
-                                            class="bullet bullet-dot"></span></span><span class="menu-title">থানা /
-                                        জোন</span></a>
-                            </div>
-                            <!--end:Menu item-->
+                            <!--begin:Menu sub-->
+                            <div class="menu-sub menu-sub-accordion">
+                                <!--begin:Menu item-->
+                                <div class="menu-item">
+                                    <a class="menu-link" id="zone_link" href="#"><span class="menu-bullet"><span
+                                                class="bullet bullet-dot"></span></span><span class="menu-title">থানা
+                                            /
+                                            জোন</span></a>
+                                </div>
+                                <!--end:Menu item-->
 
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <a class="menu-link" id="upazila_link" href="#"><span
-                                        class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                        class="menu-title">উপজেলা</span></a>
-                            </div>
-                            <!--end:Menu item-->
+                                <!--begin:Menu item-->
+                                <div class="menu-item">
+                                    <a class="menu-link" id="upazila_link" href="#"><span
+                                            class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
+                                            class="menu-title">উপজেলা</span></a>
+                                </div>
+                                <!--end:Menu item-->
 
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <a class="menu-link" id="parliament_link" href="#"><span
-                                        class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                        class="menu-title">সংসদীয় আসন</span></a>
+                                <!--begin:Menu item-->
+                                <div class="menu-item">
+                                    <a class="menu-link" id="parliament_link" href="#"><span
+                                            class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
+                                            class="menu-title">সংসদীয় আসন</span></a>
+                                </div>
+                                <!--end:Menu item-->
                             </div>
-                            <!--end:Menu item-->
+                            <!--end:Menu sub-->
                         </div>
-                        <!--end:Menu sub-->
-                    </div>
-                    <!--end: Location Info Menu item-->
+                        <!--end: Location Info Menu item-->
 
-
-                    <!--begin:Political Info Menu item-->
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="political_info_menu">
-                        <!--begin:Menu link-->
-                        <span class="menu-link">
-                            <span class="menu-icon">
-                                <i class="ki-outline ki-information fs-1"></i>
+                        <!--begin:Political Info Menu item-->
+                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="political_info_menu">
+                            <!--begin:Menu link-->
+                            <span class="menu-link">
+                                <span class="menu-icon">
+                                    <i class="ki-outline ki-information fs-1"></i>
+                                </span>
+                                <span class="menu-title">রাজনৈতিক তথ্য</span>
+                                <span class="menu-arrow"></span>
                             </span>
-                            <span class="menu-title">রাজনৈতিক তথ্য</span>
-                            <span class="menu-arrow"></span>
-                        </span>
-                        <!--end:Menu link-->
+                            <!--end:Menu link-->
 
-                        <!--begin:Menu sub-->
-                        <div class="menu-sub menu-sub-accordion">
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link--><a class="menu-link" id="political_party_link"
-                                    href="{{ route('political-parties.index') }}"><span class="menu-bullet"><span
-                                            class="bullet bullet-dot"></span></span><span class="menu-title">রাজনৈতিক
-                                        দল</span></a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
+                            <!--begin:Menu sub-->
+                            <div class="menu-sub menu-sub-accordion">
+                                <!--begin:Menu item-->
+                                <div class="menu-item">
+                                    <!--begin:Menu link--><a class="menu-link" id="political_party_link"
+                                        href="{{ route('political-parties.index') }}"><span class="menu-bullet"><span
+                                                class="bullet bullet-dot"></span></span><span
+                                            class="menu-title">রাজনৈতিক
+                                            দল</span></a>
+                                    <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
 
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <a class="menu-link" id="program_type_link"
-                                    href="{{ route('program-types.index') }}"><span class="menu-bullet"><span
-                                            class="bullet bullet-dot"></span></span><span class="menu-title">কর্মসূচির
-                                        ধরণ</span></a>
+                                <!--begin:Menu item-->
+                                <div class="menu-item">
+                                    <a class="menu-link" id="program_type_link"
+                                        href="{{ route('program-types.index') }}"><span class="menu-bullet"><span
+                                                class="bullet bullet-dot"></span></span><span
+                                            class="menu-title">কর্মসূচির
+                                            ধরণ</span></a>
+                                </div>
+                                <!--end:Menu item-->
                             </div>
-                            <!--end:Menu item-->
+                            <!--end:Menu sub-->
                         </div>
-                        <!--end:Menu sub-->
-                    </div>
-                    <!--end: Political Info Menu item-->
+                        <!--end: Political Info Menu item-->
+                    @endif
 
-                    {{-- @if (auth()->user()->role->name == 'Administrator') --}}
-                    <!--begin:User Info Menu item-->
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="user_info_menu">
-                        <!--begin:Menu link-->
-                        <span class="menu-link">
-                            <span class="menu-icon">
-                                <i class="ki-outline ki-user-edit fs-1"></i>
+
+                    @if (auth()->user()->role->name == 'Administrator')
+                        <!--begin:User Info Menu item-->
+                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="user_info_menu">
+                            <!--begin:Menu link-->
+                            <span class="menu-link">
+                                <span class="menu-icon">
+                                    <i class="ki-outline ki-user-edit fs-1"></i>
+                                </span>
+                                <span class="menu-title">ইউজার ম্যানেজমেন্ট</span>
+                                <span class="menu-arrow"></span>
                             </span>
-                            <span class="menu-title">ইউজার ম্যানেজমেন্ট</span>
-                            <span class="menu-arrow"></span>
-                        </span>
-                        <!--end:Menu link-->
+                            <!--end:Menu link-->
 
-                        <!--begin:Menu sub-->
-                        <div class="menu-sub menu-sub-accordion">
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link--><a class="menu-link" id="user_list_link"
-                                    href="{{ route('users.index') }}"><span class="menu-bullet"><span
-                                            class="bullet bullet-dot"></span></span><span class="menu-title">সকল
-                                        ইউজার</span></a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
+                            <!--begin:Menu sub-->
+                            <div class="menu-sub menu-sub-accordion">
+                                <!--begin:Menu item-->
+                                <div class="menu-item">
+                                    <!--begin:Menu link--><a class="menu-link" id="user_list_link"
+                                        href="{{ route('users.index') }}"><span class="menu-bullet"><span
+                                                class="bullet bullet-dot"></span></span><span class="menu-title">সকল
+                                            ইউজার</span></a>
+                                    <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
 
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <a class="menu-link" id="designation_link"
-                                    href="{{ route('designations.index') }}"><span class="menu-bullet"><span
-                                            class="bullet bullet-dot"></span></span><span class="menu-title">সকল
-                                        পদবী</span></a>
+                                <!--begin:Menu item-->
+                                <div class="menu-item">
+                                    <a class="menu-link" id="designation_link"
+                                        href="{{ route('designations.index') }}"><span class="menu-bullet"><span
+                                                class="bullet bullet-dot"></span></span><span class="menu-title">সকল
+                                            পদবী</span></a>
+                                </div>
+                                <!--end:Menu item-->
                             </div>
-                            <!--end:Menu item-->
+                            <!--end:Menu sub-->
                         </div>
-                        <!--end:Menu sub-->
-                    </div>
-                    <!--end: User Info Menu item-->
-                    {{-- @endif --}}
+                        <!--end: User Info Menu item-->
+                    @endif
                 </div>
                 <!--end::Menu wrapper-->
             </div>

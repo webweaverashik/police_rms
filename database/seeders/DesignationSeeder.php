@@ -1,8 +1,8 @@
 <?php
 namespace Database\Seeders;
 
-use App\Models\Designation;
 use Illuminate\Database\Seeder;
+use App\Models\User\Designation;
 
 class DesignationSeeder extends Seeder
 {
@@ -12,15 +12,15 @@ class DesignationSeeder extends Seeder
     public function run(): void
     {
         Designation::insert([
-            ['name' => 'Superintendent of Police (SP)'],
-            ['name' => 'Additional Superintendent of Police (ADC)'],
-            ['name' => 'Upazila Nirbahi Officer (UNO)'],
-            ['name' => 'Assistant Superintendent of Police (ASP)'],
-            ['name' => 'Officer in Charge (OC)'],
-            ['name' => 'Inspector'],
-            ['name' => 'Sub Inspector (SI)'],
-            ['name' => 'Assistant Sub Inspector (ASI)'],
-            ['name' => 'Constable'],
+            ['name' => 'পুলিশ সুপার (এসপি)'],
+            ['name' => 'অতিরিক্ত পুলিশ সুপার'],
+            ['name' => 'সহকারী পুলিশ সুপার'],
+            ['name' => 'উপজেলা নির্বাহী কর্মকর্তা'],
+            ['name' => 'অফিসার ইনচার্জ'],
+            ['name' => 'ইন্সপেক্টর'],
+            ['name' => 'সাব-ইন্সপেক্টর'],
+            ['name' => 'অ্যাসিস্ট্যান্ট সাব-ইন্সপেক্টর'],
+            ['name' => 'কনস্টেবল'],
         ]);
 
     }

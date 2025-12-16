@@ -1,8 +1,15 @@
 <?php
-namespace App\Models;
+namespace App\Models\Report;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User\User;
+use App\Models\Report\ProgramType;
+use App\Models\Administrative\Zone;
+use App\Models\Administrative\Union;
+use App\Models\Administrative\Upazila;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Political\ParliamentSeat;
+use App\Models\Political\PoliticalParty;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Report
@@ -35,8 +42,13 @@ class Report extends Model
         'tentative_attendee_count',
         'program_status',
         'final_attendee_count',
-        'description',
+        'program_title',
+        'program_description',
         'created_by',
+    ];
+
+    protected $casts = [
+        'program_date_time' => 'datetime',
     ];
 
     /*
@@ -59,6 +71,14 @@ class Report extends Model
     public function zone()
     {
         return $this->belongsTo(Zone::class);
+    }
+
+    /**
+     * Get the union where the program was held.
+     */
+    public function union()
+    {
+        return $this->belongsTo(Union::class);
     }
 
     /**
