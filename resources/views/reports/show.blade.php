@@ -51,7 +51,7 @@
     <!--begin::Layout-->
     <div class="d-flex flex-column flex-xl-row">
         <!--begin::Sidebar-->
-        <div class="flex-column flex-lg-row-auto w-100 w-xl-350px mb-10">
+        <div class="flex-column flex-lg-row-auto w-100 w-lg-350px w-xl-450px mb-10">
             <!--begin::Card-->
             @php
                 $statusBorder = match ($report->status) {
@@ -63,7 +63,7 @@
 
             <div class="card card-flush mb-0 {{ $statusBorder }}" data-kt-sticky="true"
                 data-kt-sticky-name="student-summary" data-kt-sticky-offset="{default: false, lg: 0}"
-                data-kt-sticky-width="{lg: '250px', xl: '350px'}" data-kt-sticky-left="auto" data-kt-sticky-top="100px"
+                data-kt-sticky-width="{lg: '350px', xl: '450px'}" data-kt-sticky-left="auto" data-kt-sticky-top="100px"
                 data-kt-sticky-animation="false" data-kt-sticky-zindex="95">
                 <!--begin::Card header-->
                 <div class="card-header ">
@@ -83,7 +83,7 @@
                     <!--begin::প্রশাসনিক অধিক্ষেত্রের তথ্য-->
                     <div class="mb-7">
                         <!--begin::Title-->
-                        <h5 class="mb-4">প্রশাসনিক অধিক্ষেত্রের তথ্য
+                        <h5 class="mb-4 fs-4">প্রশাসনিক অধিক্ষেত্রের তথ্য
                         </h5>
                         <!--end::Title-->
                         <!--begin::Details-->
@@ -92,11 +92,11 @@
                             <table class="table fs-6 fw-semibold gs-0 gy-2 gx-2">
                                 <!--begin::Row-->
                                 <tr class="">
-                                    <td class="text-gray-500">সংসদীয় আসন:</td>
-                                    <td class="text-gray-800">{{ $report->parliamentSeat->name }}
+                                    <td class="text-gray-600 fs-4">সংসদীয় আসন:</td>
+                                    <td class="text-gray-800 fs-4">{{ $report->parliamentSeat->name }}
                                         <span class="ms-1" data-bs-toggle="tooltip"
                                             title="{{ $report->parliamentSeat->description }}">
-                                            <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+                                            <i class="ki-outline ki-information-5 text-gray-600 fs-6"></i>
                                         </span>
                                     </td>
                                 </tr>
@@ -104,21 +104,21 @@
 
                                 <!--begin::Row-->
                                 <tr>
-                                    <td class="text-gray-500">উপজেলা:</td>
+                                    <td class="text-gray-600 fs-4">উপজেলা:</td>
                                     <td>{{ $report->upazila->name }}</td>
                                 </tr>
                                 <!--end::Row-->
 
                                 <!--begin::Row-->
                                 <tr class="">
-                                    <td class="text-gray-500">ইউনিয়ন:</td>
+                                    <td class="text-gray-600 fs-4">ইউনিয়ন:</td>
                                     <td>{{ $report->union->name }}</td>
                                 </tr>
                                 <!--end::Row-->
 
                                 <!--begin::Row-->
                                 <tr class="">
-                                    <td class="text-gray-500">থানা / জোন:</td>
+                                    <td class="text-gray-600 fs-4">থানা / জোন:</td>
                                     <td>{{ $report->zone->name }}</td>
                                 </tr>
                                 <!--end::Row-->
@@ -137,7 +137,7 @@
                     <!--begin::রাজনৈতিক দলের তথ্য-->
                     <div class="mb-7">
                         <!--begin::Title-->
-                        <h5 class="mb-4">রাজনৈতিক দলের তথ্য
+                        <h5 class="mb-4 fs-4">রাজনৈতিক দলের তথ্য
                         </h5>
                         <!--end::Title-->
                         <!--begin::Details-->
@@ -146,11 +146,11 @@
                             <table class="table fs-6 fw-semibold gs-0 gy-2 gx-2">
                                 <!--begin::Row-->
                                 <tr class="">
-                                    <td class="text-gray-500">দলের নাম:</td>
-                                    <td class="text-gray-800">{{ $report->politicalParty->name }}
+                                    <td class="text-gray-600 fs-4">দলের নাম:</td>
+                                    <td class="text-gray-800 fs-4">{{ $report->politicalParty->name }}
                                         <span class="ms-1" data-bs-toggle="tooltip"
                                             title="দলীয় প্রধান: {{ $report->politicalParty->party_head }} @if ($report->politicalParty->local_address) , স্থানীয় কার্যালয়: {{ $report->politicalParty->local_address }} @endif">
-                                            <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+                                            <i class="ki-outline ki-information-5 text-gray-600 fs-6"></i>
                                         </span>
                                     </td>
                                 </tr>
@@ -158,21 +158,21 @@
 
                                 <!--begin::Row-->
                                 <tr>
-                                    <td class="text-gray-500">প্রার্থীর নাম:</td>
+                                    <td class="text-gray-600 fs-4">প্রার্থীর নাম:</td>
                                     <td>{{ $report->candidate_name }}</td>
                                 </tr>
                                 <!--end::Row-->
 
                                 <!--begin::Row-->
                                 <tr class="">
-                                    <td class="text-gray-500">প্রধান অতিথি:</td>
+                                    <td class="text-gray-600 fs-4">প্রধান অতিথি:</td>
                                     <td>{{ $report->program_special_guest ? $report->program_special_guest : '-' }}</td>
                                 </tr>
                                 <!--end::Row-->
 
                                 <!--begin::Row-->
                                 <tr class="">
-                                    <td class="text-gray-500">সভাপতি:</td>
+                                    <td class="text-gray-600 fs-4">সভাপতি:</td>
                                     <td>{{ $report->program_chair ? $report->program_chair : '-' }}</td>
                                 </tr>
                                 <!--end::Row-->
@@ -191,15 +191,18 @@
                     <!--begin::প্রতিবেদন দাখিল সংক্রান্ত তথ্য-->
                     <div class="mb-0">
                         <!--begin::Title-->
-                        <h5 class="mb-4">প্রতিবেদন দাখিল সংক্রান্ত তথ্য</h5>
+                        <h5 class="mb-4 fs-4">প্রতিবেদন দাখিল সংক্রান্ত তথ্য</h5>
                         <!--end::Title-->
                         <!--begin::Details-->
                         <table class="table fs-6 fw-semibold gs-0 gy-2 gx-2">
-
+                            <tr>
+                                <td class="text-gray-600 fs-4">প্রতিবেদন তৈরিকারি:</td>
+                                <td class="text-gray-800 fs-4">{{ $report->createdBy->name }}, {{ $report->createdBy->designation->name }}</td>
+                            </tr>
                             <!--begin::Row-->
                             <tr class="">
-                                <td class="text-gray-500">দাখিলের সময়:</td>
-                                <td class="text-gray-800">
+                                <td class="text-gray-600 fs-4">দাখিলের সময়:</td>
+                                <td class="text-gray-800 fs-4">
                                     {{ $numto->bnNum($report->created_at->format('d')) }}-
                                     {{ $numto->bnNum($report->created_at->format('m')) }}-
                                     {{ $numto->bnNum($report->created_at->format('Y')) }},
@@ -212,8 +215,8 @@
 
                             <!--begin::Row-->
                             <tr class="">
-                                <td class="text-gray-500">সর্বশেষ হালনাগাদ:</td>
-                                <td class="text-gray-800">
+                                <td class="text-gray-600 fs-4">সর্বশেষ হালনাগাদ:</td>
+                                <td class="text-gray-800 fs-4">
                                     {{ $numto->bnNum($report->updated_at->format('d')) }}-
                                     {{ $numto->bnNum($report->updated_at->format('m')) }}-
                                     {{ $numto->bnNum($report->updated_at->format('Y')) }},
@@ -238,9 +241,9 @@
         <div class="flex-lg-row-fluid ms-lg-10">
             <div class="card mb-5 mb-xl-10">
                 <!--begin::Card header-->
-                <div class="card-header cursor-pointer">
+                <div class="card-header">
                     <!--begin::Card title-->
-                    <div class="card-title m-0">
+                    <div class="card-title p-4">
                         <h3 class="fw-semibold m-0">{{ $report->program_title }}</h3>
                     </div>
                     <!--end::Card title-->
@@ -250,7 +253,7 @@
                 <div class="card-body p-9">
                     <!--begin::Row-->
                     <div class="row mb-5">
-                        <label class="col-lg-2 fw-semibold text-muted fs-6">বিস্তারিত:</label>
+                        <label class="col-lg-2 fw-semibold text-muted fs-4">বিস্তারিত:</label>
 
                         <div class="col-lg-10">
                             <p class="fw-semibold fs-4 text-gray-800 mb-0">
@@ -264,7 +267,7 @@
                     <!--begin::Input group-->
                     <div class="row mb-5">
                         <!--begin::Label-->
-                        <label class="col-lg-2 fw-semibold text-muted fs-6">প্রোগ্রামের ধরণ:</label>
+                        <label class="col-lg-2 fw-semibold text-muted fs-4">প্রোগ্রামের ধরণ:</label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-10">
@@ -277,7 +280,7 @@
                     <!--begin::Input group-->
                     <div class="row mb-5">
                         <!--begin::Label-->
-                        <label class="col-lg-2 fw-semibold text-muted fs-6">প্রোগ্রামের অবস্থা:</label>
+                        <label class="col-lg-2 fw-semibold text-muted fs-4">প্রোগ্রামের অবস্থা:</label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-10">
@@ -299,7 +302,7 @@
                     <!--begin::Input group-->
                     <div class="row mb-5">
                         <!--begin::Label-->
-                        <label class="col-lg-2 fw-semibold text-muted fs-6">প্রোগ্রামের তারিখ ও সময়:</label>
+                        <label class="col-lg-2 fw-semibold text-muted fs-4">প্রোগ্রামের তারিখ ও সময়:</label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-10">
@@ -319,7 +322,7 @@
                     <!--begin::Input group-->
                     <div class="row mb-5">
                         <!--begin::Label-->
-                        <label class="col-lg-2 fw-semibold text-muted fs-6">প্রোগ্রামের স্থান:</label>
+                        <label class="col-lg-2 fw-semibold text-muted fs-4">প্রোগ্রামের স্থান:</label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-10">
@@ -332,7 +335,7 @@
                     <!--begin::Input group-->
                     <div class="row mb-5">
                         <!--begin::Label-->
-                        <label class="col-lg-2 fw-semibold text-muted fs-6">প্রোগ্রামের ধরণ:</label>
+                        <label class="col-lg-2 fw-semibold text-muted fs-4">প্রোগ্রামের ধরণ:</label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-10">
@@ -345,7 +348,7 @@
                     <!--begin::Input group-->
                     <div class="row mb-5">
                         <!--begin::Label-->
-                        <label class="col-lg-2 fw-semibold text-muted fs-6">সম্ভাব্য উপস্থিতি:</label>
+                        <label class="col-lg-2 fw-semibold text-muted fs-4">সম্ভাব্য উপস্থিতি:</label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-10">
@@ -359,7 +362,7 @@
                     <!--begin::Input group-->
                     <div class="row mb-5">
                         <!--begin::Label-->
-                        <label class="col-lg-2 fw-semibold text-muted fs-6">মোট উপস্থিতি:</label>
+                        <label class="col-lg-2 fw-semibold text-muted fs-4">মোট উপস্থিতি:</label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-10">

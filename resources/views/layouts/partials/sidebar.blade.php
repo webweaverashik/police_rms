@@ -76,7 +76,7 @@
                     <!--end: Report Info Menu item-->
 
 
-                    @if (auth()->user()->role->name !== 'Operator')
+                    @if (auth()->user()->role->name == 'Administrator')
                         <!--begin:Analytics Info Menu item-->
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="analytics_info_menu">
                             <!--begin:Menu link-->
