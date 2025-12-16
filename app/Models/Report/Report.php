@@ -9,6 +9,7 @@ use App\Models\Administrative\Upazila;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Political\ParliamentSeat;
 use App\Models\Political\PoliticalParty;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
@@ -25,7 +26,7 @@ class Report extends Model
      *
      * These fields are filled during report creation and update.
      */
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'parliament_seat_id',
@@ -111,5 +112,13 @@ class Report extends Model
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by')->withTrashed();
+    }
+
+    /**
+     * Reports deleted by this user.
+     */
+    public function deletedBy()
+    {
+        return $this->belongsTo(User::class, 'deleted_by')->withTrashed();
     }
 }

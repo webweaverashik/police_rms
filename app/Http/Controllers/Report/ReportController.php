@@ -1,16 +1,17 @@
 <?php
 namespace App\Http\Controllers\Report;
 
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use App\Models\Report\Report;
-use App\Models\Report\ProgramType;
-use Illuminate\Support\Facades\DB;
-use App\Models\Administrative\Zone;
 use App\Http\Controllers\Controller;
+use App\Models\Administrative\Union;
 use App\Models\Administrative\Upazila;
+use App\Models\Administrative\Zone;
 use App\Models\Political\ParliamentSeat;
 use App\Models\Political\PoliticalParty;
+use App\Models\Report\ProgramType;
+use App\Models\Report\Report;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
@@ -39,7 +40,7 @@ class ReportController extends Controller
     public function create()
     {
         if (auth()->user()->role->name !== 'Operator') {
-            return redirect()->route('reports.index')->with('warning', 'আপনার রিপোর্ট তৈরির অনুমতি নেই।');
+            return redirect()->route('reports.index')->with('warning', 'আপনার প্রতিবেদন তৈরির অনুমতি নেই');
         }
 
         $upazilas         = Upazila::all();
@@ -117,7 +118,20 @@ class ReportController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        if (auth()->user()->role->name !== 'Administrator') {
+            return redirect()->route('reports.index')->with('warning', 'আপনার প্রতিবেদন সংশোধনের অনুমতি নেই');
+        }
+
+        $upazilas         = Upazila::all();
+        $unions           = Union::all();
+        $zones            = Zone::all();
+        $politicalParties = PoliticalParty::all();
+        $parliamentSeats  = ParliamentSeat::all();
+        $programTypes     = ProgramType::all();
+
+        $report = Report::findOrFail($id);
+
+        return view('reports.edit', compact('report', 'upazilas', 'unions', 'zones', 'politicalParties', 'parliamentSeats', 'programTypes'));
     }
 
     /**
@@ -125,14 +139,25 @@ class ReportController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $report = Report::findOrFail($id);
+
+        $report->update($request->all());
+
+        return response()->json([
+            'success'  => true,
+            'message'  => 'প্রতিবেদন সফলভাবে আপডেট হয়েছে',
+            'redirect' => route('reports.index'),
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Report $report)
     {
-        //
+        $report->delete();
+        $report->update(['deleted_by' => auth()->user()->id]);
+
+        return response()->json(['success' => true]);
     }
 }

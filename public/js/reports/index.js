@@ -1,6 +1,6 @@
 "use strict";
 
-var KTAllTransactionsList = function () {
+var AllReportsList = function () {
       // Define shared variables
       var table;
       var datatable;
@@ -148,60 +148,60 @@ var KTAllTransactionsList = function () {
       }
 
 
-      // Delete Transaction
-      // const handleDeletion = function () {
-      //       document.addEventListener('click', function (e) {
-      //             const deleteBtn = e.target.closest('.delete-txn');
-      //             if (!deleteBtn) return;
+      // Delete Report
+      const handleDeletion = function () {
+            document.addEventListener('click', function (e) {
+                  const deleteBtn = e.target.closest('.delete-report');
+                  if (!deleteBtn) return;
 
-      //             e.preventDefault();
+                  e.preventDefault();
 
-      //             let txnId = deleteBtn.getAttribute('data-txn-id');
-      //             console.log('TXN ID:', txnId);
+                  let reportId = deleteBtn.getAttribute('data-report-id');
+                  console.log('Report ID:', reportId);
 
-      //             let url = routeDeleteTxn.replace(':id', txnId);
+                  let url = reportDeleteRoute.replace(':id', reportId);
 
-      //             Swal.fire({
-      //                   title: 'Are you sure you want to delete?',
-      //                   text: "Once deleted, this transaction will be removed.",
-      //                   icon: 'warning',
-      //                   showCancelButton: true,
-      //                   confirmButtonColor: '#3085d6',
-      //                   cancelButtonColor: '#d33',
-      //                   confirmButtonText: 'Yes, delete it',
-      //                   cancelButtonText: 'Cancel',
-      //             }).then((result) => {
-      //                   if (result.isConfirmed) {
-      //                         fetch(url, {
-      //                               method: "DELETE",
-      //                               headers: {
-      //                                     "Content-Type": "application/json",
-      //                                     "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
-      //                               },
-      //                         })
-      //                               .then(response => response.json())
-      //                               .then(data => {
-      //                                     if (data.success) {
-      //                                           Swal.fire({
-      //                                                 title: 'Success!',
-      //                                                 text: 'Transaction deleted successfully.',
-      //                                                 icon: 'success',
-      //                                                 confirmButtonText: 'Okay',
-      //                                           }).then(() => {
-      //                                                 location.reload();
-      //                                           });
-      //                                     } else {
-      //                                           Swal.fire('Failed!', 'Transaction could not be deleted.', 'error');
-      //                                     }
-      //                               })
-      //                               .catch(error => {
-      //                                     console.error("Fetch Error:", error);
-      //                                     Swal.fire('Failed!', 'An error occurred. Please contact support.', 'error');
-      //                               });
-      //                   }
-      //             });
-      //       });
-      // };
+                  Swal.fire({
+                        title: 'আপনি কি নিশ্চিত?',
+                        text: 'এই প্রতিবেদনটি মুছে ফেলা হবে।',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'মুছে ফেলুন',
+                        cancelButtonText: 'বাতিল',
+                  }).then((result) => {
+                        if (result.isConfirmed) {
+                              fetch(url, {
+                                    method: "DELETE",
+                                    headers: {
+                                          "Content-Type": "application/json",
+                                          "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+                                    },
+                              })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                          if (data.success) {
+                                                Swal.fire({
+                                                      title: 'ধন্যবাদ!',
+                                                      text: 'প্রতিবেদনটি সফলভাবে মুছে ফেলা হয়েছে।',
+                                                      icon: 'success',
+                                                      confirmButtonText: 'ঠিক আছে',
+                                                }).then(() => {
+                                                      location.reload();
+                                                });
+                                          } else {
+                                                Swal.fire('Failed!', 'প্রতিবেদনটি মুছে ফেলা যায়নি।', 'error');
+                                          }
+                                    })
+                                    .catch(error => {
+                                          console.error("Fetch Error:", error);
+                                          Swal.fire('Failed!', 'An error occurred. Please contact support.', 'error');
+                                    });
+                        }
+                  });
+            });
+      };
 
 
       return {
@@ -217,7 +217,7 @@ var KTAllTransactionsList = function () {
                   exportButtons();
                   handleSearch();
                   handleFilter();
-                  // handleDeletion();
+                  handleDeletion();
             }
       }
 }();
@@ -225,5 +225,5 @@ var KTAllTransactionsList = function () {
 
 // On document ready
 KTUtil.onDOMContentLoaded(function () {
-      KTAllTransactionsList.init();
+      AllReportsList.init();
 });

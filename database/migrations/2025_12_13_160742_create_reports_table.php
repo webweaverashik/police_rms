@@ -30,6 +30,8 @@ return new class extends Migration
             $table->text('program_title');
             $table->text('program_description');
             $table->foreignId('created_by')->constrained('users')->restrictOnDelete();
+            $table->foreignId('deleted_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

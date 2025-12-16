@@ -2,10 +2,19 @@
 
 
 @push('page-css')
-    <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+        .select2-container--bootstrap5 .select2-selection--single {
+            font-size: 1.25rem;
+            min-height: 40px;
+        }
+
+        .select2-container--bootstrap5 .select2-results__option {
+            font-size: 1.25rem;
+        }
+    </style>
 @endpush
 
-@section('title', 'নতুন রিপোর্ট')
+@section('title', 'প্রতিবেদন সংশোধন')
 
 @section('header-title')
     <div data-kt-swapper="true" data-kt-swapper-mode="{default: 'prepend', lg: 'prepend'}"
@@ -13,7 +22,7 @@
         class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
         <!--begin::Title-->
         <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 align-items-center my-0">
-            রিপোর্ট যুক্ত করুন
+            প্রতিবেদনটি সংশোধন করুন
         </h1>
         <!--end::Title-->
         <!--begin::Separator-->
@@ -24,7 +33,7 @@
             <!--begin::Item-->
             <li class="breadcrumb-item text-muted">
                 <a href="#" class="text-muted text-hover-primary">
-                    রিপোর্ট </a>
+                    প্রতিবেদন </a>
             </li>
             <!--end::Item-->
             <!--begin::Item-->
@@ -34,7 +43,7 @@
             <!--end::Item-->
             <!--begin::Item-->
             <li class="breadcrumb-item text-muted">
-                নতুন রিপোর্ট </li>
+                সংশোধন </li>
             <!--end::Item-->
         </ul>
         <!--end::Breadcrumb-->
@@ -42,12 +51,322 @@
 @endsection
 
 @section('content')
+    <!--begin::Form-->
+    <form action="#" class="form d-flex flex-column" id="kt_edit_report_form" novalidate="novalidate">
+        <!-- ===================== Administrative Jurisdiction ===================== -->
+        <div class="card card-flush py-4 mb-7">
+            <div class="card-header">
+                <div class="card-title">
+                    <h2>প্রশাসনিক অধিক্ষেত্রের তথ্য</h2>
+                </div>
+            </div>
 
+            <div class="card-body pt-0">
+                <div class="row">
+                    <!-- Parliament Seat -->
+                    <div class="col-lg-12">
+                        <div class="mb-8 fv-row">
+                            <label class="required fw-semibold fs-4 mb-4 d-block">
+                                সংসদীয় আসন
+                                <span class="ms-1" data-bs-toggle="tooltip"
+                                    title="প্রোগ্রামটি যে সংসদীয় আসনের তা সিলেক্ট করুন">
+                                    <i class="ki-outline ki-information fs-4"></i>
+                                </span>
+                            </label>
+
+                            <div class="row row-cols-2 row-cols-xl-4 g-4">
+                                @foreach ($parliamentSeats as $seat)
+                                    <div class="col">
+                                        <input type="radio" class="btn-check" name="parliament_seat_id"
+                                            id="seat_{{ $seat->id }}" value="{{ $seat->id }}" required
+                                            @if ($report->parliament_seat_id == $seat->id) checked @endif>
+
+                                        <label for="seat_{{ $seat->id }}"
+                                            class="btn btn-outline btn-outline-dashed btn-active-light-primary btn-radio-lg w-100 d-flex align-items-center fs-4 p-6">
+
+                                            <!-- Icon -->
+                                            <i class="ki-outline ki-map fs-2x me-3"></i>
+
+                                            <!-- Text -->
+                                            <span class="fw-bold">
+                                                {{ $seat->name }}
+                                            </span>
+
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Upazila -->
+                    <div class="col-lg-4">
+                        <div class="mb-8 fv-row">
+                            <label class="required form-label fs-4">উপজেলা</label>
+                            <select name="upazila_id" class="form-select form-select-solid fs-4" data-control="select2"
+                                data-placeholder="উপজেলা বাছাই করুন" data-allow-clear="true" data-hide-search="true"
+                                required>
+                                <option></option>
+                                @foreach ($upazilas as $upazila)
+                                    <option value="{{ $upazila->id }}" @if ($report->upazila_id == $upazila->id) selected @endif>
+                                        {{ $upazila->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Zone -->
+                    <div class="col-lg-4">
+                        <div class="mb-8 fv-row">
+                            <label class="required form-label fs-4">ইউনিয়ন
+                                <span class="ms-1" data-bs-toggle="tooltip"
+                                    title="প্রথম উপজেলা সিলেক্ট করুন। এরপর সেই উপজেলার ইউনিয়ন লিস্ট দেখাবে।">
+                                    <i class="ki-outline ki-information fs-4"></i>
+                                </span>
+                            </label>
+                            <select name="union_id" class="form-select form-select-solid fs-4" data-control="select2"
+                                data-placeholder="ইউনিয়ন বাছাই করুন" data-allow-clear="true" disabled required>
+                                <option></option>
+                                @foreach ($unions as $union)
+                                    <option value="{{ $union->id }}" @if ($report->union_id == $union->id) selected @endif>
+                                        {{ $union->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Zone -->
+                    <div class="col-lg-4">
+                        <div class="mb-8 fv-row">
+                            <label class="required form-label fs-4">থানা / জোন</label>
+                            <select name="zone_id" class="form-select form-select-solid fs-4" data-control="select2"
+                                data-placeholder="থানা / জোন বাছাই করুন" data-allow-clear="true" required>
+                                <option></option>
+                                @foreach ($zones as $zone)
+                                    <option value="{{ $zone->id }}" @if ($report->zone_id == $zone->id) selected @endif>
+                                        {{ $zone->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================== Political Information ===================== -->
+        <div class="card card-flush py-4 mb-7">
+            <div class="card-header">
+                <div class="card-title">
+                    <h2>প্রোগ্রামের প্রয়োজনীয় তথ্য</h2>
+                </div>
+            </div>
+
+            <div class="card-body pt-0">
+                <div class="row">
+
+                    <!-- Political Party -->
+                    <div class="col-lg-4">
+                        <div class="mb-8 fv-row">
+                            <label class="required form-label fs-4">রাজনৈতিক দলের নাম</label>
+                            <select name="political_party_id" class="form-select form-select-solid fs-4"
+                                data-control="select2" data-placeholder="রাজনৈতিক দল বাছাই করুন" data-allow-clear="true"
+                                required>
+                                <option></option>
+                                @foreach ($politicalParties as $party)
+                                    <option value="{{ $party->id }}" @if ($report->political_party_id == $party->id) selected @endif>
+                                        {{ $party->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Candidate Name -->
+                    <div class="col-lg-4">
+                        <div class="mb-8 fv-row">
+                            <label class="required form-label fs-4">প্রার্থীর নাম</label>
+                            <input type="text" name="candidate_name" class="form-control form-control-solid fs-4"
+                                placeholder="প্রার্থীর নাম লিখুন" required value="{{ $report->candidate_name }}">
+                        </div>
+                    </div>
+
+                    <!-- Program Special Guest -->
+                    <div class="col-lg-4">
+                        <div class="mb-8 fv-row">
+                            <label class="form-label fs-4">প্রধান অতিথি <span class="text-muted fst-italic">(প্রযোজ্য
+                                    ক্ষেত্রে)</span></label>
+                            <input type="text" name="program_special_guest" class="form-control form-control-solid fs-4"
+                                placeholder="প্রধান অতিথির নাম লিখুন" value="{{ $report->program_special_guest }}">
+                        </div>
+                    </div>
+
+                    <!-- Program Chair -->
+                    <div class="col-lg-4">
+                        <div class="mb-8 fv-row">
+                            <label class="form-label fs-4">প্রোগ্রামের সভাপতি <span
+                                    class="text-muted fst-italic">(প্রযোজ্য
+                                    ক্ষেত্রে)</span></label>
+                            <input type="text" name="program_chair" class="form-control form-control-solid fs-4"
+                                placeholder="সভাপতির নাম লিখুন" value="{{ $report->program_chair }}">
+                        </div>
+                    </div>
+
+                    <!-- Program Type -->
+                    <div class="col-lg-4">
+                        <div class="mb-8 fv-row">
+                            <label class="required form-label fs-4">প্রোগ্রামের ধরণ</label>
+                            <select name="program_type_id" class="form-select form-select-solid fs-4"
+                                data-control="select2" data-placeholder="প্রোগ্রামের ধরণ বাছাই করুন"
+                                data-allow-clear="true" required>
+                                <option></option>
+                                @foreach ($programTypes as $type)
+                                    <option value="{{ $type->id }}" @if ($report->program_type_id == $type->id) selected @endif>
+                                        {{ $type->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Program Date & Time -->
+                    <div class="col-lg-4">
+                        <div class="mb-8 fv-row">
+                            <label class="required form-label fs-4">তারিখ ও সময়</label>
+                            <input name="program_date_time" id="program_date_time_picker"
+                                value="{{ $report->program_date_time->format('d-m-Y h:i A') }}"
+                                placeholder="তারিখ ও সময় সেট করুন" class="form-control form-control-solid fs-4" required>
+                        </div>
+                    </div>
+
+                    <!-- Tentative Attendee Count -->
+                    <div class="col-lg-4">
+                        <div class="mb-8 fv-row">
+                            <label class="form-label fs-4">সম্ভাব্য উপস্থিতি (জন) <span
+                                    class="text-muted fst-italic">(প্রযোজ্য ক্ষেত্রে)</span></label>
+                            <input type="number" name="tentative_attendee_count"
+                                value="{{ $report->tentative_attendee_count }}"
+                                class="form-control form-control-solid fs-4" placeholder="সম্ভাব্য উপস্থিতি সংখ্যা">
+                        </div>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="col-lg-4">
+                        <div class="mb-8 fv-row">
+                            <label class="form-label fs-4 required">প্রোগ্রামের স্থান</label>
+                            <input type="text" name="location_name" class="form-control form-control-solid fs-4"
+                                placeholder="প্রোগ্রামের স্থান লিখুন" value="{{ $report->location_name }}">
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================== Program Details ===================== -->
+        <div class="card card-flush py-4 mb-7">
+            <div class="card-header">
+                <div class="card-title">
+                    <h2>প্রোগ্রামের বিস্তারিত বিবরণ</h2>
+                </div>
+            </div>
+
+            <div class="card-body pt-0">
+                <div class="row">
+                    <!-- Location -->
+                    <div class="col-lg-12">
+                        <div class="mb-8 fv-row">
+                            <label class="form-label fs-4 required">প্রোগ্রামের বিষয়</label>
+                            <input type="text" name="program_title" class="form-control form-control-solid fs-4"
+                                placeholder="প্রোগ্রামের বিষয় লিখুন" value="{{ $report->program_title }}">
+                        </div>
+                    </div>
+
+                    <!-- Program Status -->
+                    <div class="col-lg-4">
+                        <div class="mb-8 fv-row">
+                            <label class="required form-label fs-4">প্রোগ্রামের অবস্থা</label>
+
+                            @php
+                                $statuses = [
+                                    'done' => ['label' => 'সম্পন্ন', 'icon' => 'las la-check-circle'],
+                                    'ongoing' => ['label' => 'চলমান', 'icon' => 'las la-spinner'],
+                                    'upcoming' => ['label' => 'আসন্ন', 'icon' => 'las la-clock'],
+                                ];
+                            @endphp
+
+                            <div class="row g-3">
+                                @foreach ($statuses as $key => $status)
+                                    <div class="col">
+                                        <input type="radio" class="btn-check" name="program_status"
+                                            id="status_{{ $key }}" value="{{ $key }}" required
+                                            @if ($report->program_status == $key) checked @endif>
+
+                                        <label for="status_{{ $key }}"
+                                            class="btn btn-outline btn-outline-dashed btn-active-light-primary
+                                               btn-radio-lg w-100 d-flex align-items-center fs-4">
+                                            <i class="{{ $status['icon'] }} fs-2x me-3"></i>
+                                            <span class="fw-bold">{{ $status['label'] }}</span>
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Final Attendee Count -->
+                    <div class="col-lg-4">
+                        <div class="mb-8 fv-row">
+                            <label class="form-label fs-4">মোট উপস্থিতি (জন) <span class="text-muted fst-italic">(প্রযোজ্য
+                                    ক্ষেত্রে)</span></label>
+                            <input type="number" name="final_attendee_count"
+                                value="{{ $report->final_attendee_count }}" class="form-control form-control-solid fs-4"
+                                placeholder="মোট উপস্থিতি সংখ্যা">
+                        </div>
+                    </div>
+
+                    <!-- Program Description -->
+                    <div class="col-lg-12">
+                        <div class="mb-8 fv-row">
+                            <label class="form-label fs-4 required">বিস্তারিত বর্ণনা</label>
+                            <textarea name="program_description" rows="10" class="form-control form-control-solid fs-4"
+                                placeholder="প্রোগ্রামের বিস্তারিত লিখুন" required>{{ $report->program_description }}</textarea>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================== Actions ===================== -->
+        <div class="d-flex justify-content-start">
+            <button type="reset" id="kt_edit_report_form_reset" class="btn btn-secondary me-3 w-100px">রিসেট</button>
+
+            <button type="submit" id="kt_edit_report_form_submit" class="btn btn-primary w-100px">
+                <span class="indicator-label">আপডেট</span>
+                <span class="indicator-progress">অপেক্ষা করুন...
+                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+            </button>
+        </div>
+
+    </form>
+    <!--end::Form-->
 @endsection
 
 
 @push('vendor-js')
-    <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+    <script>
+        const reportId = "{{ $report->id }}";
+        const updateReportRoute = "{{ route('reports.update', ':id') }}".replace(':id', reportId);
+
+        const fetchUnionRoute = "{{ route('ajax.union', ':upazila_id') }}";
+    </script>
+
+    <script src="{{ asset('js/reports/edit.js') }}"></script>
 @endpush
 
 @push('page-js')

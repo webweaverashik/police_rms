@@ -247,7 +247,7 @@
                             <td class="@if (auth()->user()->role->name == 'Operator') d-none @endif">{{ $report->createdBy->name }},
                                 {{ $report->createdBy->designation->name }}</td>
                             <td>
-                                @if (auth()->user()->role->name !== 'Operator')
+                                @if (auth()->user()->role->name == 'Administrator')
                                     <a href="#" class="btn btn-light btn-active-light-primary btn-sm"
                                         data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">একশন
                                         <i class="ki-outline ki-down fs-5 m-0"></i></a>
@@ -256,13 +256,14 @@
                                         data-kt-menu="true">
 
                                         <div class="menu-item px-3">
-                                            <a href="{{ route('reports.show', $report->id) }}" title="প্রতিবেদনটি দেখুন"
+                                            <a href="{{ route('reports.show', $report->id) }}" title="প্রতিবেদনটির বিস্তারিত দেখুন"
                                                 class="menu-link text-hover-primary px-3" target="_blank"><i
                                                     class="ki-outline ki-eye fs-3 me-2"></i> দেখুন</a>
                                         </div>
 
                                         <div class="menu-item px-3">
-                                            <a href="#" title="প্রতিবেদনটি সংশোধন করুন"
+                                            <a href="{{ route('reports.edit', $report->id) }}"
+                                                title="প্রতিবেদনটি সংশোধন করুন"
                                                 class="menu-link text-hover-primary px-3"><i
                                                     class="ki-outline ki-pencil fs-3 me-2"></i>
                                                 সংশোধন</a>
@@ -277,7 +278,8 @@
                                     </div>
                                     <!--end::Menu-->
                                 @else
-                                    <a href="{{ route('reports.show', $report->id) }}" title="প্রতিবেদনটি দেখুন" target="_blank"
+                                    <a href="{{ route('reports.show', $report->id) }}" title="প্রতিবেদনটির বিস্তারিত দেখুন"
+                                        target="_blank"
                                         class="btn btn-icon text-hover-primary w-30px h-30px edit-teacher me-2">
                                         <i class="ki-outline ki-eye fs-2"></i>
                                     </a>
@@ -300,6 +302,10 @@
 @endpush
 
 @push('page-js')
+    <script>
+        const reportDeleteRoute = "{{ route('reports.destroy', ':id') }}";
+    </script>
+
     <script src="{{ asset('js/reports/index.js') }}"></script>
 
     <script>

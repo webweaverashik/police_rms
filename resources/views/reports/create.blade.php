@@ -77,21 +77,20 @@
                             <div class="row row-cols-2 row-cols-xl-4 g-4">
                                 @foreach ($parliamentSeats as $seat)
                                     <div class="col">
-                                        <label
-                                            class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6"
-                                            data-kt-button="true">
-                                            <!--begin::Radio-->
-                                            <span
-                                                class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                                <input class="form-check-input" type="radio" name="parliament_seat_id"
-                                                    value="{{ $seat->id }}" required />
+                                        <input type="radio" class="btn-check" name="parliament_seat_id"
+                                            id="seat_{{ $seat->id }}" value="{{ $seat->id }}" required>
+
+                                        <label for="seat_{{ $seat->id }}"
+                                            class="btn btn-outline btn-outline-dashed btn-active-light-primary btn-radio-lg w-100 d-flex align-items-center fs-4 p-6">
+
+                                            <!-- Icon -->
+                                            <i class="ki-outline ki-map fs-2x me-3"></i>
+
+                                            <!-- Text -->
+                                            <span class="fw-bold">
+                                                {{ $seat->name }}
                                             </span>
-                                            <!--end::Radio-->
-                                            <!--begin::Info-->
-                                            <span class="ms-5">
-                                                <span class="fs-4 fw-bold text-gray-800 d-block">{{ $seat->name }}</span>
-                                            </span>
-                                            <!--end::Info-->
+
                                         </label>
                                     </div>
                                 @endforeach
@@ -226,7 +225,7 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <!-- Program Date & Time -->
                     <div class="col-lg-4">
                         <div class="mb-8 fv-row">
@@ -235,7 +234,7 @@
                                 placeholder="তারিখ ও সময় সেট করুন" class="form-control form-control-solid fs-4" required>
                         </div>
                     </div>
-                    
+
                     <!-- Tentative Attendee Count -->
                     <div class="col-lg-4">
                         <div class="mb-8 fv-row">
@@ -255,11 +254,11 @@
                         </div>
                     </div>
 
-                    
+
                 </div>
             </div>
         </div>
-        
+
         <!-- ===================== Program Details ===================== -->
         <div class="card card-flush py-4 mb-7">
             <div class="card-header">
@@ -271,14 +270,14 @@
             <div class="card-body pt-0">
                 <div class="row">
                     <!-- Location -->
-                    <div class="col-lg-5">
+                    <div class="col-lg-12">
                         <div class="mb-8 fv-row">
                             <label class="form-label fs-4 required">প্রোগ্রামের বিষয়</label>
                             <input type="text" name="program_title" class="form-control form-control-solid fs-4"
                                 placeholder="প্রোগ্রামের বিষয় লিখুন">
                         </div>
                     </div>
-                    
+
                     <!-- Program Status -->
                     <div class="col-lg-4">
                         <div class="mb-8 fv-row">
@@ -311,7 +310,7 @@
                     </div>
 
                     <!-- Final Attendee Count -->
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                         <div class="mb-8 fv-row">
                             <label class="form-label fs-4">মোট উপস্থিতি (জন) <span class="text-muted fst-italic">(প্রযোজ্য
                                     ক্ষেত্রে)</span></label>
@@ -324,7 +323,7 @@
                     <div class="col-lg-12">
                         <div class="mb-8 fv-row">
                             <label class="form-label fs-4 required">বিস্তারিত বর্ণনা</label>
-                            <textarea name="program_description" rows="6" class="form-control form-control-solid fs-4"
+                            <textarea name="program_description" rows="10" class="form-control form-control-solid fs-4"
                                 placeholder="প্রোগ্রামের বিস্তারিত লিখুন" required></textarea>
                         </div>
                     </div>
@@ -346,7 +345,6 @@
 
     </form>
     <!--end::Form-->
-
 @endsection
 
 

@@ -106,7 +106,7 @@ class User extends Authenticatable
     /** Super Admin shortcut */
     public function isAdmin(): bool
     {
-        return $this->hasRole('অ্যাডমিন');
+        return $this->hasRole('Administrator');
     }
 
     /** Check active status */
