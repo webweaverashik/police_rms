@@ -1,9 +1,10 @@
 <?php
 namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use App\Models\User\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -12,7 +13,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::with(['role:id,name', 'designation:id,name', 'zones:id,name', 'loginActivities'])->withCount('reports')->latest()->get();
+
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -68,8 +71,45 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return response()->json(['success' => true]);
+    }
+
+    /**
+     * Toggle active and inactive users
+     */
+    public function toggleActive(Request $request)
+    {
+        $user = User::find($request->user_id);
+
+        if (! $user) {
+            return response()->json(['success' => false, 'message' => 'Error. Please, contact support.']);
+        }
+
+        $user->is_active = $request->is_active;
+        $user->save();
+
+        return response()->json(['success' => true, 'message' => 'User activation status updated.']);
+    }
+
+    /**
+     * Reset user password
+     */
+    public function userPasswordReset(Request $request, User $user)
+    {
+        $request->validate([
+            'new_password' => 'required|string|min:6',
+        ]);
+
+        if (! $user) {
+            return response()->json(['success' => false, 'message' => 'User not found.']);
+        }
+
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return response()->json(['success' => true]);
     }
 }

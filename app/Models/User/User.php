@@ -1,15 +1,15 @@
 <?php
 namespace App\Models\User;
 
-use App\Models\User\Role;
+use App\Models\Administrative\Zone;
 use App\Models\Report\Report;
 use App\Models\User\Designation;
 use App\Models\User\LoginActivity;
-use App\Models\Administrative\Zone;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\User\Role;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -90,7 +90,6 @@ class User extends Authenticatable
         return $this->hasMany(Report::class, 'created_by');
     }
 
-    
     /*
     |--------------------------------------------------------------------------
     | Helper Methods

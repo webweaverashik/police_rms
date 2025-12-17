@@ -39,7 +39,12 @@ Route::middleware(['auth', 'isLoggedIn'])->group(function () {
     // ------- AJAX routes end -------
 
     // ------- Custom routes start -------
+    // Users
+    Route::post('users/toggle-active', [UserController::class, 'toggleActive'])->name('users.toggleActive');
+    Route::put('users/{user}/password', [UserController::class, 'userPasswordReset'])->name('users.password.reset');
     Route::get('profile', [UserController::class, 'profile'])->name('profile');
+
+
     Route::resource('users', UserController::class);
     Route::resource('designations', DesignationController::class);
     Route::resource('political-parties', PoliticalPartyController::class);

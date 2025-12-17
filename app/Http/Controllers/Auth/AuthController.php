@@ -74,7 +74,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message'  => 'সাইন ইন সফল হয়েছে।',
-            'redirect' => route('reports.index'),
+            'redirect' => auth()->user()->role->name === 'Operator' ? route('dashboard') : route('reports.index'),
         ]);
     }
 
