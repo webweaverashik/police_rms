@@ -3,6 +3,7 @@ namespace App\Models\Political;
 
 use App\Models\Report\Report;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Political\SeatPartyCandidate;
 
 class ParliamentSeat extends Model
 {
@@ -11,5 +12,10 @@ class ParliamentSeat extends Model
     public function reports()
     {
         return $this->hasMany(Report::class);
+    }
+
+    public function seatPartyCandidates()
+    {
+        return $this->hasMany(SeatPartyCandidate::class);
     }
 }

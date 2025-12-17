@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('program_types', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description')->nullable();
+            $table->string('name')->unique();
+            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
         });
-
     }
 
     /**

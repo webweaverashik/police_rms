@@ -1,16 +1,17 @@
 <?php
 namespace App\Models\Report;
 
-use App\Models\User\User;
-use App\Models\Report\ProgramType;
-use App\Models\Administrative\Zone;
 use App\Models\Administrative\Union;
 use App\Models\Administrative\Upazila;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Administrative\Zone;
 use App\Models\Political\ParliamentSeat;
 use App\Models\Political\PoliticalParty;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Political\SeatPartyCandidate;
+use App\Models\Report\ProgramType;
+use App\Models\User\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Report
@@ -29,27 +30,28 @@ class Report extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'parliament_seat_id',
         'upazila_id',
         'zone_id',
         'union_id',
         'location_name',
+        'parliament_seat_id',
         'political_party_id',
-        'candidate_name',
         'program_type_id',
-        'program_date_time',
+        'program_date',
+        'program_time',
         'program_special_guest',
         'program_chair',
         'tentative_attendee_count',
         'program_status',
-        'final_attendee_count',
         'program_title',
         'program_description',
         'created_by',
+        'deleted_by',
     ];
 
     protected $casts = [
-        'program_date_time' => 'datetime',
+        'program_date' => 'date',
+        'program_time' => 'datetime:H:i',
     ];
 
     /*
@@ -87,7 +89,7 @@ class Report extends Model
      */
     public function politicalParty()
     {
-        return $this->belongsTo(PoliticalParty::class, 'political_party_id');
+        return $this->belongsTo(PoliticalParty::class);
     }
 
     /**
@@ -121,4 +123,17 @@ class Report extends Model
     {
         return $this->belongsTo(User::class, 'deleted_by')->withTrashed();
     }
+
+    // 🔥 Auto resolve candidate
+    public function seatPartyCandidate()
+    {
+        return $this->hasOne(SeatPartyCandidate::class,
+            'political_party_id',
+            'political_party_id'
+        )->whereColumn(
+            'seat_party_candidates.parliament_seat_id',
+            'reports.parliament_seat_id'
+        );
+    }
+
 }

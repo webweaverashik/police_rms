@@ -52,6 +52,7 @@
 
 @push('page-js')
     <script>
+        document.getElementById("user_info_menu").classList.add("here", "show");
         document.getElementById("user_profile_menu").classList.add("active");
     </script>
 @endpush

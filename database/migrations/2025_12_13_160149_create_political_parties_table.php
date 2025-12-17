@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('party_head')->nullable();
-            $table->text('local_office_address')->nullable();
             $table->timestamps();
         });
 
