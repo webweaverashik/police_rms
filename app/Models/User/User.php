@@ -3,6 +3,7 @@ namespace App\Models\User;
 
 use App\Models\Administrative\Zone;
 use App\Models\Report\Report;
+use App\Models\Report\ReportAssignment;
 use App\Models\User\Designation;
 use App\Models\User\LoginActivity;
 use App\Models\User\Role;
@@ -102,16 +103,52 @@ class User extends Authenticatable
         return $this->role && $this->role->name === $roleName;
     }
 
-    /** Super Admin shortcut */
+    /** Role Helpers */
+    public function isSuperAdmin(): bool
+    {
+        return $this->hasRole('SuperAdmin');
+    }
+
     public function isAdmin(): bool
     {
-        return $this->hasRole('Administrator');
+        return $this->hasRole('Admin');
+    }
+
+    public function isViewer(): bool
+    {
+        return in_array($this->role->name, ['Viewer', 'Magistrate']);
+    }
+
+    public function isOperator(): bool
+    {
+        return $this->role->name === 'Operator';
     }
 
     /** Check active status */
     public function isActive(): bool
     {
         return $this->is_active === true;
+    }
+
+    /**
+     * Reports assigned to this user (UNO)
+     */
+    public function assignedReports()
+    {
+        return $this->belongsToMany(
+            Report::class,
+            'report_assignments',
+            'user_id',
+            'report_id'
+        );
+    }
+
+/**
+ * Assignments made by this user (Admin / SuperAdmin)
+ */
+    public function assignedByMe()
+    {
+        return $this->hasMany(ReportAssignment::class, 'assigned_by');
     }
 
 }

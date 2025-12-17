@@ -14,18 +14,27 @@ class UserSeeder extends Seeder
     {
         /*
         |--------------------------------------------------------------------------
-        | Roles
+        | Roles (MUST exist before running this seeder)
+        |--------------------------------------------------------------------------
+        | SuperAdmin  → Full system control (ICT / System owner)
+        | Admin       → Police Super (SP)
+        | Viewer      → OC, ADC, ASP (Zone-based viewers)
+        | Magistrate  → UNO (Assigned-report viewer only)
+        | Operator    → Field level (SI, ASI, Inspector, Constable)
         |--------------------------------------------------------------------------
         */
-        $adminRole    = Role::where('name', 'Administrator')->firstOrFail();
-        $viewerRole   = Role::where('name', 'Viewer')->firstOrFail();
-        $operatorRole = Role::where('name', 'Operator')->firstOrFail();
+        $superAdminRole = Role::where('name', 'SuperAdmin')->firstOrFail();
+        $adminRole      = Role::where('name', 'Admin')->firstOrFail();
+        $viewerRole     = Role::where('name', 'Viewer')->firstOrFail();
+        $magistrateRole = Role::where('name', 'Magistrate')->firstOrFail();
+        $operatorRole   = Role::where('name', 'Operator')->firstOrFail();
 
         /*
         |--------------------------------------------------------------------------
-        | Designations
+        | Designations (Bangla)
         |--------------------------------------------------------------------------
         */
+        $ict       = Designation::where('name', 'আইসিটি অফিসার')->firstOrFail();
         $sp        = Designation::where('name', 'পুলিশ সুপার (এসপি)')->firstOrFail();
         $adc       = Designation::where('name', 'অতিরিক্ত পুলিশ সুপার')->firstOrFail();
         $uno       = Designation::where('name', 'উপজেলা নির্বাহী কর্মকর্তা')->firstOrFail();
@@ -40,38 +49,37 @@ class UserSeeder extends Seeder
         | Zones (Bangla)
         |--------------------------------------------------------------------------
         */
-        $kalapara        = Zone::where('name', 'কলাপাড়া জোন')->firstOrFail();
-        $kalaparaPayra   = Zone::where('name', 'কলাপাড়া জোন (পায়রা বন্দর)')->firstOrFail();
-        $galachipa       = Zone::where('name', 'গলাচিপা জোন')->firstOrFail();
-        $dashmina        = Zone::where('name', 'দশমিনা জোন')->firstOrFail();
-        $dumki           = Zone::where('name', 'দুমকি জোন')->firstOrFail();
-        $patuakhaliSadar = Zone::where('name', 'পটুয়াখালী সদর জোন')->firstOrFail();
-        $bauphal         = Zone::where('name', 'বাউফল জোন')->firstOrFail();
-        $mohipur         = Zone::where('name', 'মহিপুর জোন')->firstOrFail();
-        $mirzaganj       = Zone::where('name', 'মির্জাগঞ্জ জোন')->firstOrFail();
-        $rangabali       = Zone::where('name', 'রাঙ্গাবালী জোন')->firstOrFail();
+        $kalapara        = Zone::where('name', 'কলাপাড়া')->firstOrFail();
+        $galachipa       = Zone::where('name', 'গলাচিপা')->firstOrFail();
+        $dashmina        = Zone::where('name', 'দশমিনা')->firstOrFail();
+        $dumki           = Zone::where('name', 'দুমকি')->firstOrFail();
+        $patuakhaliSadar = Zone::where('name', 'পটুয়াখালী সদর')->firstOrFail();
+        $bauphal         = Zone::where('name', 'বাউফল')->firstOrFail();
+        $mohipur         = Zone::where('name', 'মহিপুর')->firstOrFail();
+        $mirzaganj       = Zone::where('name', 'মির্জাগঞ্জ')->firstOrFail();
+        $rangabali       = Zone::where('name', 'রাঙ্গাবালী')->firstOrFail();
 
         /*
         |--------------------------------------------------------------------------
-        | Administrator (Full Access)
+        | Super Admin (ICT / System Owner)
         |--------------------------------------------------------------------------
         */
-        $admin = User::updateOrCreate(
+        $superAdmin = User::updateOrCreate(
             ['email' => 'admin@prms.gov'],
             [
-                'name'           => 'আইসিটি অ্যাডমিন',
-                'designation_id' => $sp->id,
-                'role_id'        => $adminRole->id,
+                'name'           => 'সবুজ তালুকদার',
+                'bp_number'      => null,
+                'designation_id' => $ict->id,
+                'role_id'        => $superAdminRole->id,
                 'mobile_no'      => '01700000000',
                 'password'       => Hash::make('password123'),
                 'is_active'      => true,
             ]
         );
 
-        // Admin → ALL zones
-        $admin->zones()->sync([
+        // SuperAdmin → Access to all zones (for monitoring)
+        $superAdmin->zones()->sync([
             $kalapara->id,
-            $kalaparaPayra->id,
             $galachipa->id,
             $dashmina->id,
             $dumki->id,
@@ -84,29 +92,47 @@ class UserSeeder extends Seeder
 
         /*
         |--------------------------------------------------------------------------
-        | Viewers (SP, ADC, UNO, OC)
+        | Admin (Police Super - SP)
         |--------------------------------------------------------------------------
         */
-
-        // SP
         $spUser = User::updateOrCreate(
             ['email' => 'sp@prms.gov'],
             [
                 'name'           => 'মোঃ আবু ইউসুফ',
+                'bp_number'      => 'BP-10001',
                 'designation_id' => $sp->id,
-                'role_id'        => $viewerRole->id,
+                'role_id'        => $adminRole->id,
                 'mobile_no'      => '01700000001',
                 'password'       => Hash::make('password123'),
                 'is_active'      => true,
             ]
         );
-        $spUser->zones()->sync([$patuakhaliSadar->id]);
+
+        // SP → All zones
+        $spUser->zones()->sync([
+            $kalapara->id,
+            $galachipa->id,
+            $dashmina->id,
+            $dumki->id,
+            $patuakhaliSadar->id,
+            $bauphal->id,
+            $mohipur->id,
+            $mirzaganj->id,
+            $rangabali->id,
+        ]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Viewers (ADC, OC)
+        |--------------------------------------------------------------------------
+        */
 
         // ADC
         $adcUser = User::updateOrCreate(
             ['email' => 'adc@prms.gov'],
             [
                 'name'           => 'মোঃ অপু সরোয়ার',
+                'bp_number'      => 'BP-20001',
                 'designation_id' => $adc->id,
                 'role_id'        => $viewerRole->id,
                 'mobile_no'      => '01700000002',
@@ -116,25 +142,12 @@ class UserSeeder extends Seeder
         );
         $adcUser->zones()->sync([$patuakhaliSadar->id]);
 
-        // UNO
-        $unoUser = User::updateOrCreate(
-            ['email' => 'uno@prms.gov'],
-            [
-                'name'           => 'কাউছার হামিদ',
-                'designation_id' => $uno->id,
-                'role_id'        => $viewerRole->id,
-                'mobile_no'      => '01700000003',
-                'password'       => Hash::make('password123'),
-                'is_active'      => true,
-            ]
-        );
-        $unoUser->zones()->sync([$kalapara->id]);
-
-        // OC (Viewer as requested)
+        // OC
         $ocUser = User::updateOrCreate(
             ['email' => 'oc@prms.gov'],
             [
-                'name'           => 'মো: সৈয়দুজ্জামান',
+                'name'           => 'মোঃ সৈয়দুজ্জামান',
+                'bp_number'      => 'BP-20002',
                 'designation_id' => $oc->id,
                 'role_id'        => $viewerRole->id,
                 'mobile_no'      => '01700000004',
@@ -143,6 +156,28 @@ class UserSeeder extends Seeder
             ]
         );
         $ocUser->zones()->sync([$galachipa->id]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Magistrate (UNO) – Assigned-report viewer only
+        |--------------------------------------------------------------------------
+        | NOTE:
+        | UNO access comes from report_assignments table,
+        | NOT from zones.
+        |--------------------------------------------------------------------------
+        */
+        User::updateOrCreate(
+            ['email' => 'uno@prms.gov'],
+            [
+                'name'           => 'কাউছার হামিদ',
+                'bp_number'      => null,
+                'designation_id' => $uno->id,
+                'role_id'        => $magistrateRole->id,
+                'mobile_no'      => '01700000003',
+                'password'       => Hash::make('password123'),
+                'is_active'      => true,
+            ]
+        );
 
         /*
         |--------------------------------------------------------------------------
@@ -155,6 +190,7 @@ class UserSeeder extends Seeder
             ['email' => 'inspector@prms.gov'],
             [
                 'name'           => 'মোঃ মাসুদ হোসেন',
+                'bp_number'      => 'BP-30001',
                 'designation_id' => $inspector->id,
                 'role_id'        => $operatorRole->id,
                 'mobile_no'      => '01700000005',
@@ -169,6 +205,7 @@ class UserSeeder extends Seeder
             ['email' => 'si@prms.gov'],
             [
                 'name'           => 'আব্দুর রহিম মৃধা',
+                'bp_number'      => 'BP-30002',
                 'designation_id' => $si->id,
                 'role_id'        => $operatorRole->id,
                 'mobile_no'      => '01700000006',
@@ -183,6 +220,7 @@ class UserSeeder extends Seeder
             ['email' => 'asi@prms.gov'],
             [
                 'name'           => 'মোঃ হুমায়ুন কবির',
+                'bp_number'      => 'BP-30003',
                 'designation_id' => $asi->id,
                 'role_id'        => $operatorRole->id,
                 'mobile_no'      => '01700000007',
@@ -197,6 +235,7 @@ class UserSeeder extends Seeder
             ['email' => 'constable@prms.gov'],
             [
                 'name'           => 'মোঃ নওশের আলী',
+                'bp_number'      => 'BP-30004',
                 'designation_id' => $constable->id,
                 'role_id'        => $operatorRole->id,
                 'mobile_no'      => '01700000008',

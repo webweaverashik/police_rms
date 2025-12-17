@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProgramType extends Model
 {
-    protected $fillable = ['name', 'created_by'];
+    protected $fillable = ['name', 'description', 'created_by'];
 
     public function reports()
     {

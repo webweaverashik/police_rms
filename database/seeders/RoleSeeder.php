@@ -1,6 +1,7 @@
 <?php
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use App\Models\User\Role;
 use Illuminate\Database\Seeder;
 
@@ -11,11 +12,19 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        Role::insert([
-            ['name' => 'Administrator'],
-            ['name' => 'Viewer'],
-            ['name' => 'Operator'],
-        ]);
+        $roles = [
+            'SuperAdmin',
+            'Admin',
+            'Viewer',
+            'Magistrate',
+            'Operator',
+        ];
 
+        foreach ($roles as $role) {
+            Role::updateOrCreate(
+                ['name' => $role],
+                ['created_at' => Carbon::now(), 'updated_at' => Carbon::now()]
+            );
+        }
     }
 }

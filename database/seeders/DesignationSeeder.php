@@ -12,6 +12,7 @@ class DesignationSeeder extends Seeder
     public function run(): void
     {
         Designation::insert([
+            ['name' => 'আইসিটি অফিসার'],
             ['name' => 'পুলিশ সুপার (এসপি)'],
             ['name' => 'অতিরিক্ত পুলিশ সুপার'],
             ['name' => 'সহকারী পুলিশ সুপার'],

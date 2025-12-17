@@ -14,7 +14,7 @@ class ZoneSeeder extends Seeder
         Zone::insert([
             ['name' => 'কলাপাড়া'],
             ['name' => 'গলাচিপা'],
-            ['name' => 'দশমিনা জোন'],
+            ['name' => 'দশমিনা'],
             ['name' => 'দুমকি'],
             ['name' => 'পটুয়াখালী সদর'],
             ['name' => 'বাউফল'],
