@@ -120,7 +120,7 @@
                         <div class="mb-8 fv-row">
                             <label class="required form-label fs-4">ইউনিয়ন
                                 <span class="ms-1" data-bs-toggle="tooltip"
-                                    title="প্রথম উপজেলা সিলেক্ট করুন। এরপর সেই উপজেলার ইউনিয়ন লিস্ট দেখাবে।">
+                                    title="প্রথমে উপজেলা সিলেক্ট করুন। এরপর সেই উপজেলার ইউনিয়ন লিস্ট দেখাবে।">
                                     <i class="ki-outline ki-information fs-4"></i>
                                 </span>
                             </label>
@@ -165,16 +165,14 @@
                     <!-- Political Party -->
                     <div class="col-lg-4">
                         <div class="mb-8 fv-row">
-                            <label class="required form-label fs-4">রাজনৈতিক দলের নাম</label>
+                            <label class="required form-label fs-4">রাজনৈতিক দলের নাম <span class="ms-1" data-bs-toggle="tooltip"
+                                    title="প্রথমে সংসদীয় আসন সিলেক্ট করুন তাহলে সেই আসনের রাজনৈতিক দলের লিস্ট দেখাবে">
+                                    <i class="ki-outline ki-information fs-4"></i>
+                                </span></label>
                             <select name="political_party_id" class="form-select form-select-solid fs-4"
                                 data-control="select2" data-placeholder="রাজনৈতিক দল বাছাই করুন" data-allow-clear="true"
-                                required>
+                                required disabled>
                                 <option></option>
-                                @foreach ($politicalParties as $party)
-                                    <option value="{{ $party->id }}">
-                                        {{ $party->name }}
-                                    </option>
-                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -182,9 +180,12 @@
                     <!-- Candidate Name -->
                     <div class="col-lg-4">
                         <div class="mb-8 fv-row">
-                            <label class="form-label fs-4 required">প্রার্থীর নাম</label>
+                            <label class="form-label fs-4 required">প্রার্থীর নাম <span class="ms-1" data-bs-toggle="tooltip"
+                                    title="সংসদীয় আসন ও রাজনৈতিক দল উভয় সিলেক্ট করলে প্রার্থীর নাম অটো চলে আসবে বা আপনি চাইলে লিখেও দিতে পারেন।">
+                                    <i class="ki-outline ki-information fs-4"></i>
+                                </span></label>
                             <input type="text" name="candidate_name" class="form-control form-control-solid fs-4"
-                                placeholder="প্রার্থীর নাম লিখুন">
+                                placeholder="প্রার্থীর নাম লিখুন" required disabled>
                         </div>
                     </div>
 
@@ -229,7 +230,8 @@
                     <!-- Program Date -->
                     <div class="col-6 col-lg-2">
                         <div class="mb-8 fv-row">
-                            <label class="form-label fs-4">তারিখ <span class="text-muted fst-italic">(প্রযোজ্য ক্ষেত্রে)</span></label>
+                            <label class="form-label fs-4">তারিখ <span class="text-muted fst-italic">(প্রযোজ্য
+                                    ক্ষেত্রে)</span></label>
                             <input name="program_date" id="program_date_picker" placeholder="তারিখ সিলেক্ট করুন"
                                 class="form-control form-control-solid fs-4">
                         </div>
@@ -238,7 +240,8 @@
                     <!-- Program Time -->
                     <div class="col-6 col-lg-2">
                         <div class="mb-8 fv-row">
-                            <label class="form-label fs-4">সময় <span class="text-muted fst-italic">(প্রযোজ্য ক্ষেত্রে)</span></label>
+                            <label class="form-label fs-4">সময় <span class="text-muted fst-italic">(প্রযোজ্য
+                                    ক্ষেত্রে)</span></label>
                             <input name="program_time" id="program_time_picker" placeholder="সময় সেট করুন"
                                 class="form-control form-control-solid fs-4">
                         </div>
@@ -248,7 +251,8 @@
                     <!-- Location -->
                     <div class="col-lg-4">
                         <div class="mb-8 fv-row">
-                            <label class="form-label fs-4 ">প্রোগ্রামের স্থান <span class="text-muted fst-italic">(প্রযোজ্য ক্ষেত্রে)</span></label>
+                            <label class="form-label fs-4 ">প্রোগ্রামের স্থান <span
+                                    class="text-muted fst-italic">(প্রযোজ্য ক্ষেত্রে)</span></label>
                             <input type="text" name="location_name" class="form-control form-control-solid fs-4"
                                 placeholder="প্রোগ্রামের স্থান লিখুন">
                         </div>
@@ -272,9 +276,9 @@
                     <!-- Location -->
                     <div class="col-lg-12">
                         <div class="mb-8 fv-row">
-                            <label class="form-label fs-4">প্রোগ্রামের বিষয়<span class="text-muted fst-italic">(প্রযোজ্য ক্ষেত্রে)</span></label>
+                            <label class="form-label fs-4 required">প্রোগ্রামের বিষয়</label>
                             <input type="text" name="program_title" class="form-control form-control-solid fs-4"
-                                placeholder="প্রোগ্রামের বিষয় লিখুন">
+                                placeholder="প্রোগ্রামের বিষয় লিখুন" required>
                         </div>
                     </div>
 
@@ -322,7 +326,8 @@
                     <!-- Program Description -->
                     <div class="col-lg-12">
                         <div class="mb-8 fv-row">
-                            <label class="form-label fs-4">বিস্তারিত বর্ণনা <span class="text-muted fst-italic">(প্রযোজ্য ক্ষেত্রে)</span></label>
+                            <label class="form-label fs-4">বিস্তারিত বর্ণনা <span class="text-muted fst-italic">(প্রযোজ্য
+                                    ক্ষেত্রে)</span></label>
                             <textarea name="program_description" rows="10" class="form-control form-control-solid fs-4"
                                 placeholder="প্রোগ্রামের বিস্তারিত লিখুন"></textarea>
                         </div>
@@ -354,7 +359,11 @@
 @push('page-js')
     <script>
         const storeReportRoute = "{{ route('reports.store') }}";
+
+        // AJAX routes
         const fetchUnionRoute = "{{ route('ajax.union', ':upazila_id') }}";
+        const fetchSeatPartiesRoute = "{{ route('ajax.seat.parties') }}";
+        const fetchCandidateRoute = "{{ route('ajax.seat.party.candidate') }}";
     </script>
 
     <script src="{{ asset('js/reports/create.js') }}"></script>

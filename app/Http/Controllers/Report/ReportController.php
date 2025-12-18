@@ -14,6 +14,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use PDF;
+use Rakibhstu\Banglanumber\NumberToBangla;
 
 class ReportController extends Controller
 {
@@ -28,9 +30,7 @@ class ReportController extends Controller
         $cacheKey = 'reports.index.' . $user->role->name . '.' . $user->id;
 
         $reports = Cache::remember($cacheKey, now()->addHours(2), function () use ($user) {
-            $query = Report::query()
-                ->with(['upazila', 'zone', 'union', 'politicalParty', 'parliamentSeat', 'programType', 'createdBy:id,name,designation_id', 'createdBy.designation:id,name', 'assignment'])
-                ->latest('reports.created_at');
+            $query = Report::query()->with(['upazila', 'zone', 'union', 'politicalParty', 'parliamentSeat', 'programType', 'createdBy:id,name,designation_id', 'createdBy.designation:id,name', 'assignment']);
 
             // Operator → own reports
             if ($user->isOperator()) {
@@ -43,7 +43,7 @@ class ReportController extends Controller
                 });
             }
 
-            return $query->latest('reports.id')->get();
+            return $query->latest('id')->get();
         });
 
         /*
@@ -54,7 +54,7 @@ class ReportController extends Controller
         $upazilas         = Cache::remember('filters.upazilas', now()->addHours(6), fn() => Upazila::all());
         $zones            = Cache::remember('filters.zones', now()->addHours(6), fn() => Zone::all());
         $unions           = Cache::remember('filters.unions', now()->addHours(6), fn() => Union::all());
-        $politicalParties = Cache::remember('filters.parties', now()->addHours(6), fn() => PoliticalParty::all());
+        $politicalParties = Cache::remember('filters.parties', now()->addHours(6), fn() => PoliticalParty::whereHas('seatPartyCandidates')->orderBy('name')->get());
         $parliamentSeats  = Cache::remember('filters.seats', now()->addHours(6), fn() => ParliamentSeat::all());
         $programTypes     = Cache::remember('filters.program_types', now()->addHours(6), fn() => ProgramType::all());
 
@@ -74,13 +74,12 @@ class ReportController extends Controller
             return redirect()->route('reports.index')->with('warning', 'আপনার প্রতিবেদন তৈরির অনুমতি নেই');
         }
 
-        $upazilas         = Upazila::all();
-        $zones            = Zone::all();
-        $politicalParties = PoliticalParty::all();
-        $parliamentSeats  = ParliamentSeat::all();
-        $programTypes     = ProgramType::all();
+        $upazilas        = Upazila::all();
+        $zones           = Zone::all();
+        $parliamentSeats = ParliamentSeat::all();
+        $programTypes    = ProgramType::all();
 
-        return view('reports.create', compact('upazilas', 'zones', 'politicalParties', 'parliamentSeats', 'programTypes'));
+        return view('reports.create', compact('upazilas', 'zones', 'parliamentSeats', 'programTypes'));
     }
 
     /**
@@ -96,7 +95,7 @@ class ReportController extends Controller
             }
 
             if ($request->filled('program_time')) {
-                $programTime = Carbon::createFromFormat('h:i A', $request->program_time)->format('H:i:s');
+                $programTime = Carbon::createFromFormat('h:i A', $request->program_time)->format('H:i');
             }
 
             Report::create([
@@ -108,9 +107,9 @@ class ReportController extends Controller
                 'political_party_id'       => $request->political_party_id,
                 'candidate_name'           => $request->candidate_name,
 
-                'program_special_guest'    => $request->filled('program_special_guest') ? $request->program_chair : null,
+                'program_special_guest'    => $request->filled('program_special_guest') ? $request->program_special_guest : null,
                 'program_chair'            => $request->filled('program_chair') ? $request->program_chair : null,
-                'location_name'            => $request->filled('location_name') ? $request->program_chair : null,
+                'location_name'            => $request->filled('location_name') ? $request->location_name : null,
 
                 'program_date'             => $programDate ?? null,
                 'program_time'             => $programTime ?? null,
@@ -126,9 +125,9 @@ class ReportController extends Controller
             ]);
 
             DB::commit();
-            
+
             Cache::flush(); // acceptable for small system
-            
+
             return response()->json([
                 'success'  => true,
                 'message'  => 'প্রতিবেদন সফলভাবে সংরক্ষণ করা হয়েছে',
@@ -136,7 +135,6 @@ class ReportController extends Controller
             ]);
         } catch (\Throwable $e) {
             DB::rollBack();
-
 
             // ✅ production-safe error message
             return response()->json(
@@ -168,14 +166,19 @@ class ReportController extends Controller
             return redirect()->route('reports.index')->with('warning', 'আপনার প্রতিবেদন সংশোধনের অনুমতি নেই');
         }
 
-        $upazilas         = Upazila::all();
-        $unions           = Union::all();
-        $zones            = Zone::all();
-        $politicalParties = PoliticalParty::all();
-        $parliamentSeats  = ParliamentSeat::all();
-        $programTypes     = ProgramType::all();
-
         $report = Report::findOrFail($id);
+
+        $upazilas                = Upazila::all();
+        $unions                  = Union::all();
+        $zones                   = Zone::all();
+        $politicalParties = PoliticalParty::whereHas('seatPartyCandidates', function ($q) use ($report) {
+            $q->where('parliament_seat_id', $report->parliament_seat_id);
+        })
+            ->orderBy('name')
+            ->get();
+
+        $parliamentSeats = ParliamentSeat::all();
+        $programTypes    = ProgramType::all();
 
         return view('reports.edit', compact('report', 'upazilas', 'unions', 'zones', 'politicalParties', 'parliamentSeats', 'programTypes'));
     }
@@ -185,17 +188,76 @@ class ReportController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $report = Report::findOrFail($id);
+        DB::beginTransaction();
 
-        $report->update($request->all());
+        try {
+            $report = Report::findOrFail($id);
 
-        Cache::flush(); // acceptable for small system
+            // Normalize date
+            if ($request->filled('program_date')) {
+                $programDate = Carbon::createFromFormat('d-m-Y', $request->program_date)->format('Y-m-d');
+            } else {
+                $programDate = $report->program_date; // 🔒 keep old
+            }
 
-        return response()->json([
-            'success'  => true,
-            'message'  => 'প্রতিবেদন সফলভাবে আপডেট হয়েছে',
-            'redirect' => route('reports.index'),
-        ]);
+            // Normalize time
+            if ($request->filled('program_time')) {
+                $programTime = Carbon::createFromFormat('h:i A', $request->program_time)->format('H:i:s');
+            } else {
+                $programTime = $report->program_time; // 🔒 keep old
+            }
+
+            $report->update([
+                // 🔒 Administrative fields: update ONLY if present
+                'parliament_seat_id'       => $request->has('parliament_seat_id') ? $request->parliament_seat_id : $report->parliament_seat_id,
+
+                'upazila_id'               => $request->has('upazila_id') ? $request->upazila_id : $report->upazila_id,
+
+                'union_id'                 => $request->has('union_id') ? $request->union_id : $report->union_id,
+
+                'zone_id'                  => $request->has('zone_id') ? $request->zone_id : $report->zone_id,
+
+                // Editable fields
+                'political_party_id'       => $request->political_party_id,
+                'candidate_name'           => $request->candidate_name,
+
+                'program_special_guest'    => $request->filled('program_special_guest') ? $request->program_special_guest : null,
+
+                'program_chair'            => $request->filled('program_chair') ? $request->program_chair : null,
+
+                'location_name'            => $request->filled('location_name') ? $request->location_name : null,
+
+                'program_date'             => $programDate,
+                'program_time'             => $programTime,
+
+                'tentative_attendee_count' => $request->filled('tentative_attendee_count') ? $request->tentative_attendee_count : null,
+
+                'program_type_id'          => $request->program_type_id,
+                'program_status'           => $request->program_status,
+                'program_title'            => $request->program_title ?? null,
+                'program_description'      => $request->program_description ?? null,
+            ]);
+
+            DB::commit();
+
+            Cache::flush();
+
+            return response()->json([
+                'success'  => true,
+                'message'  => 'প্রতিবেদন সফলভাবে আপডেট হয়েছে',
+                'redirect' => route('reports.index'),
+            ]);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => config('app.debug') ? $e->getMessage() : 'প্রতিবেদন আপডেট করা যায়নি',
+                ],
+                500,
+            );
+        }
     }
 
     /**
@@ -214,7 +276,21 @@ class ReportController extends Controller
      */
     public function download(Report $report)
     {
-        $pdf = PDF::loadView('reports.pdf', compact('report'));
-        return $pdf->download('report.pdf');
+        $numto = new NumberToBangla();
+
+        $date = Carbon::parse($report->created_at);
+
+        // Date part
+        $bnDate = $numto->bnNum($date->format('d')) . '/' . $numto->bnNum($date->format('m')) . '/' . $numto->bnNum($date->format('Y'));
+
+        // Time part (12-hour)
+        $bnHour     = $numto->bnNum($date->format('h'));
+        $bnMinute   = $numto->bnNum($date->format('i'));
+        $bnMeridiem = $date->format('A') === 'AM' ? 'পূর্বাহ্ণ' : 'অপরাহ্ণ';
+
+        // Final output
+        $reportDateTime = $bnDate . ', ' . $bnHour . ':' . $bnMinute . ' ' . $bnMeridiem . ' খ্রিঃ';
+
+        return PDF::loadView('reports.pdf', compact('report', 'reportDateTime'))->download($report->program_title . ' - ' . $report->candidate_name . '.pdf');
     }
 }

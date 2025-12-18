@@ -127,13 +127,13 @@ var KTCreateReportForm = function () {
                                           },
                                     }
                               },
-                              // 'program_title': {
-                              //       validators: {
-                              //             notEmpty: {
-                              //                   message: 'প্রোগ্রামের বিষয় লিখুন।'
-                              //             },
-                              //       }
-                              // },
+                              'program_title': {
+                                    validators: {
+                                          notEmpty: {
+                                                message: 'প্রোগ্রামের বিষয় লিখুন।'
+                                          },
+                                    }
+                              },
                               // 'program_description': {
                               //       validators: {
                               //             notEmpty: {
@@ -293,6 +293,113 @@ var KTCreateReportForm = function () {
             });
       }
 
+      // ================================
+      // Load Political Parties by Seat
+      // ================================
+      function initSeatWiseParties() {
+            const partySelect = $('select[name="political_party_id"]');
+            const candidateInput = $('input[name="candidate_name"]');
+
+            function getSelectedSeatId() {
+                  const seat = $('input[name="parliament_seat_id"]:checked');
+                  return seat.length ? seat.val() : null;
+            }
+
+            $('input[name="parliament_seat_id"]').on('change', function () {
+                  const seatId = getSelectedSeatId();
+
+                  // Reset
+                  partySelect
+                        .empty()
+                        .append('<option></option>')
+                        .prop('disabled', true)
+                        .trigger('change');
+
+                  candidateInput
+                        .val('')
+                        .prop('disabled', true); // 🔒 keep disabled
+
+                  if (!seatId) return;
+
+                  fetch(`${fetchSeatPartiesRoute}?parliament_seat_id=${seatId}`, {
+                        headers: {
+                              'Accept': 'application/json',
+                              'X-Requested-With': 'XMLHttpRequest'
+                        }
+                  })
+                        .then(res => res.json())
+                        .then(data => {
+                              if (data.success && Array.isArray(data.parties)) {
+                                    data.parties.forEach(party => {
+                                          partySelect.append(
+                                                `<option value="${party.id}">${party.name}</option>`
+                                          );
+                                    });
+
+                                    // ✅ Enable party select AFTER seat chosen
+                                    partySelect.prop('disabled', false);
+                              }
+
+                              partySelect.trigger('change');
+                        })
+                        .catch(err => {
+                              console.error(err);
+                              toastr.error('রাজনৈতিক দল লোড করা যায়নি');
+                        });
+            });
+      }
+
+
+
+      // =====================================
+      // Load Candidate by Seat + Party
+      // =====================================
+      function initCandidateBySeatAndParty() {
+            const partySelect = $('select[name="political_party_id"]');
+            const candidateInput = $('input[name="candidate_name"]');
+
+            function getSelectedSeatId() {
+                  const seat = $('input[name="parliament_seat_id"]:checked');
+                  return seat.length ? seat.val() : null;
+            }
+
+            partySelect.on('change', function () {
+                  const seatId = getSelectedSeatId();
+                  const partyId = $(this).val();
+
+                  candidateInput.val('');
+
+                  if (!seatId || !partyId) {
+                        candidateInput.prop('disabled', true); // 🔒 still disabled
+                        return;
+                  }
+
+                  // ✅ Enable candidate input once party is selected
+                  candidateInput.prop('disabled', false);
+
+                  fetch(
+                        `${fetchCandidateRoute}?parliament_seat_id=${seatId}&political_party_id=${partyId}`,
+                        {
+                              headers: {
+                                    'Accept': 'application/json',
+                                    'X-Requested-With': 'XMLHttpRequest'
+                              }
+                        }
+                  )
+                        .then(res => res.json())
+                        .then(data => {
+                              if (data.success && data.candidate_name) {
+                                    candidateInput.val(data.candidate_name);
+                              }
+                        })
+                        .catch(err => {
+                              console.error(err);
+                              toastr.error('প্রার্থীর তথ্য লোড করা যায়নি');
+                        });
+            });
+      }
+
+
 
       // Public functions
       return {
@@ -300,6 +407,9 @@ var KTCreateReportForm = function () {
             init: function () {
                   initValidation();
                   initUnionByUpazila();
+
+                  initSeatWiseParties();
+                  initCandidateBySeatAndParty();
             }
       };
 

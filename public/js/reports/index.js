@@ -28,7 +28,7 @@ var AllReportsList = function () {
 
       // Hook export buttons
       var exportButtons = () => {
-            const documentTitle = 'সকল প্রতিবেদন';
+            const documentTitle = 'সকল দাখিলকৃত প্রতিবেদন';
 
             var buttons = new $.fn.dataTable.Buttons(datatable, {
                   buttons: [

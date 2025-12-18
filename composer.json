@@ -8,6 +8,7 @@
     "require": {
         "php": "^8.2",
         "bangladatetime/laravel": "^1.0",
+        "carlos-meneses/laravel-mpdf": "^2.1",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "rakibhstu/number-to-bangla": "^1.5",

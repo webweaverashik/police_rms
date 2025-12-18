@@ -305,7 +305,7 @@
                             <td>{{ $report->program_chair ?? '-' }}</td>
                             <td>{{ $report->programType?->name ?? '-' }}</td>
                             <td class="d-none">{{ $report->programType->id }}_{{ $report->programType->name }}</td>
-                            
+
                             <td>{{ $report->location_name ?? '-' }}</td>
 
                             {{-- Date --}}
@@ -348,8 +348,7 @@
 
                             {{-- Reporter (hidden for Operator) --}}
                             <td class="@if (auth()->user()->role->name == 'Operator') d-none @endif">
-                                {{ $report->createdBy->name }},
-                                {{ $report->createdBy->designation->name }}
+                                {{ $report->createdBy->name }}, {{ $report->createdBy->designation->name }}
                             </td>
 
                             <td class="d-none">
@@ -403,6 +402,10 @@
                                         class="btn btn-icon text-hover-primary">
                                         <i class="ki-outline ki-eye fs-2"></i>
                                     </a>
+
+                                    <a href="{{ route('reports.download', $report->id) }}"
+                                        class="btn btn-icon text-hover-primary px-3" target="_blank"><i
+                                            class="bi bi-download fs-2 me-2"></i></a>
                                 @endif
                             </td>
                         </tr>

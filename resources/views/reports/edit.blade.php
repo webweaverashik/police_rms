@@ -116,7 +116,7 @@
                         </div>
                     </div>
 
-                    <!-- Zone -->
+                    <!-- Union -->
                     <div class="col-lg-4">
                         <div class="mb-8 fv-row">
                             <label class="required form-label fs-4">ইউনিয়ন
@@ -171,7 +171,11 @@
                     <!-- Political Party -->
                     <div class="col-lg-4">
                         <div class="mb-8 fv-row">
-                            <label class="required form-label fs-4">রাজনৈতিক দলের নাম</label>
+                            <label class="required form-label fs-4">রাজনৈতিক দলের নাম <span class="ms-1"
+                                    data-bs-toggle="tooltip"
+                                    title="প্রথমে সংসদীয় আসন সিলেক্ট করুন তাহলে সেই আসনের রাজনৈতিক দলের লিস্ট দেখাবে">
+                                    <i class="ki-outline ki-information fs-4"></i>
+                                </span></label>
                             <select name="political_party_id" class="form-select form-select-solid fs-4"
                                 data-control="select2" data-placeholder="রাজনৈতিক দল বাছাই করুন" data-allow-clear="true"
                                 required>
@@ -188,9 +192,14 @@
                     <!-- Candidate Name -->
                     <div class="col-lg-4">
                         <div class="mb-8 fv-row">
-                            <label class="required form-label fs-4">প্রার্থীর নাম</label>
+                            <label class="required form-label fs-4">প্রার্থীর নাম <span class="ms-1"
+                                    data-bs-toggle="tooltip"
+                                    title="সংসদীয় আসন ও রাজনৈতিক দল উভয় সিলেক্ট করলে প্রার্থীর নাম অটো চলে আসবে বা আপনি চাইলে লিখেও দিতে পারেন।">
+                                    <i class="ki-outline ki-information fs-4"></i>
+                                </span></label>
                             <input type="text" name="candidate_name" class="form-control form-control-solid fs-4"
-                                placeholder="প্রার্থীর নাম লিখুন" required value="{{ $report->candidate_name }}">
+                                placeholder="প্রার্থীর নাম লিখুন" required
+                                value="{{ $report->candidate_name }}">
                         </div>
                     </div>
 
@@ -199,8 +208,9 @@
                         <div class="mb-8 fv-row">
                             <label class="form-label fs-4">প্রধান অতিথি <span class="text-muted fst-italic">(প্রযোজ্য
                                     ক্ষেত্রে)</span></label>
-                            <input type="text" name="program_special_guest" class="form-control form-control-solid fs-4"
-                                placeholder="প্রধান অতিথির নাম লিখুন" value="{{ $report->program_special_guest }}">
+                            <input type="text" name="program_special_guest"
+                                class="form-control form-control-solid fs-4" placeholder="প্রধান অতিথির নাম লিখুন"
+                                value="{{ $report->program_special_guest }}">
                         </div>
                     </div>
 
@@ -285,7 +295,7 @@
                         <div class="mb-8 fv-row">
                             <label class="form-label fs-4 required">প্রোগ্রামের বিষয়</label>
                             <input type="text" name="program_title" class="form-control form-control-solid fs-4"
-                                placeholder="প্রোগ্রামের বিষয় লিখুন" value="{{ $report->program_title }}">
+                                placeholder="প্রোগ্রামের বিষয় লিখুন" value="{{ $report->program_title }}" required>
                         </div>
                     </div>
 
@@ -335,9 +345,10 @@
                     <!-- Program Description -->
                     <div class="col-lg-12">
                         <div class="mb-8 fv-row">
-                            <label class="form-label fs-4 required">বিস্তারিত বর্ণনা</label>
+                            <label class="form-label fs-4">বিস্তারিত বর্ণনা <span class="text-muted fst-italic">(প্রযোজ্য
+                                    ক্ষেত্রে)</span></label>
                             <textarea name="program_description" rows="10" class="form-control form-control-solid fs-4"
-                                placeholder="প্রোগ্রামের বিস্তারিত লিখুন" required>{{ $report->program_description }}</textarea>
+                                placeholder="প্রোগ্রামের বিস্তারিত লিখুন">{{ $report->program_description }}</textarea>
                         </div>
                     </div>
 
@@ -366,7 +377,10 @@
         const reportId = "{{ $report->id }}";
         const updateReportRoute = "{{ route('reports.update', ':id') }}".replace(':id', reportId);
 
+        // AJAX routes
         const fetchUnionRoute = "{{ route('ajax.union', ':upazila_id') }}";
+        const fetchSeatPartiesRoute = "{{ route('ajax.seat.parties') }}";
+        const fetchCandidateRoute = "{{ route('ajax.seat.party.candidate') }}";
     </script>
 
     <script src="{{ asset('js/reports/edit.js') }}"></script>
