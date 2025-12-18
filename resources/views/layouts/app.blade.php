@@ -77,9 +77,8 @@
 
                                 @yield('content')
 
-                                @if (auth()->user()->role->name == 'Operator')
-                                    <div class="fixed-bottom bg-white shadow-lg border-top py-3 px-4"
-                                        style="z-index: 1000;">
+                                @if (auth()->user()->isOperator())
+                                    <div class="fixed-bottom operator-bottom-bar bg-white shadow-lg border-top py-3 px-4" style="z-index: 1000;">
                                         <div class="d-flex justify-content-around align-items-center">
 
                                             @php $isHome = request()->routeIs('dashboard'); @endphp

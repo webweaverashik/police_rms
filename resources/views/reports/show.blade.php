@@ -118,7 +118,7 @@
 
                                 <!--begin::Row-->
                                 <tr class="">
-                                    <td class="text-gray-600 fs-4">থানা / জোন:</td>
+                                    <td class="text-gray-600 fs-4">থানা:</td>
                                     <td class="fs-4">{{ $report->zone->name }}</td>
                                 </tr>
                                 <!--end::Row-->
@@ -166,14 +166,14 @@
                                 <!--begin::Row-->
                                 <tr class="">
                                     <td class="text-gray-600 fs-4">প্রধান অতিথি:</td>
-                                    <td class="fs-4">{{ $report->program_special_guest ? $report->program_special_guest : '-' }}</td>
+                                    <td class="fs-4">{{ $report->program_special_guest ?? '-' }}</td>
                                 </tr>
                                 <!--end::Row-->
 
                                 <!--begin::Row-->
                                 <tr class="">
                                     <td class="text-gray-600 fs-4">সভাপতি:</td>
-                                    <td class="fs-4">{{ $report->program_chair ? $report->program_chair : '-' }}</td>
+                                    <td class="fs-4">{{ $report->program_chair ?? '-' }}</td>
                                 </tr>
                                 <!--end::Row-->
 
@@ -302,17 +302,35 @@
                     <!--begin::Input group-->
                     <div class="row mb-5">
                         <!--begin::Label-->
-                        <label class="col-6 col-lg-2 fw-semibold text-muted fs-4">প্রোগ্রামের তারিখ ও সময়:</label>
+                        <label class="col-6 col-lg-2 fw-semibold text-muted fs-4">প্রোগ্রামের তারিখ:</label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-6 col-lg-10">
                             <span class="fw-semibold fs-4 text-gray-800">
-                                {{ $numto->bnNum($report->program_date_time->format('d')) }}-
-                                {{ $numto->bnNum($report->program_date_time->format('m')) }}-
-                                {{ $numto->bnNum($report->program_date_time->format('Y')) }},
-                                {{ $numto->bnNum($report->program_date_time->format('h')) }}:
-                                {{ $numto->bnNum($report->program_date_time->format('i')) }}
-                                {{ $report->program_date_time->format('A') }}
+                                @if ($report->program_date)
+                                    {{ $numto->bnNum(\Carbon\Carbon::parse($report->program_date)->format('d')) }}-{{ $numto->bnNum(\Carbon\Carbon::parse($report->program_date)->format('m')) }}-{{ $numto->bnNum(\Carbon\Carbon::parse($report->program_date)->format('Y')) }}
+                                @else
+                                    -
+                                @endif
+                            </span>
+                        </div>
+                        <!--end::Col-->
+                    </div>
+                    <!--end::Input group-->
+
+                    <!--begin::Input group-->
+                    <div class="row mb-5">
+                        <!--begin::Label-->
+                        <label class="col-6 col-lg-2 fw-semibold text-muted fs-4">প্রোগ্রামের সময়:</label>
+                        <!--end::Label-->
+                        <!--begin::Col-->
+                        <div class="col-6 col-lg-10">
+                            <span class="fw-semibold fs-4 text-gray-800">
+                                @if ($report->program_time)
+                                    {{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('h')) }}:{{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('i')) }} {{ \Carbon\Carbon::parse($report->program_time)->format('A') }}
+                                @else
+                                    -
+                                @endif
                             </span>
                         </div>
                         <!--end::Col-->
@@ -326,7 +344,7 @@
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-6 col-lg-10">
-                            <span class="fw-semibold fs-4 text-gray-800">{{ $report->location_name }}</span>
+                            <span class="fw-semibold fs-4 text-gray-800">{{ $report->location_name ?? '-' }}</span>
                         </div>
                         <!--end::Col-->
                     </div>
@@ -354,20 +372,6 @@
                         <div class="col-6 col-lg-10">
                             <span
                                 class="fw-semibold fs-4 text-gray-800">{{ $report->tentative_attendee_count ? $numto->bnNum($report->tentative_attendee_count) . ' জন' : '-' }}</span>
-                        </div>
-                        <!--end::Col-->
-                    </div>
-                    <!--end::Input group-->
-
-                    <!--begin::Input group-->
-                    <div class="row mb-5">
-                        <!--begin::Label-->
-                        <label class="col-6 col-lg-2 fw-semibold text-muted fs-4">মোট উপস্থিতি:</label>
-                        <!--end::Label-->
-                        <!--begin::Col-->
-                        <div class="col-6 col-lg-10">
-                            <span
-                                class="fw-semibold fs-4 text-gray-800">{{ $report->final_attendee_count ? $numto->bnNum($report->final_attendee_count) . ' জন' : '-' }}</span>
                         </div>
                         <!--end::Col-->
                     </div>

@@ -37,6 +37,7 @@ class ReportFactory extends Factory
             // Political (derived from SeatPartyCandidate)
             'parliament_seat_id'       => $seatParty->parliament_seat_id,
             'political_party_id'       => $seatParty->political_party_id,
+            'candidate_name'           => $seatParty->candidate_name,
 
             // Location hierarchy
             'upazila_id'               => Upazila::inRandomOrder()->value('id'),

@@ -5,7 +5,8 @@
     <div class="app-container  container-fluid d-flex align-items-stretch justify-content-between "
         id="kt_app_header_container">
         <!--begin::Sidebar mobile toggle-->
-        <div class="d-flex align-items-center d-lg-none ms-n3 me-1 me-md-2 @if (auth()->user()->role->name == "Operator") d-none @endif">
+        <div
+            class="d-flex align-items-center d-lg-none ms-n3 me-1 me-md-2 @if (auth()->user()->isOperator()) d-none @endif">
             <div class="btn btn-icon btn-active-color-primary w-35px h-35px" id="kt_app_sidebar_mobile_toggle">
                 <i class="ki-outline ki-abstract-14 fs-2 fs-md-1"></i>
             </div>
@@ -35,7 +36,9 @@
                     <span class="badge badge-lg badge-info fs-5">
                         @php
                             $roles = [
-                                'Administrator' => 'অ্যাডমিন',
+                                'SuperAdmin' => 'সুপার অ্যাডমিন',
+                                'Admin' => 'অ্যাডমিন',
+                                'Magistrate' => 'ম্যাজিস্ট্রেট',
                                 'Viewer' => 'পর্যবেক্ষক',
                                 'Operator' => 'তৈরিকারি',
                             ];
@@ -598,8 +601,8 @@
 
                 <!--begin::Reload Button-->
                 <div class="app-navbar-item ms-2 ms-md-4 d-sm-none">
-                    <a href="#" id="reload_button"
-                        data-bs-toggle="tooltip" data-bs-placement="bottom" title="রিলোড করুন"
+                    <a href="#" id="reload_button" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        title="রিলোড করুন"
                         class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px"><i
                             class="bi bi-arrow-clockwise fs-2x fs-lg-2"></i></a>
                 </div>
@@ -681,7 +684,8 @@
                                     <div class="fw-bold d-flex align-items-center fs-5">
                                         {{ auth()->user()->name }}
                                     </div>
-                                    <span class="fw-semibold text-gray-700 fs-6">{{ auth()->user()->designation->name }}</span>
+                                    <span
+                                        class="fw-semibold text-gray-700 fs-6">{{ auth()->user()->designation->name }}</span>
                                     <span class="fw-semibold text-muted fs-7">
                                         {{ auth()->user()->email }} </span>
                                 </div>

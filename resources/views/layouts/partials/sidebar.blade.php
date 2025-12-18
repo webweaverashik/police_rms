@@ -64,7 +64,7 @@
                                 <i class="ki-outline ki-filter-tablet fs-2"></i>
                             </span>
                             <span class="menu-title fs-4">
-                                @if (auth()->user()->role->name == 'Operator')
+                                @if (auth()->user()->isOperator())
                                     আমার প্রতিবেদন
                                 @else
                                     সকল প্রতিবেদন
@@ -76,7 +76,7 @@
                     <!--end: Report Info Menu item-->
 
                     <!--begin:User Profile Menu item-->
-                    @if (auth()->user()->role->name == 'Operator')
+                    @if (auth()->user()->isOperator())
                         <div class="menu-item">
                             <!--begin:Menu link-->
                             <a class="menu-link" href="{{ route('profile') }}" id="user_profile_menu">
@@ -93,7 +93,7 @@
                     <!--end:User Profile Menu item-->
 
 
-                    @if (auth()->user()->role->name == 'Administrator')
+                    @if (in_array(auth()->user()->role->name, ['Admin999', 'SuperAdmin888']))
                         <!--begin:Analytics Info Menu item-->
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="analytics_info_menu">
                             <!--begin:Menu link-->
@@ -136,7 +136,10 @@
                             <!--end:Menu sub-->
                         </div>
                         <!--end: Analytics Info Menu item-->
+                    @endif
 
+
+                    @if (in_array(auth()->user()->role->name, ['Admin', 'SuperAdmin']))
                         <!--begin:Location Info Menu item-->
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="location_info_menu">
                             <!--begin:Menu link-->
@@ -222,7 +225,7 @@
                     @endif
 
 
-                    @if (auth()->user()->role->name == 'Administrator')
+                    @if (auth()->user()->isSuperAdmin())
                         <!--begin:User Info Menu item-->
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="user_info_menu">
                             <!--begin:Menu link-->

@@ -21,26 +21,14 @@ class User extends Authenticatable
     | Mass Assignment
     |--------------------------------------------------------------------------
     */
-    protected $fillable = [
-        'name',
-        'bp_number',
-        'designation_id',
-        'role_id',
-        'mobile_no',
-        'email',
-        'password',
-        'is_active',
-    ];
+    protected $fillable = ['name', 'bp_number', 'designation_id', 'role_id', 'mobile_no', 'email', 'password', 'is_active'];
 
     /*
     |--------------------------------------------------------------------------
     | Hidden Attributes
     |--------------------------------------------------------------------------
     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ['password', 'remember_token'];
 
     /*
     |--------------------------------------------------------------------------
@@ -114,14 +102,21 @@ class User extends Authenticatable
         return $this->hasRole('Admin');
     }
 
+    public function isMagistrate(): bool
+    {
+        return $this->hasRole('Magistrate');
+    }
+
     public function isViewer(): bool
     {
-        return in_array($this->role->name, ['Viewer', 'Magistrate']);
+        // return in_array($this->role->name, ['Viewer', 'Magistrate']);
+        return $this->hasRole('Viewer');
     }
 
     public function isOperator(): bool
     {
-        return $this->role->name === 'Operator';
+        // return $this->role->name === 'Operator';
+        return $this->hasRole('Operator');
     }
 
     /** Check active status */
@@ -135,20 +130,14 @@ class User extends Authenticatable
      */
     public function assignedReports()
     {
-        return $this->belongsToMany(
-            Report::class,
-            'report_assignments',
-            'user_id',
-            'report_id'
-        );
+        return $this->belongsToMany(Report::class, 'report_assignments', 'user_id', 'report_id');
     }
 
-/**
- * Assignments made by this user (Admin / SuperAdmin)
- */
+    /**
+     * Assignments made by this user (Admin / SuperAdmin)
+     */
     public function assignedByMe()
     {
         return $this->hasMany(ReportAssignment::class, 'assigned_by');
     }
-
 }

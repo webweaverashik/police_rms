@@ -29,25 +29,7 @@ class Report extends Model
      */
     use HasFactory, SoftDeletes;
 
-    protected $fillable = [
-        'upazila_id',
-        'zone_id',
-        'union_id',
-        'location_name',
-        'parliament_seat_id',
-        'political_party_id',
-        'program_type_id',
-        'program_date',
-        'program_time',
-        'program_special_guest',
-        'program_chair',
-        'tentative_attendee_count',
-        'program_status',
-        'program_title',
-        'program_description',
-        'created_by',
-        'deleted_by',
-    ];
+    protected $fillable = ['upazila_id', 'zone_id', 'union_id', 'location_name', 'parliament_seat_id', 'political_party_id', 'candidate_name', 'program_type_id', 'program_date', 'program_time', 'program_special_guest', 'program_chair', 'tentative_attendee_count', 'program_status', 'program_title', 'program_description', 'created_by', 'deleted_by'];
 
     protected $casts = [
         'program_date' => 'date',
@@ -122,18 +104,6 @@ class Report extends Model
     public function deletedBy()
     {
         return $this->belongsTo(User::class, 'deleted_by')->withTrashed();
-    }
-
-    // 🔥 Auto resolve candidate
-    public function seatPartyCandidate()
-    {
-        return $this->hasOne(SeatPartyCandidate::class,
-            'political_party_id',
-            'political_party_id'
-        )->whereColumn(
-            'seat_party_candidates.parliament_seat_id',
-            'reports.parliament_seat_id'
-        );
     }
 
     // Report assignment to UNO

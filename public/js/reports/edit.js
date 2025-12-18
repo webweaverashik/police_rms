@@ -84,20 +84,27 @@ var KTEditReportForm = function () {
                                           },
                                     }
                               },
-                              'program_date_time': {
-                                    validators: {
-                                          notEmpty: {
-                                                message: 'তারিখ ও সময় উল্লেখ করুন'
-                                          },
-                                    }
-                              },
-                              'location_name': {
-                                    validators: {
-                                          notEmpty: {
-                                                message: 'প্রোগ্রামারের স্থান উল্লেখ করুন'
-                                          },
-                                    }
-                              },
+                              // 'program_date': {
+                              //       validators: {
+                              //             notEmpty: {
+                              //                   message: 'তারিখ উল্লেখ করুন'
+                              //             },
+                              //       }
+                              // },
+                              // 'program_time': {
+                              //       validators: {
+                              //             notEmpty: {
+                              //                   message: 'সময় উল্লেখ করুন'
+                              //             },
+                              //       }
+                              // },
+                              // 'location_name': {
+                              //       validators: {
+                              //             notEmpty: {
+                              //                   message: 'প্রোগ্রামারের স্থান উল্লেখ করুন'
+                              //             },
+                              //       }
+                              // },
                               'tentative_attendee_count': {
                                     validators: {
                                           greaterThan: {
@@ -120,28 +127,20 @@ var KTEditReportForm = function () {
                                           },
                                     }
                               },
-                              'final_attendee_count': {
-                                    validators: {
-                                          greaterThan: {
-                                                min: 10,
-                                                message: 'ন্যূনতম ১০ জন সংখ্যা দেওয়া যাবে নতুবা ফাঁকা রাখুন।'
-                                          }
-                                    }
-                              },
-                              'program_title': {
-                                    validators: {
-                                          notEmpty: {
-                                                message: 'প্রোগ্রামের বিষয় লিখুন।'
-                                          },
-                                    }
-                              },
-                              'program_description': {
-                                    validators: {
-                                          notEmpty: {
-                                                message: 'প্রোগ্রামের বিস্তারিত লিখুন।'
-                                          },
-                                    }
-                              },
+                              // 'program_title': {
+                              //       validators: {
+                              //             notEmpty: {
+                              //                   message: 'প্রোগ্রামের বিষয় লিখুন।'
+                              //             },
+                              //       }
+                              // },
+                              // 'program_description': {
+                              //       validators: {
+                              //             notEmpty: {
+                              //                   message: 'প্রোগ্রামের বিস্তারিত লিখুন।'
+                              //             },
+                              //       }
+                              // },
                         },
                         plugins: {
                               trigger: new FormValidation.plugins.Trigger(),
@@ -217,9 +216,15 @@ var KTEditReportForm = function () {
       }
 
       // Initalizing flatpickr
-      $("#program_date_time_picker").flatpickr({
+      $("#program_date_picker").flatpickr({
+            enableTime: false,
+            dateFormat: "d-m-Y",
+      });
+
+      $("#program_time_picker").flatpickr({
+            noCalendar: true,
             enableTime: true,
-            dateFormat: "d-m-Y h:i K",
+            dateFormat: "h:i K",
       });
 
       // =======================

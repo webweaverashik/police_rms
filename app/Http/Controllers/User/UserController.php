@@ -13,7 +13,14 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with(['role:id,name', 'designation:id,name', 'zones:id,name', 'loginActivities'])->withCount('reports')->latest()->get();
+        if (! auth()->user()->isSuperAdmin()) {
+            return redirect()->route('reports.index')->with('warning', 'এই লিংকে আপনার অনুমতি নেই');
+        }
+
+        $users = User::with(['role:id,name', 'designation:id,name', 'zones:id,name', 'loginActivities'])
+            ->withCount('reports')
+            ->latest()
+            ->get();
 
         return view('users.index', compact('users'));
     }

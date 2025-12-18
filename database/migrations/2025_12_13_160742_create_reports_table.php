@@ -15,14 +15,15 @@ return new class extends Migration {
             $table->foreignId('upazila_id')->constrained();
             $table->foreignId('zone_id')->constrained();
             $table->foreignId('union_id')->constrained();
-            $table->string('location_name');
-
+            $table->string('location_name')->nullable();
+            
             $table->foreignId('parliament_seat_id')->constrained();
             $table->foreignId('political_party_id')->constrained();
+            $table->string('candidate_name')->nullable();
             $table->foreignId('program_type_id')->nullable()->constrained()->nullOnDelete();
 
-            $table->date('program_date');
-            $table->time('program_time');
+            $table->date('program_date')->nullable();
+            $table->time('program_time')->nullable();
 
             $table->string('program_special_guest')->nullable();
             $table->string('program_chair')->nullable();
@@ -30,8 +31,8 @@ return new class extends Migration {
 
             $table->enum('program_status', ['upcoming', 'ongoing', 'done']);
 
-            $table->text('program_title');
-            $table->text('program_description');
+            $table->text('program_title')->nullable();
+            $table->text('program_description')->nullable();
 
             $table->foreignId('created_by')->constrained('users')->restrictOnDelete();
             $table->foreignId('deleted_by')->nullable()->constrained('users')->nullOnDelete();

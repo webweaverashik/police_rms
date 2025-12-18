@@ -44,6 +44,8 @@ Route::middleware(['auth', 'isLoggedIn'])->group(function () {
     Route::put('users/{user}/password', [UserController::class, 'userPasswordReset'])->name('users.password.reset');
     Route::get('profile', [UserController::class, 'profile'])->name('profile');
 
+    // Report
+    Route::get('reports/{report}/download', [ReportController::class, 'download'])->name('reports.download');
 
     Route::resource('users', UserController::class);
     Route::resource('designations', DesignationController::class);
@@ -92,10 +94,10 @@ Route::get('/run-command/{slug}', function (string $slug) {
 
     // ✅ Allowed slug → command mapping
     $commands = [
-        'optimize-clear'       => 'optimize:clear',
-        'migrate'              => 'migrate',
-        'migrate-seed'         => 'migrate --seed',
-        'migrate-refresh'      => 'migrate:refresh',
+        'optimize-clear' => 'optimize:clear',
+        'migrate' => 'migrate',
+        'migrate-seed' => 'migrate --seed',
+        'migrate-refresh' => 'migrate:refresh',
         'migrate-refresh-seed' => 'migrate:refresh --seed',
     ];
 
@@ -106,8 +108,8 @@ Route::get('/run-command/{slug}', function (string $slug) {
 
     return response()->json([
         'success' => true,
-        'slug'    => $slug,
+        'slug' => $slug,
         'command' => $commands[$slug],
-        'output'  => Artisan::output(),
+        'output' => Artisan::output(),
     ]);
 })->name('run.command');

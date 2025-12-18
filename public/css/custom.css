@@ -1,13 +1,14 @@
 @font-face {
-    font-family: 'BalooDa2';
-    src: url('../font/BalooDa2.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
+      font-family: 'BalooDa2';
+      src: url('../font/BalooDa2.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
 }
 
-body, * {
-    font-family: 'BalooDa2';
+body,
+* {
+      font-family: 'BalooDa2';
 }
 
 /* Repeat for other weights */
@@ -25,4 +26,37 @@ table.prms-table td {
       /* border: 1px dashed #F1F1F4 !important; */
       text-align: center !important;
       vertical-align: middle !important;
+}
+
+
+
+/* ===============================
+   Operator Bottom Bar – Dark Mode
+   =============================== */
+
+/* Metronic dark mode */
+html[data-bs-theme="dark"] .operator-bottom-bar,
+body.dark-mode .operator-bottom-bar {
+      background-color: #1e1e2d !important;
+      border-top-color: #2b2b40 !important;
+}
+
+/* Text + icon color */
+html[data-bs-theme="dark"] .operator-bottom-bar i,
+html[data-bs-theme="dark"] .operator-bottom-bar span,
+body.dark-mode .operator-bottom-bar i,
+body.dark-mode .operator-bottom-bar span {
+      color: #a1a5b7 !important;
+}
+
+/* Active item */
+html[data-bs-theme="dark"] .operator-bottom-bar .text-primary,
+body.dark-mode .operator-bottom-bar .text-primary {
+      color: #3699ff !important;
+}
+
+/* Hover */
+html[data-bs-theme="dark"] .operator-bottom-bar a:hover i,
+html[data-bs-theme="dark"] .operator-bottom-bar a:hover span {
+      color: #ffffff !important;
 }

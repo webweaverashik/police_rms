@@ -99,7 +99,7 @@ class UserSeeder extends Seeder
             ['email' => 'sp@prms.gov'],
             [
                 'name'           => 'মোঃ আবু ইউসুফ',
-                'bp_number'      => 'BP-10001',
+                'bp_number'      => '10001',
                 'designation_id' => $sp->id,
                 'role_id'        => $adminRole->id,
                 'mobile_no'      => '01700000001',
@@ -132,7 +132,7 @@ class UserSeeder extends Seeder
             ['email' => 'adc@prms.gov'],
             [
                 'name'           => 'মোঃ অপু সরোয়ার',
-                'bp_number'      => 'BP-20001',
+                'bp_number'      => '20001',
                 'designation_id' => $adc->id,
                 'role_id'        => $viewerRole->id,
                 'mobile_no'      => '01700000002',
@@ -147,7 +147,7 @@ class UserSeeder extends Seeder
             ['email' => 'oc@prms.gov'],
             [
                 'name'           => 'মোঃ সৈয়দুজ্জামান',
-                'bp_number'      => 'BP-20002',
+                'bp_number'      => '20002',
                 'designation_id' => $oc->id,
                 'role_id'        => $viewerRole->id,
                 'mobile_no'      => '01700000004',
@@ -190,7 +190,7 @@ class UserSeeder extends Seeder
             ['email' => 'inspector@prms.gov'],
             [
                 'name'           => 'মোঃ মাসুদ হোসেন',
-                'bp_number'      => 'BP-30001',
+                'bp_number'      => '30001',
                 'designation_id' => $inspector->id,
                 'role_id'        => $operatorRole->id,
                 'mobile_no'      => '01700000005',
@@ -205,7 +205,7 @@ class UserSeeder extends Seeder
             ['email' => 'si@prms.gov'],
             [
                 'name'           => 'আব্দুর রহিম মৃধা',
-                'bp_number'      => 'BP-30002',
+                'bp_number'      => '30002',
                 'designation_id' => $si->id,
                 'role_id'        => $operatorRole->id,
                 'mobile_no'      => '01700000006',
@@ -220,7 +220,7 @@ class UserSeeder extends Seeder
             ['email' => 'asi@prms.gov'],
             [
                 'name'           => 'মোঃ হুমায়ুন কবির',
-                'bp_number'      => 'BP-30003',
+                'bp_number'      => '30003',
                 'designation_id' => $asi->id,
                 'role_id'        => $operatorRole->id,
                 'mobile_no'      => '01700000007',
@@ -235,7 +235,7 @@ class UserSeeder extends Seeder
             ['email' => 'constable@prms.gov'],
             [
                 'name'           => 'মোঃ নওশের আলী',
-                'bp_number'      => 'BP-30004',
+                'bp_number'      => '30004',
                 'designation_id' => $constable->id,
                 'role_id'        => $operatorRole->id,
                 'mobile_no'      => '01700000008',

@@ -55,7 +55,7 @@
                 <div class="d-flex align-items-center position-relative my-1">
                     <i class="ki-outline ki-magnifier fs-3 position-absolute ms-5"></i> <input type="text"
                         data-all-reports-table-filter="search" class="form-control form-control-solid w-350px ps-12"
-                        placeholder="প্রতিবেদনে খুঁজুন">
+                        placeholder="প্রতিবেদনে খুঁজুন যেমন: প্রার্থীর নাম">
                 </div>
                 <!--end::Search-->
 
@@ -69,13 +69,13 @@
             <!--begin::Card toolbar-->
             <div class="card-toolbar">
                 <!--begin::Toolbar-->
-                <div class="d-flex justify-content-end" data-transaction-table-toolbar="base">
+                <div class="d-flex justify-content-end" data-all-reports-table-toolbar="base">
                     <!--begin::Filter-->
                     <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click"
                         data-kt-menu-placement="bottom-end">
                         <i class="ki-outline ki-filter fs-2"></i>ফিল্টার</button>
                     <!--begin::Menu 1-->
-                    <div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true">
+                    <div class="menu menu-sub menu-sub-dropdown w-300px w-md-450px" data-kt-menu="true">
                         <!--begin::Header-->
                         <div class="px-7 py-5">
                             <div class="fs-5 text-gray-900 fw-bold">ফিল্টার অপশন</div>
@@ -86,41 +86,109 @@
                         <!--end::Separator-->
                         <!--begin::Content-->
                         <div class="px-7 py-5" data-all-reports-table-filter="form">
-                            <!--begin::Input group-->
-                            <div class="mb-10">
-                                <label class="form-label fs-6 fw-semibold">উপজেলা:</label>
-                                <select class="form-select form-select-solid fw-bold" data-kt-select2="true"
-                                    data-placeholder="Select option" data-allow-clear="true" data-hide-search="true">
-                                    <option></option>
-                                    <option value="T_partial">Partial</option>
-                                    <option value="T_full_paid">Full Paid</option>
-                                    <option value="T_discounted">Discounted</option>
-                                </select>
-                            </div>
-                            <!--end::Input group-->
-
-                            @if (auth()->user()->hasRole('admin'))
-                                <!--begin::Input group-->
-                                <div class="mb-10">
-                                    <label class="form-label fs-6 fw-semibold">Branch:</label>
+                            <div class="row">
+                                <div class="col-6 mb-5">
+                                    <label class="form-label fs-6 fw-semibold">সংসদীয় আসন:</label>
                                     <select class="form-select form-select-solid fw-bold" data-kt-select2="true"
-                                        data-placeholder="Select option" data-allow-clear="true" data-hide-search="true">
+                                        data-placeholder="সিলেক্ট করুন" data-allow-clear="true"
+                                        data-all-reports-table-filter="status" data-hide-search="true">
                                         <option></option>
-                                        @foreach ($branches as $branch)
-                                            <option value="{{ ucfirst($branch->branch_name) }}">
-                                                {{ ucfirst($branch->branch_name) }}</option>
+                                        @foreach ($parliamentSeats as $seat)
+                                            <option value="{{ $seat->id }}_{{ $seat->name }}">{{ $seat->name }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
-                                <!--end::Input group-->
-                            @endif
+
+                                <div class="col-6 mb-5">
+                                    <label class="form-label fs-6 fw-semibold">উপজেলা:</label>
+                                    <select class="form-select form-select-solid fw-bold" data-kt-select2="true"
+                                        data-placeholder="সিলেক্ট করুন" data-allow-clear="true"
+                                        data-all-reports-table-filter="status" data-hide-search="true">
+                                        <option></option>
+                                        @foreach ($upazilas as $upazila)
+                                            <option value="{{ $upazila->id }}_{{ $upazila->name }}">{{ $upazila->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-6 mb-5">
+                                    <label class="form-label fs-6 fw-semibold">থানা:</label>
+                                    <select class="form-select form-select-solid fw-bold" data-kt-select2="true"
+                                        data-placeholder="সিলেক্ট করুন" data-allow-clear="true"
+                                        data-all-reports-table-filter="status" data-hide-search="true">
+                                        <option></option>
+                                        @foreach ($zones as $zone)
+                                            <option value="{{ $zone->id }}_{{ $zone->name }}">{{ $zone->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-6 mb-5">
+                                    <label class="form-label fs-6 fw-semibold">ইউনিয়ন:</label>
+                                    <select class="form-select form-select-solid fw-bold" data-kt-select2="true"
+                                        data-placeholder="সিলেক্ট করুন" data-allow-clear="true"
+                                        data-all-reports-table-filter="status" data-hide-search="false">
+                                        <option></option>
+                                        @foreach ($unions as $union)
+                                            <option value="{{ $union->id }}_{{ $union->name }}">{{ $union->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-6 mb-5">
+                                    <label class="form-label fs-6 fw-semibold">রাজনৈতিক দল:</label>
+                                    <select class="form-select form-select-solid fw-bold" data-kt-select2="true"
+                                        data-placeholder="সিলেক্ট করুন" data-allow-clear="true"
+                                        data-all-reports-table-filter="status" data-hide-search="false">
+                                        <option></option>
+                                        @foreach ($politicalParties as $party)
+                                            <option value="{{ $party->id }}_{{ $party->name }}">{{ $party->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-6 mb-5">
+                                    <label class="form-label fs-6 fw-semibold">প্রোগ্রামের ধরণ:</label>
+                                    <select class="form-select form-select-solid fw-bold" data-kt-select2="true"
+                                        data-placeholder="সিলেক্ট করুন" data-allow-clear="true"
+                                        data-all-reports-table-filter="status" data-hide-search="false">
+                                        <option></option>
+                                        @foreach ($programTypes as $type)
+                                            <option value="{{ $type->id }}_{{ $type->name }}">{{ $type->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                @if (!auth()->user()->isOperator())
+                                    <div class="col-12 mb-5">
+                                        <label class="form-label fs-6 fw-semibold">প্রতিবেদন তৈরিকারি:</label>
+                                        <select class="form-select form-select-solid fw-bold" data-kt-select2="true"
+                                            data-placeholder="সিলেক্ট করুন" data-allow-clear="true"
+                                            data-all-reports-table-filter="status" data-hide-search="false">
+                                            <option></option>
+                                            @foreach ($reporters as $user)
+                                                <option
+                                                    value="{{ $user->id }}_{{ $user->name }}_{{ $user->designation->name }}">
+                                                    {{ $user->name }}, {{ $user->designation->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @endif
+                            </div>
 
                             <!--begin::Actions-->
-                            <div class="d-flex justify-content-end">
-                                <button type="reset" class="btn btn-light btn-active-light-primary fw-semibold me-2 px-6"
-                                    data-kt-menu-dismiss="true" data-all-reports-table-filter="reset">Reset</button>
-                                <button type="submit" class="btn btn-primary fw-semibold px-6" data-kt-menu-dismiss="true"
-                                    data-all-reports-table-filter="filter">Apply</button>
+                            <div class="d-flex justify-content-end mt-5">
+                                <button type="reset"
+                                    class="btn btn-light btn-active-light-primary fw-semibold me-2 px-6"
+                                    data-kt-menu-dismiss="true" data-all-reports-table-filter="reset">রিসেট</button>
+                                <button type="submit" class="btn btn-primary fw-semibold px-6"
+                                    data-kt-menu-dismiss="true" data-all-reports-table-filter="filter">এপ্লাই</button>
                             </div>
                             <!--end::Actions-->
                         </div>
@@ -181,53 +249,91 @@
                     <tr class="fw-bold fs-6 gs-0">
                         <th>#</th>
                         <th>সংসদীয় আসন</th>
+                        <th class="d-none">সংসদীয় আসন (filter)</th>
                         <th>উপজেলা</th>
+                        <th class="d-none">উপজেলা (filter)</th>
                         <th>ইউনিয়ন</th>
-                        <th>থানা/জোন</th>
+                        <th class="d-none">ইউনিয়ন (filter)</th>
+                        <th>থানা</th>
+                        <th class="d-none">থানা (filter)</th>
                         <th>দলের নাম</th>
+                        <th class="d-none">দলের নাম (filter)</th>
                         <th>প্রার্থীর নাম</th>
                         <th>প্রধান অতিথি</th>
                         <th>সভাপতি</th>
                         <th>প্রোগ্রামের ধরণ</th>
-                        <th>তারিখ ও সময়</th>
+                        <th class="d-none">প্রোগ্রামের ধরণ (filter)</th>
+                        <th>স্থান</th>
+                        <th>তারিখ</th>
+                        <th>সময়</th>
                         <th>সম্ভাব্য উপস্থিতি</th>
                         <th>প্রোগ্রামের অবস্থা</th>
-                        <th>মোট উপস্থিতি</th>
                         <th class="@if (auth()->user()->role->name == 'Operator') d-none @endif">প্রতিবেদক</th>
+                        <th class="d-none">প্রতিবেদক (filter)</th>
                         <th class="not-export w-100px">##</th>
                     </tr>
                 </thead>
                 <tbody class="text-gray-800 fw-semibold">
                     @php
                         use Rakibhstu\Banglanumber\NumberToBangla;
-
                         $numto = new NumberToBangla();
                     @endphp
 
                     @foreach ($reports as $report)
                         <tr>
-                            <td>{{ $numto->bnNum($loop->index + 1) }}</td>
+                            <td>{{ $numto->bnNum($loop->iteration) }}</td>
+
                             <td>{{ $report->parliamentSeat->name }}</td>
+                            <td class="d-none">{{ $report->parliamentSeat->id }}_{{ $report->parliamentSeat->name }}</td>
+
                             <td>{{ $report->upazila->name }}</td>
+                            <td class="d-none">{{ $report->upazila->id }}_{{ $report->upazila->name }}</td>
+
                             <td>{{ $report->union->name }}</td>
+                            <td class="d-none">{{ $report->union->id }}_{{ $report->union->name }}</td>
+
                             <td>{{ $report->zone->name }}</td>
+                            <td class="d-none">{{ $report->zone->id }}_{{ $report->zone->name }}</td>
+
                             <td>{{ $report->politicalParty->name }}</td>
+                            <td class="d-none">{{ $report->politicalParty->id }}_{{ $report->politicalParty->name }}</td>
+
+                            {{-- Candidate (NEW LOGIC) --}}
                             <td>{{ $report->candidate_name }}</td>
-                            <td>{{ $report->program_special_guest ? $report->program_special_guest : '-' }}</td>
-                            <td>{{ $report->program_chair ? $report->program_chair : '-' }}</td>
-                            <td>{{ $report->programType->name }}</td>
+
+                            <td>{{ $report->program_special_guest ?? '-' }}</td>
+                            <td>{{ $report->program_chair ?? '-' }}</td>
+                            <td>{{ $report->programType?->name ?? '-' }}</td>
+                            <td class="d-none">{{ $report->programType->id }}_{{ $report->programType->name }}</td>
+                            
+                            <td>{{ $report->location_name ?? '-' }}</td>
+
+                            {{-- Date --}}
                             <td>
-                                {{ $numto->bnNum($report->program_date_time->format('d')) }}-
-                                {{ $numto->bnNum($report->program_date_time->format('m')) }}-
-                                {{ $numto->bnNum($report->program_date_time->format('Y')) }},
-                                {{ $numto->bnNum($report->program_date_time->format('h')) }}:
-                                {{ $numto->bnNum($report->program_date_time->format('i')) }}
-                                {{ $report->program_date_time->format('A') }}
+                                @if ($report->program_date)
+                                    {{ $numto->bnNum(\Carbon\Carbon::parse($report->program_date)->format('d')) }}-{{ $numto->bnNum(\Carbon\Carbon::parse($report->program_date)->format('m')) }}-{{ $numto->bnNum(\Carbon\Carbon::parse($report->program_date)->format('Y')) }}
+                                @else
+                                    -
+                                @endif
                             </td>
+
+
+                            {{-- Time --}}
+                            <td>
+                                @if ($report->program_time)
+                                    {{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('h')) }}:{{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('i')) }} {{ \Carbon\Carbon::parse($report->program_time)->format('A') }}
+                                @else
+                                    -
+                                @endif
+                            </td>
+
+
 
                             <td>
                                 {{ $report->tentative_attendee_count ? $numto->bnNum($report->tentative_attendee_count) : '-' }}
                             </td>
+
+                            {{-- Status --}}
                             <td>
                                 @php
                                     $statusMap = [
@@ -235,19 +341,27 @@
                                         'ongoing' => ['label' => 'চলমান', 'class' => 'badge-danger'],
                                         'upcoming' => ['label' => 'আসন্ন', 'class' => 'badge-info'],
                                     ];
-                                    $status = $statusMap[$report->program_status] ?? null;
+                                    $status = $statusMap[$report->program_status];
                                 @endphp
-
                                 <span class="badge {{ $status['class'] }}">{{ $status['label'] }}</span>
                             </td>
 
-                            <td>
-                                {{ $report->final_attendee_count ? $numto->bnNum($report->final_attendee_count) : '-' }}
+                            {{-- Reporter (hidden for Operator) --}}
+                            <td class="@if (auth()->user()->role->name == 'Operator') d-none @endif">
+                                {{ $report->createdBy->name }},
+                                {{ $report->createdBy->designation->name }}
                             </td>
-                            <td class="@if (auth()->user()->role->name == 'Operator') d-none @endif">{{ $report->createdBy->name }},
-                                {{ $report->createdBy->designation->name }}</td>
+
+                            <td class="d-none">
+                                {{ $report->createdBy->name }},
+                                {{ $report->createdBy->designation->name }}
+                                {{ $report->created_by }}_{{ $report->createdBy->name }}_{{ $report->createdBy->designation->name }}
+                            </td>
+
+                            {{-- Actions --}}
                             <td>
-                                @if (auth()->user()->role->name == 'Administrator')
+                                @if (auth()->user()->isSuperAdmin() || auth()->user()->isAdmin())
+                                    {{-- Full action menu --}}
                                     <a href="#" class="btn btn-light btn-active-light-primary btn-sm"
                                         data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">একশন
                                         <i class="ki-outline ki-down fs-5 m-0"></i></a>
@@ -256,31 +370,37 @@
                                         data-kt-menu="true">
 
                                         <div class="menu-item px-3">
-                                            <a href="{{ route('reports.show', $report->id) }}" title="প্রতিবেদনটির বিস্তারিত দেখুন"
+                                            <a href="{{ route('reports.show', $report->id) }}"
                                                 class="menu-link text-hover-primary px-3" target="_blank"><i
-                                                    class="ki-outline ki-eye fs-3 me-2"></i> দেখুন</a>
+                                                    class="ki-outline ki-eye fs-3 me-2"></i> প্রতিবেদন দেখুন</a>
                                         </div>
 
                                         <div class="menu-item px-3">
-                                            <a href="{{ route('reports.edit', $report->id) }}"
-                                                title="প্রতিবেদনটি সংশোধন করুন"
-                                                class="menu-link text-hover-primary px-3"><i
-                                                    class="ki-outline ki-pencil fs-3 me-2"></i>
-                                                সংশোধন</a>
+                                            <a href="{{ route('reports.download', $report->id) }}"
+                                                class="menu-link text-hover-primary px-3" target="_blank"><i
+                                                    class="bi bi-download fs-3 me-2"></i> ডাউনলোড করুন</a>
                                         </div>
 
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3 text-hover-danger delete-report"
-                                                title="প্রতিবেদনটি মুছে ফেলুন" data-report-id="{{ $report->id }}"><i
-                                                    class="ki-outline ki-trash fs-3 me-2"></i>
-                                                মুছুন</a>
-                                        </div>
+                                        @if (auth()->user()->isSuperAdmin())
+                                            <div class="menu-item px-3">
+                                                <a href="{{ route('reports.edit', $report->id) }}"
+                                                    class="menu-link text-hover-primary px-3"><i
+                                                        class="ki-outline ki-pencil fs-3 me-2"></i>
+                                                    প্রতিবেদন সংশোধন</a>
+                                            </div>
+
+                                            <div class="menu-item px-3">
+                                                <a href="#" class="menu-link px-3 text-hover-danger delete-report"
+                                                    data-report-id="{{ $report->id }}"><i
+                                                        class="ki-outline ki-trash fs-3 me-2"></i>
+                                                    প্রতিবেদন মুছুন</a>
+                                            </div>
+                                        @endif
                                     </div>
                                     <!--end::Menu-->
                                 @else
-                                    <a href="{{ route('reports.show', $report->id) }}" title="প্রতিবেদনটির বিস্তারিত দেখুন"
-                                        target="_blank"
-                                        class="btn btn-icon text-hover-primary w-30px h-30px edit-teacher me-2">
+                                    <a href="{{ route('reports.show', $report->id) }}" target="_blank"
+                                        class="btn btn-icon text-hover-primary">
                                         <i class="ki-outline ki-eye fs-2"></i>
                                     </a>
                                 @endif
@@ -288,6 +408,7 @@
                         </tr>
                     @endforeach
                 </tbody>
+
             </table>
             <!--end::Table-->
         </div>

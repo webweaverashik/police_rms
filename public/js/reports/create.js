@@ -45,35 +45,35 @@ var KTCreateReportForm = function () {
                               'parliament_seat_id': {
                                     validators: {
                                           notEmpty: {
-                                                message: 'সংসদীয় আসন তথ্য প্রয়োজন'
+                                                message: 'সংসদীয় আসন সিলেক্ট করুন'
                                           }
                                     }
                               },
                               'upazila_id': {
                                     validators: {
                                           notEmpty: {
-                                                message: 'উপজেলার তথ্য প্রয়োজন'
+                                                message: 'উপজেলার সিলেক্ট করুন'
                                           }
                                     }
                               },
                               'union_id': {
                                     validators: {
                                           notEmpty: {
-                                                message: 'ইউনিয়ন তথ্য প্রয়োজন'
+                                                message: 'ইউনিয়ন সিলেক্ট করুন'
                                           },
                                     }
                               },
                               'zone_id': {
                                     validators: {
                                           notEmpty: {
-                                                message: 'থানা / জোনের তথ্য প্রয়োজন'
+                                                message: 'থানার সিলেক্ট করুন'
                                           },
                                     }
                               },
                               'political_party_id': {
                                     validators: {
                                           notEmpty: {
-                                                message: 'রাজনৈতিক দলের নাম প্রয়োজন'
+                                                message: 'রাজনৈতিক দল সিলেক্ট করুন'
                                           },
                                     }
                               },
@@ -84,20 +84,27 @@ var KTCreateReportForm = function () {
                                           },
                                     }
                               },
-                              'program_date_time': {
-                                    validators: {
-                                          notEmpty: {
-                                                message: 'তারিখ ও সময় উল্লেখ করুন'
-                                          },
-                                    }
-                              },
-                              'location_name': {
-                                    validators: {
-                                          notEmpty: {
-                                                message: 'প্রোগ্রামারের স্থান উল্লেখ করুন'
-                                          },
-                                    }
-                              },
+                              // 'program_date': {
+                              //       validators: {
+                              //             notEmpty: {
+                              //                   message: 'তারিখ উল্লেখ করুন'
+                              //             },
+                              //       }
+                              // },
+                              // 'program_time': {
+                              //       validators: {
+                              //             notEmpty: {
+                              //                   message: 'সময় উল্লেখ করুন'
+                              //             },
+                              //       }
+                              // },
+                              // 'location_name': {
+                              //       validators: {
+                              //             notEmpty: {
+                              //                   message: 'প্রোগ্রামারের স্থান উল্লেখ করুন'
+                              //             },
+                              //       }
+                              // },
                               'tentative_attendee_count': {
                                     validators: {
                                           greaterThan: {
@@ -109,7 +116,7 @@ var KTCreateReportForm = function () {
                               'program_type_id': {
                                     validators: {
                                           notEmpty: {
-                                                message: 'প্রোগ্রামের ধরণ বাছাই করুন।'
+                                                message: 'প্রোগ্রামের ধরণ সিলেক্ট করুন'
                                           },
                                     }
                               },
@@ -120,28 +127,20 @@ var KTCreateReportForm = function () {
                                           },
                                     }
                               },
-                              'final_attendee_count': {
-                                    validators: {
-                                          greaterThan: {
-                                                min: 10,
-                                                message: 'ন্যূনতম ১০ জন সংখ্যা দেওয়া যাবে নতুবা ফাঁকা রাখুন।'
-                                          }
-                                    }
-                              },
-                              'program_title': {
-                                    validators: {
-                                          notEmpty: {
-                                                message: 'প্রোগ্রামের বিষয় লিখুন।'
-                                          },
-                                    }
-                              },
-                              'program_description': {
-                                    validators: {
-                                          notEmpty: {
-                                                message: 'প্রোগ্রামের বিস্তারিত লিখুন।'
-                                          },
-                                    }
-                              },
+                              // 'program_title': {
+                              //       validators: {
+                              //             notEmpty: {
+                              //                   message: 'প্রোগ্রামের বিষয় লিখুন।'
+                              //             },
+                              //       }
+                              // },
+                              // 'program_description': {
+                              //       validators: {
+                              //             notEmpty: {
+                              //                   message: 'প্রোগ্রামের বিস্তারিত লিখুন।'
+                              //             },
+                              //       }
+                              // },
                         },
                         plugins: {
                               trigger: new FormValidation.plugins.Trigger(),
@@ -228,9 +227,15 @@ var KTCreateReportForm = function () {
       }
 
       // Initalizing flatpickr
-      $("#program_date_time_picker").flatpickr({
+      $("#program_date_picker").flatpickr({
+            enableTime: false,
+            dateFormat: "d-m-Y",
+      });
+
+      $("#program_time_picker").flatpickr({
+            noCalendar: true,
             enableTime: true,
-            dateFormat: "d-m-Y h:i K",
+            dateFormat: "h:i K",
       });
 
       // =======================

@@ -134,9 +134,9 @@
                     <!-- Zone -->
                     <div class="col-lg-4">
                         <div class="mb-8 fv-row">
-                            <label class="required form-label fs-4">থানা / জোন</label>
+                            <label class="required form-label fs-4">থানা</label>
                             <select name="zone_id" class="form-select form-select-solid fs-4" data-control="select2"
-                                data-placeholder="থানা / জোন বাছাই করুন" data-allow-clear="true" required>
+                                data-placeholder="থানা বাছাই করুন" data-allow-clear="true" required>
                                 <option></option>
                                 @foreach ($zones as $zone)
                                     <option value="{{ $zone->id }}">
@@ -182,9 +182,9 @@
                     <!-- Candidate Name -->
                     <div class="col-lg-4">
                         <div class="mb-8 fv-row">
-                            <label class="required form-label fs-4">প্রার্থীর নাম</label>
+                            <label class="form-label fs-4 required">প্রার্থীর নাম</label>
                             <input type="text" name="candidate_name" class="form-control form-control-solid fs-4"
-                                placeholder="প্রার্থীর নাম লিখুন" required>
+                                placeholder="প্রার্থীর নাম লিখুন">
                         </div>
                     </div>
 
@@ -226,29 +226,29 @@
                         </div>
                     </div>
 
-                    <!-- Program Date & Time -->
-                    <div class="col-lg-4">
+                    <!-- Program Date -->
+                    <div class="col-6 col-lg-2">
                         <div class="mb-8 fv-row">
-                            <label class="required form-label fs-4">তারিখ ও সময়</label>
-                            <input name="program_date_time" id="program_date_time_picker"
-                                placeholder="তারিখ ও সময় সেট করুন" class="form-control form-control-solid fs-4" required>
+                            <label class="form-label fs-4">তারিখ <span class="text-muted fst-italic">(প্রযোজ্য ক্ষেত্রে)</span></label>
+                            <input name="program_date" id="program_date_picker" placeholder="তারিখ সিলেক্ট করুন"
+                                class="form-control form-control-solid fs-4">
                         </div>
                     </div>
 
-                    <!-- Tentative Attendee Count -->
-                    <div class="col-lg-4">
+                    <!-- Program Time -->
+                    <div class="col-6 col-lg-2">
                         <div class="mb-8 fv-row">
-                            <label class="form-label fs-4">সম্ভাব্য উপস্থিতি (জন) <span
-                                    class="text-muted fst-italic">(প্রযোজ্য ক্ষেত্রে)</span></label>
-                            <input type="number" name="tentative_attendee_count"
-                                class="form-control form-control-solid fs-4" placeholder="সম্ভাব্য উপস্থিতি সংখ্যা">
+                            <label class="form-label fs-4">সময় <span class="text-muted fst-italic">(প্রযোজ্য ক্ষেত্রে)</span></label>
+                            <input name="program_time" id="program_time_picker" placeholder="সময় সেট করুন"
+                                class="form-control form-control-solid fs-4">
                         </div>
                     </div>
+
 
                     <!-- Location -->
                     <div class="col-lg-4">
                         <div class="mb-8 fv-row">
-                            <label class="form-label fs-4 required">প্রোগ্রামের স্থান</label>
+                            <label class="form-label fs-4 ">প্রোগ্রামের স্থান <span class="text-muted fst-italic">(প্রযোজ্য ক্ষেত্রে)</span></label>
                             <input type="text" name="location_name" class="form-control form-control-solid fs-4"
                                 placeholder="প্রোগ্রামের স্থান লিখুন">
                         </div>
@@ -272,7 +272,7 @@
                     <!-- Location -->
                     <div class="col-lg-12">
                         <div class="mb-8 fv-row">
-                            <label class="form-label fs-4 required">প্রোগ্রামের বিষয়</label>
+                            <label class="form-label fs-4">প্রোগ্রামের বিষয়<span class="text-muted fst-italic">(প্রযোজ্য ক্ষেত্রে)</span></label>
                             <input type="text" name="program_title" class="form-control form-control-solid fs-4"
                                 placeholder="প্রোগ্রামের বিষয় লিখুন">
                         </div>
@@ -293,13 +293,13 @@
 
                             <div class="row g-3">
                                 @foreach ($statuses as $key => $status)
-                                    <div class="col">
+                                    <div class="col-4">
                                         <input type="radio" class="btn-check" name="program_status"
                                             id="status_{{ $key }}" value="{{ $key }}" required>
 
                                         <label for="status_{{ $key }}"
                                             class="btn btn-outline btn-outline-dashed btn-active-light-primary
-                                               btn-radio-lg w-100 d-flex align-items-center fs-4">
+                                    btn-radio-lg w-100 d-flex align-items-center fs-4">
                                             <i class="{{ $status['icon'] }} fs-2x me-3"></i>
                                             <span class="fw-bold">{{ $status['label'] }}</span>
                                         </label>
@@ -309,22 +309,22 @@
                         </div>
                     </div>
 
-                    <!-- Final Attendee Count -->
+                    <!-- Tentative Attendee Count -->
                     <div class="col-lg-4">
                         <div class="mb-8 fv-row">
-                            <label class="form-label fs-4">মোট উপস্থিতি (জন) <span class="text-muted fst-italic">(প্রযোজ্য
-                                    ক্ষেত্রে)</span></label>
-                            <input type="number" name="final_attendee_count"
-                                class="form-control form-control-solid fs-4" placeholder="মোট উপস্থিতি সংখ্যা">
+                            <label class="form-label fs-4">সম্ভাব্য উপস্থিতি (জন) <span
+                                    class="text-muted fst-italic">(প্রযোজ্য ক্ষেত্রে)</span></label>
+                            <input type="number" name="tentative_attendee_count"
+                                class="form-control form-control-solid fs-4" placeholder="সম্ভাব্য উপস্থিতি সংখ্যা">
                         </div>
                     </div>
 
                     <!-- Program Description -->
                     <div class="col-lg-12">
                         <div class="mb-8 fv-row">
-                            <label class="form-label fs-4 required">বিস্তারিত বর্ণনা</label>
+                            <label class="form-label fs-4">বিস্তারিত বর্ণনা <span class="text-muted fst-italic">(প্রযোজ্য ক্ষেত্রে)</span></label>
                             <textarea name="program_description" rows="10" class="form-control form-control-solid fs-4"
-                                placeholder="প্রোগ্রামের বিস্তারিত লিখুন" required></textarea>
+                                placeholder="প্রোগ্রামের বিস্তারিত লিখুন"></textarea>
                         </div>
                     </div>
 

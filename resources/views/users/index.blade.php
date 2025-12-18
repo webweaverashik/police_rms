@@ -107,18 +107,32 @@
                                     <span class="fw-semibold">পদবী: {{ $user->designation->name }}</span>
                                 </div>
                             </td>
-                            <td>{{ $numto->bnNum($user->bp_number) }}</td>
+                            <td>{{ $user->bp_number ? $numto->bnNum($user->bp_number) : '-' }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $numto->bnNum($user->mobile_no) }}</td>
+
+                            @php
+                                $roleBadges = [
+                                    'SuperAdmin' => ['label' => 'সুপার এডমিন', 'class' => 'badge-danger'],
+                                    'Admin' => ['label' => 'এডমিন', 'class' => 'badge-success'],
+                                    'Viewer' => ['label' => 'পর্যবেক্ষক', 'class' => 'badge-primary'],
+                                    'Magistrate' => ['label' => 'ম্যাজিস্ট্রেট', 'class' => 'badge-warning'],
+                                    'Operator' => ['label' => 'তৈরিকারি', 'class' => 'badge-info'],
+                                ];
+
+                                $roleName = $user->role->name ?? null;
+                            @endphp
                             <td>
-                                @if ($user->role->name == 'Operator')
-                                    <div class="badge badge-info">তৈরিকারি</div>
-                                @elseif ($user->role->name == 'Administrator')
-                                    <div class="badge badge-success">এডমিন</div>
-                                @elseif ($user->role->name == 'Viewer')
-                                    <div class="badge badge-primary">পর্যবেক্ষক</div>
+                                @if ($roleName && isset($roleBadges[$roleName]))
+                                    <span class="badge {{ $roleBadges[$roleName]['class'] }}">
+                                        {{ $roleBadges[$roleName]['label'] }}
+                                    </span>
+                                @else
+                                    <span class="badge badge-light">N/A</span>
                                 @endif
                             </td>
+
+
                             <td>
                                 {{ $numto->bnNum($user->created_at->format('d')) }}-
                                 {{ $numto->bnNum($user->created_at->format('m')) }}-
