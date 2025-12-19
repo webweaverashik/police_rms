@@ -215,7 +215,7 @@ class ProgramTypeSeeder extends Seeder
                 ['name' => $type['name']],
                 [
                     'description' => $type['description'],
-                    'created_by'  => null, // system seeded
+                    'created_by'  => 1, // system seeded
                 ]
             );
         }

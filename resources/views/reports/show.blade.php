@@ -353,19 +353,6 @@
                     <!--begin::Input group-->
                     <div class="row mb-5">
                         <!--begin::Label-->
-                        <label class="col-6 col-lg-2 fw-semibold text-muted fs-4">প্রোগ্রামের ধরণ:</label>
-                        <!--end::Label-->
-                        <!--begin::Col-->
-                        <div class="col-6 col-lg-10">
-                            <span class="fw-semibold fs-4 text-gray-800">{{ $report->programType->name }}</span>
-                        </div>
-                        <!--end::Col-->
-                    </div>
-                    <!--end::Input group-->
-
-                    <!--begin::Input group-->
-                    <div class="row mb-5">
-                        <!--begin::Label-->
                         <label class="col-6 col-lg-2 fw-semibold text-muted fs-4">সম্ভাব্য উপস্থিতি:</label>
                         <!--end::Label-->
                         <!--begin::Col-->
