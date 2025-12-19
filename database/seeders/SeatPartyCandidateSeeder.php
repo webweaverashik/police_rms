@@ -1,44 +1,113 @@
 <?php
 namespace Database\Seeders;
 
+use Illuminate\Database\Seeder;
 use App\Models\Political\ParliamentSeat;
 use App\Models\Political\PoliticalParty;
 use App\Models\Political\SeatPartyCandidate;
-use Illuminate\Database\Seeder;
-use Tusharkhan\BanglaFaker\BanglaFaker;
 
 class SeatPartyCandidateSeeder extends Seeder
 {
     public function run(): void
     {
-        if (ParliamentSeat::count() === 0 || PoliticalParty::count() === 0) {
-            $this->command->warn('SeatPartyCandidateSeeder skipped: ParliamentSeat or PoliticalParty missing.');
-            return;
-        }
+        $data = [
 
-        $banglaFaker = new BanglaFaker();
-        $parties     = PoliticalParty::all();
-
-        foreach (ParliamentSeat::all() as $seat) {
             /*
-            |----------------------------------------------------------
-            | Each seat realistically has 3–6 contesting parties
-            |----------------------------------------------------------
+            |--------------------------------------------------------------------------
+            | পটুয়াখালী-১
+            |--------------------------------------------------------------------------
             */
-            $contestParties = $parties->random(rand(3, min(6, $parties->count())));
+            'পটুয়াখালী-১' => [
+                ['party' => 'বাংলাদেশ জাতীয়তাবাদী দল - বিএনপি', 'name' => 'এয়ার ভাইস মার্শাল (অব.) আলতাফ হোসেন চৌধুরী'],
+                ['party' => 'বাংলাদেশ জামায়াতে ইসলামী', 'name' => 'অ্যাড. নাজমুল আহসান'],
+                ['party' => 'ইসলামী আন্দোলন বাংলাদেশ', 'name' => 'মাওলানা মুফতি মো. হাবিবুর রহমান হাওলাদার'],
+                ['party' => 'গণঅধিকার পরিষদ (জিওপি)', 'name' => 'মো. শহিদুল ইসলাম ফাহিম'],
+                ['party' => 'জাতীয় নাগরিক পার্টি - এনসিপি', 'name' => 'মো. জহিরুল ইসলাম মুসা'],
+                ['party' => 'বাংলাদেশের কমিউনিস্ট পার্টি', 'name' => 'মো. আ. মোতালেব মোল্লা'],
+                ['party' => 'আমার বাংলাদেশ পার্টি (এবি পার্টি)', 'name' => 'মোহাম্মদ আব্দুল ওহাব মিনার'],
+                ['party' => 'বাংলাদেশ খেলাফত মজলিস', 'name' => 'অধ্যাপক মাওলানা সাইদুর রহমান'],
+                ['party' => 'গণফোরাম', 'name' => 'আজম রুপু'],
+            ],
 
-            foreach ($contestParties as $party) {
-                SeatPartyCandidate::updateOrCreate(
+            /*
+            |--------------------------------------------------------------------------
+            | পটুয়াখালী-২
+            |--------------------------------------------------------------------------
+            */
+            'পটুয়াখালী-২' => [
+                ['party' => 'বাংলাদেশ জাতীয়তাবাদী দল - বিএনপি', 'name' => 'মো. শহিদুল আলম তালুকদার'],
+                ['party' => 'বাংলাদেশ জাতীয়তাবাদী দল - বিএনপি', 'name' => 'মুহাম্মদ মনির হোসেন'],
+                ['party' => 'বাংলাদেশ জাতীয়তাবাদী দল - বিএনপি', 'name' => 'এ কে এম ফারুক আহমেদ'],
+                ['party' => 'বাংলাদেশ জাতীয়তাবাদী দল - বিএনপি', 'name' => 'এ,কে,এম মিজানুর রহমান লিটু'],
+                ['party' => 'বাংলাদেশ জামায়াতে ইসলামী', 'name' => 'ড. শফিকুল ইসলাম মাসুদ'],
+                ['party' => 'জাতীয় নাগরিক পার্টি - এনসিপি', 'name' => 'মুহা. মুজাহিদুল ইসলাম (শাহিন)'],
+                ['party' => 'ইসলামী আন্দোলন বাংলাদেশ', 'name' => 'আব্দুল মালেক হোসেন আনোয়ারী'],
+                ['party' => 'বাংলাদেশ খেলাফত মজলিস', 'name' => 'অধ্যাপক মাওলানা আইয়ুব বিন মুসা'],
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | পটুয়াখালী-৩
+            |--------------------------------------------------------------------------
+            */
+            'পটুয়াখালী-৩' => [
+                ['party' => 'বাংলাদেশ জাতীয়তাবাদী দল - বিএনপি', 'name' => 'মো. হাসান মামুন'],
+                ['party' => 'বাংলাদেশ আওয়ামী লীগ (স্থগিত)', 'name' => 'গোলাম মাওলা রনি'],
+                ['party' => 'গণঅধিকার পরিষদ (জিওপি)', 'name' => 'নুরুল হক নুর'],
+                ['party' => 'ইসলামী আন্দোলন বাংলাদেশ', 'name' => 'মাওলানা আবু বকর সিদ্দিক'],
+                ['party' => 'বাংলাদেশ জামায়াতে ইসলামী', 'name' => 'অধ্যাপক মুহাম্মদ শাহ আলম'],
+                ['party' => 'বাংলাদেশ খেলাফত মজলিস', 'name' => 'অ্যাডভোকেট দেলোয়ার হোসাইন'],
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | পটুয়াখালী-৪
+            |--------------------------------------------------------------------------
+            */
+            'পটুয়াখালী-৪' => [
+                ['party' => 'বাংলাদেশ জাতীয়তাবাদী দল - বিএনপি', 'name' => 'মো. এবিএম মোশাররফ হোসেন'],
+                ['party' => 'বাংলাদেশ জাতীয়তাবাদী দল - বিএনপি', 'name' => 'আলহাজ মো. মনিরুজ্জামান মনির'],
+                ['party' => 'বাংলাদেশ জামায়াতে ইসলামী', 'name' => 'মাওলানা মুহাম্মদ আবদুল কাইয়ুম'],
+                ['party' => 'ইসলামী আন্দোলন বাংলাদেশ', 'name' => 'মোঃ মোস্তাফিজুর রহমান'],
+                ['party' => 'বাংলাদেশ আমজনগণ পার্টি', 'name' => 'ফাতিমা তাসনিম'],
+                ['party' => 'বাংলাদেশ খেলাফত মজলিস', 'name' => 'ডা: জহির আহমেদ'],
+                ['party' => 'গণঅধিকার পরিষদ (জিওপি)', 'name' => 'মোঃ রবিউল মিয়া'],
+            ],
+        ];
+
+        foreach ($data as $seatName => $candidates) {
+
+            $seat = ParliamentSeat::where('name', $seatName)->first();
+
+            if (! $seat) {
+                $this->command->warn("Seat not found: {$seatName}");
+                continue;
+            }
+
+            foreach ($candidates as $row) {
+
+                $party = PoliticalParty::where('name', $row['party'])->first();
+
+                if (! $party) {
+                    $this->command->warn("Party not found: {$row['party']}");
+                    continue;
+                }
+
+                SeatPartyCandidate::firstOrCreate(
                     [
                         'parliament_seat_id' => $seat->id,
                         'political_party_id' => $party->id,
+                        'candidate_name'     => $row['name'],
                     ],
                     [
-                        'candidate_name'  => $banglaFaker->maleName(),
-                        'election_symbol' => null,
-                    ],
+                        'candidate_address'    => null,
+                        'political_background' => null,
+                        'election_symbol'      => null,
+                    ]
                 );
             }
         }
+
+        $this->command->info('SeatPartyCandidateSeeder executed successfully.');
     }
 }

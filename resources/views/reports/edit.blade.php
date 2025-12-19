@@ -194,8 +194,12 @@
                                     title="সংসদীয় আসন ও রাজনৈতিক দল উভয় সিলেক্ট করলে প্রার্থীর নাম অটো চলে আসবে বা আপনি চাইলে লিখেও দিতে পারেন।">
                                     <i class="ki-outline ki-information fs-4"></i>
                                 </span></label>
-                            <input type="text" name="candidate_name" class="form-control form-control-solid fs-4"
-                                placeholder="প্রার্থীর নাম লিখুন" required value="{{ $report->candidate_name }}">
+                            <select name="candidate_name" class="form-select form-select-solid fs-4"
+                                data-control="select2" data-placeholder="প্রার্থী বাছাই করুন" data-allow-clear="true" data-hide-search="true"
+                                required>
+                                <option></option>
+                                <option selected value="{{ $report->candidate_name }}">{{ $report->candidate_name }}</option>
+                            </select>
                         </div>
                     </div>
 

@@ -224,8 +224,11 @@
                                     title="সংসদীয় আসন ও রাজনৈতিক দল উভয় সিলেক্ট করলে প্রার্থীর নাম অটো চলে আসবে বা আপনি চাইলে লিখেও দিতে পারেন।">
                                     <i class="ki-outline ki-information fs-4"></i>
                                 </span></label>
-                            <input type="text" name="candidate_name" class="form-control form-control-solid fs-4"
-                                placeholder="প্রার্থীর নাম লিখুন" required disabled>
+                            <select name="candidate_name" class="form-select form-select-solid fs-4"
+                                data-control="select2" data-placeholder="প্রার্থী বাছাই করুন" data-allow-clear="true" data-hide-search="true"
+                                required disabled>
+                                <option></option>
+                            </select>
                         </div>
                     </div>
 
@@ -254,8 +257,7 @@
                     <div class="col-lg-4">
                         <div class="mb-8 fv-row">
                             <label class="required form-label fs-4">প্রোগ্রামের ধরণ
-                                <span class="ms-1"
-                                    data-bs-toggle="tooltip"
+                                <span class="ms-1" data-bs-toggle="tooltip"
                                     title="প্রোগ্রামের ধরণ সিলেক্ট করুন। আর যদি লিস্টে ঐ সম্পর্কিত ধরণ না পান তাহলে + আইকনে ক্লিক করে নতুন তৈরি করুন।">
                                     <i class="ki-outline ki-information fs-4"></i>
                                 </span>
@@ -282,7 +284,8 @@
                                     <div class="d-flex gap-2 align-items-start">
                                         <div class="flex-grow-1">
                                             <input type="text" id="newProgramTypeName"
-                                                class="form-control form-control-sm fs-5" placeholder="নতুন প্রোগ্রামের ধরণের নাম...">
+                                                class="form-control form-control-sm fs-5"
+                                                placeholder="নতুন প্রোগ্রামের ধরণের নাম...">
                                             <div class="invalid-feedback" id="programTypeError"></div>
                                         </div>
                                         <button type="button" class="btn btn-icon btn-sm btn-success"

@@ -436,7 +436,7 @@ var KTCreateReportForm = function () {
       function initCandidateBySeatAndParty() {
             const seatSelect = $('select[name="parliament_seat_id"]');
             const partySelect = $('select[name="political_party_id"]');
-            const candidateInput = $('input[name="candidate_name"]');
+            const candidateSelect = $('select[name="candidate_name"]');
 
             function getSelectedSeatId() {
                   return seatSelect.val() || null;
@@ -446,15 +446,16 @@ var KTCreateReportForm = function () {
                   const seatId = getSelectedSeatId();
                   const partyId = $(this).val();
 
-                  candidateInput.val('');
+                  // Reset candidate select
+                  candidateSelect
+                        .empty()
+                        .append('<option></option>')
+                        .prop('disabled', true)
+                        .trigger('change');
 
                   if (!seatId || !partyId) {
-                        candidateInput.prop('disabled', true); // 🔒 still disabled
                         return;
                   }
-
-                  // ✅ Enable candidate input once party is selected
-                  candidateInput.prop('disabled', false);
 
                   fetch(
                         `${fetchCandidateRoute}?parliament_seat_id=${seatId}&political_party_id=${partyId}`,
@@ -467,8 +468,25 @@ var KTCreateReportForm = function () {
                   )
                         .then(res => res.json())
                         .then(data => {
-                              if (data.success && data.candidate_name) {
-                                    candidateInput.val(data.candidate_name);
+                              if (data.success && Array.isArray(data.candidates) && data.candidates.length > 0) {
+                                    // Loop through all candidates and add them as options
+                                    data.candidates.forEach(candidate => {
+                                          candidateSelect.append(
+                                                `<option value="${candidate.candidate_name}">${candidate.candidate_name}</option>`
+                                          );
+                                    });
+                                    candidateSelect.prop('disabled', false).trigger('change');
+
+                                    // Auto-select if only one candidate
+                                    if (data.candidates.length === 1) {
+                                          candidateSelect.val(data.candidates[0].candidate_name).trigger('change');
+                                    }
+                              } else {
+                                    // Enable select even if no candidates found
+                                    candidateSelect.prop('disabled', false).trigger('change');
+                                    if (partyId) {
+                                          toastr.info('এই দলের জন্য কোনো প্রার্থী পাওয়া যায়নি');
+                                    }
                               }
                         })
                         .catch(err => {

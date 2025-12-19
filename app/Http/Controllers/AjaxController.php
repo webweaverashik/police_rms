@@ -1,12 +1,12 @@
 <?php
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Administrative\Zone;
 use App\Models\Administrative\Union;
 use App\Models\Administrative\Upazila;
+use App\Models\Administrative\Zone;
 use App\Models\Political\PoliticalParty;
 use App\Models\Political\SeatPartyCandidate;
+use Illuminate\Http\Request;
 
 class AjaxController extends Controller
 {
@@ -21,8 +21,7 @@ class AjaxController extends Controller
             return response()->json([]);
         }
 
-        $upazilas = Upazila::where('parliament_seat_id', $parliamentSeatId)
-            ->get(['id', 'name']);
+        $upazilas = Upazila::where('parliament_seat_id', $parliamentSeatId)->get(['id', 'name']);
 
         return response()->json($upazilas);
     }
@@ -76,7 +75,7 @@ class AjaxController extends Controller
     }
 
     /**
-     * Fetch candidate name by seat & party
+     * Fetch all candidates by seat & party
      */
     public function getSeatPartyCandidate(Request $request)
     {
@@ -85,11 +84,13 @@ class AjaxController extends Controller
             'political_party_id' => 'required|integer',
         ]);
 
-        $candidate = SeatPartyCandidate::where('parliament_seat_id', $request->parliament_seat_id)->where('political_party_id', $request->political_party_id)->first();
+        $candidates = SeatPartyCandidate::where('parliament_seat_id', $request->parliament_seat_id)
+            ->where('political_party_id', $request->political_party_id)
+            ->get(['candidate_name']); // Only fetch candidate_name column
 
         return response()->json([
-            'success'        => true,
-            'candidate_name' => $candidate?->candidate_name,
+            'success'    => true,
+            'candidates' => $candidates,
         ]);
     }
 }

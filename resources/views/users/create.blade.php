@@ -40,7 +40,331 @@
 @endsection
 
 @section('content')
+    <!--begin::Form-->
+    <form action="#" class="form d-flex flex-column" id="kt_create_report_form" novalidate="novalidate">
+        <!-- ===================== Administrative Jurisdiction ===================== -->
+        <div class="card card-flush py-4 mb-7">
+            <div class="card-header">
+                <div class="card-title">
+                    <h2>প্রশাসনিক অধিক্ষেত্রের তথ্য</h2>
+                </div>
+            </div>
 
+            <div class="card-body pt-0">
+                <div class="row">
+                    <!-- Parliament Seat -->
+                    <div class="col-lg-3">
+                        <div class="mb-8 fv-row">
+                            <label class="required form-label fs-4">
+                                সংসদীয় আসন
+                                <span class="ms-1" data-bs-toggle="tooltip"
+                                    title="প্রোগ্রামটি যে সংসদীয় আসনের তা সিলেক্ট করুন">
+                                    <i class="ki-outline ki-information fs-4"></i>
+                                </span>
+                            </label>
+
+                            <select name="parliament_seat_id" class="form-select form-select-solid fs-4"
+                                data-control="select2" data-placeholder="আসন বাছাই করুন" data-allow-clear="true"
+                                data-hide-search="true" required>
+                                <option></option>
+                                @foreach ($parliamentSeats as $seat)
+                                    <option value="{{ $seat->id }}">
+                                        {{ $seat->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Upazila -->
+                    <div class="col-lg-3">
+                        <div class="mb-8 fv-row">
+                            <label class="required form-label fs-4">উপজেলা
+                                <span class="ms-1" data-bs-toggle="tooltip"
+                                    title="প্রথমে সংসদীয় আসন সিলেক্ট করুন। এরপর সেই আসনের উপজেলার লিস্ট দেখাবে।">
+                                    <i class="ki-outline ki-information fs-4"></i>
+                                </span>
+                            </label>
+                            <select name="upazila_id" class="form-select form-select-solid fs-4" data-control="select2"
+                                data-placeholder="উপজেলা বাছাই করুন" data-allow-clear="true" data-hide-search="true"
+                                required disabled>
+                                <option></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Zone -->
+                    <div class="col-lg-3">
+                        <div class="mb-8 fv-row">
+                            <label class="required form-label fs-4">থানা
+                                <span class="ms-1" data-bs-toggle="tooltip"
+                                    title="প্রথমে উপজেলা সিলেক্ট করুন। এরপর সেই উপজেলার থানার লিস্ট দেখাবে।">
+                                    <i class="ki-outline ki-information fs-4"></i>
+                                </span>
+                            </label>
+                            <select name="zone_id" class="form-select form-select-solid fs-4" data-control="select2"
+                                data-placeholder="থানা বাছাই করুন" data-allow-clear="true" data-hide-search="true" required
+                                disabled>
+                                <option></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Union -->
+                    <div class="col-lg-3">
+                        <div class="mb-8 fv-row">
+                            <label class="required form-label fs-4">ইউনিয়ন / পৌরসভা
+                                <span class="ms-1" data-bs-toggle="tooltip"
+                                    title="প্রথমে উপজেলা সিলেক্ট করুন। এরপর সেই উপজেলার ইউনিয়ন লিস্ট দেখাবে।">
+                                    <i class="ki-outline ki-information fs-4"></i>
+                                </span>
+                            </label>
+                            <select name="union_id" class="form-select form-select-solid fs-4" data-control="select2"
+                                data-placeholder="ইউনিয়ন বাছাই করুন" data-allow-clear="true" data-hide-search="true"
+                                disabled required>
+                                <option></option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================== Political Information ===================== -->
+        <div class="card card-flush py-4 mb-7">
+            <div class="card-header">
+                <div class="card-title">
+                    <h2>প্রোগ্রামের প্রয়োজনীয় তথ্য</h2>
+                </div>
+            </div>
+
+            <div class="card-body pt-0">
+                <div class="row">
+
+                    <!-- Political Party -->
+                    <div class="col-lg-4">
+                        <div class="mb-8 fv-row">
+                            <label class="required form-label fs-4">রাজনৈতিক দলের নাম <span class="ms-1"
+                                    data-bs-toggle="tooltip"
+                                    title="প্রথমে সংসদীয় আসন সিলেক্ট করুন তাহলে সেই আসনের রাজনৈতিক দলের লিস্ট দেখাবে">
+                                    <i class="ki-outline ki-information fs-4"></i>
+                                </span></label>
+                            <select name="political_party_id" class="form-select form-select-solid fs-4"
+                                data-control="select2" data-placeholder="রাজনৈতিক দল বাছাই করুন" data-allow-clear="true"
+                                required disabled>
+                                <option></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Candidate Name -->
+                    <div class="col-lg-4">
+                        <div class="mb-8 fv-row">
+                            <label class="form-label fs-4 required">প্রার্থীর নাম <span class="ms-1"
+                                    data-bs-toggle="tooltip"
+                                    title="সংসদীয় আসন ও রাজনৈতিক দল উভয় সিলেক্ট করলে প্রার্থীর নাম অটো চলে আসবে বা আপনি চাইলে লিখেও দিতে পারেন।">
+                                    <i class="ki-outline ki-information fs-4"></i>
+                                </span></label>
+                            <input type="text" name="candidate_name" class="form-control form-control-solid fs-4"
+                                placeholder="প্রার্থীর নাম লিখুন" required disabled>
+                        </div>
+                    </div>
+
+                    <!-- Program Special Guest -->
+                    <div class="col-lg-4">
+                        <div class="mb-8 fv-row">
+                            <label class="form-label fs-4">প্রধান অতিথি <span class="text-muted fst-italic">(প্রযোজ্য
+                                    ক্ষেত্রে)</span></label>
+                            <input type="text" name="program_special_guest"
+                                class="form-control form-control-solid fs-4" placeholder="প্রধান অতিথির নাম লিখুন">
+                        </div>
+                    </div>
+
+                    <!-- Program Chair -->
+                    <div class="col-lg-4">
+                        <div class="mb-8 fv-row">
+                            <label class="form-label fs-4">প্রোগ্রামের সভাপতি <span
+                                    class="text-muted fst-italic">(প্রযোজ্য
+                                    ক্ষেত্রে)</span></label>
+                            <input type="text" name="program_chair" class="form-control form-control-solid fs-4"
+                                placeholder="সভাপতির নাম লিখুন">
+                        </div>
+                    </div>
+
+                    <!-- Program Type -->
+                    <div class="col-lg-4">
+                        <div class="mb-8 fv-row">
+                            <label class="required form-label fs-4">প্রোগ্রামের ধরণ
+                                <span class="ms-1" data-bs-toggle="tooltip"
+                                    title="প্রোগ্রামের ধরণ সিলেক্ট করুন। আর যদি লিস্টে ঐ সম্পর্কিত ধরণ না পান তাহলে + আইকনে ক্লিক করে নতুন তৈরি করুন।">
+                                    <i class="ki-outline ki-information fs-4"></i>
+                                </span>
+                            </label>
+
+                            <div class="d-flex gap-2 position-relative" id="programTypeWrapper">
+                                <select name="program_type_id" class="form-select form-select-solid fs-4 flex-grow-1"
+                                    data-control="select2" data-placeholder="প্রোগ্রামের ধরণ বাছাই করুন"
+                                    data-allow-clear="true" required>
+                                    <option></option>
+                                    @foreach ($programTypes as $type)
+                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                    @endforeach
+                                </select>
+
+                                <!-- Add Button -->
+                                <button type="button" class="btn btn-light-primary btn-icon" id="toggleProgramTypePopup"
+                                    title="নতুন যোগ করুন">
+                                    <i class="ki-outline ki-plus fs-2"></i>
+                                </button>
+
+                                <!-- Mini Popup -->
+                                <div class="program-type-popup" id="programTypePopup">
+                                    <div class="d-flex gap-2 align-items-start">
+                                        <div class="flex-grow-1">
+                                            <input type="text" id="newProgramTypeName"
+                                                class="form-control form-control-sm fs-5"
+                                                placeholder="নতুন প্রোগ্রামের ধরণের নাম...">
+                                            <div class="invalid-feedback" id="programTypeError"></div>
+                                        </div>
+                                        <button type="button" class="btn btn-icon btn-sm btn-success"
+                                            id="saveProgramTypeBtn">
+                                            <i class="ki-outline ki-check fs-4"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-icon btn-sm btn-light-danger"
+                                            id="cancelProgramTypeBtn">
+                                            <i class="ki-outline ki-cross fs-4"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Program Date -->
+                    <div class="col-6 col-lg-2">
+                        <div class="mb-8 fv-row">
+                            <label class="form-label fs-4">তারিখ <span class="text-muted fst-italic">(প্রযোজ্য
+                                    ক্ষেত্রে)</span></label>
+                            <input name="program_date" id="program_date_picker" placeholder="তারিখ সিলেক্ট করুন"
+                                class="form-control form-control-solid fs-4">
+                        </div>
+                    </div>
+
+                    <!-- Program Time -->
+                    <div class="col-6 col-lg-2">
+                        <div class="mb-8 fv-row">
+                            <label class="form-label fs-4">সময় <span class="text-muted fst-italic">(প্রযোজ্য
+                                    ক্ষেত্রে)</span></label>
+                            <input name="program_time" id="program_time_picker" placeholder="সময় সেট করুন"
+                                class="form-control form-control-solid fs-4">
+                        </div>
+                    </div>
+
+
+                    <!-- Location -->
+                    <div class="col-lg-4">
+                        <div class="mb-8 fv-row">
+                            <label class="form-label fs-4 ">প্রোগ্রামের স্থান <span
+                                    class="text-muted fst-italic">(প্রযোজ্য ক্ষেত্রে)</span></label>
+                            <input type="text" name="location_name" class="form-control form-control-solid fs-4"
+                                placeholder="প্রোগ্রামের স্থান লিখুন">
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================== Program Details ===================== -->
+        <div class="card card-flush py-4 mb-7">
+            <div class="card-header">
+                <div class="card-title">
+                    <h2>প্রোগ্রামের বিস্তারিত বিবরণ</h2>
+                </div>
+            </div>
+
+            <div class="card-body pt-0">
+                <div class="row">
+                    <!-- Location -->
+                    <div class="col-lg-12">
+                        <div class="mb-8 fv-row">
+                            <label class="form-label fs-4 required">প্রোগ্রামের বিষয়</label>
+                            <input type="text" name="program_title" class="form-control form-control-solid fs-4"
+                                placeholder="প্রোগ্রামের বিষয় লিখুন" required>
+                        </div>
+                    </div>
+
+                    <!-- Program Status -->
+                    <div class="col-lg-4">
+                        <div class="mb-8 fv-row">
+                            <label class="required form-label fs-4">প্রোগ্রামের অবস্থা</label>
+
+                            @php
+                                $statuses = [
+                                    'done' => ['label' => 'সম্পন্ন', 'icon' => 'las la-check-circle'],
+                                    'ongoing' => ['label' => 'চলমান', 'icon' => 'las la-spinner'],
+                                    'upcoming' => ['label' => 'আসন্ন', 'icon' => 'las la-clock'],
+                                ];
+                            @endphp
+
+                            <div class="row g-3">
+                                @foreach ($statuses as $key => $status)
+                                    <div class="col-4">
+                                        <input type="radio" class="btn-check" name="program_status"
+                                            id="status_{{ $key }}" value="{{ $key }}" required>
+
+                                        <label for="status_{{ $key }}"
+                                            class="btn btn-outline btn-outline-dashed btn-active-light-primary
+                                    btn-radio-lg w-100 d-flex align-items-center fs-4">
+                                            <i class="{{ $status['icon'] }} fs-2x me-3"></i>
+                                            <span class="fw-bold">{{ $status['label'] }}</span>
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tentative Attendee Count -->
+                    <div class="col-lg-4">
+                        <div class="mb-8 fv-row">
+                            <label class="form-label fs-4">সম্ভাব্য উপস্থিতি (জন) <span
+                                    class="text-muted fst-italic">(প্রযোজ্য ক্ষেত্রে)</span></label>
+                            <input type="number" name="tentative_attendee_count"
+                                class="form-control form-control-solid fs-4" placeholder="সম্ভাব্য উপস্থিতি সংখ্যা">
+                        </div>
+                    </div>
+
+                    <!-- Program Description -->
+                    <div class="col-lg-12">
+                        <div class="mb-8 fv-row">
+                            <label class="form-label fs-4">বিস্তারিত বর্ণনা <span class="text-muted fst-italic">(প্রযোজ্য
+                                    ক্ষেত্রে)</span></label>
+                            <textarea name="program_description" rows="10" class="form-control form-control-solid fs-4"
+                                placeholder="প্রোগ্রামের বিস্তারিত লিখুন"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================== Actions ===================== -->
+        <div class="d-flex justify-content-start">
+            <button type="reset" id="kt_create_report_form_reset" class="btn btn-secondary me-3 w-100px">রিসেট</button>
+
+            <button type="submit" id="kt_create_report_form_submit" class="btn btn-primary w-100px">
+                <span class="indicator-label">সাবমিট</span>
+                <span class="indicator-progress">অপেক্ষা করুন...
+                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+            </button>
+        </div>
+
+    </form>
+    <!--end::Form-->
 @endsection
 
 
@@ -48,6 +372,8 @@
 @endpush
 
 @push('page-js')
+    <script src="{{ asset('js/users/create.js') }}"></script>
+    
     <script>
         document.getElementById("user_info_menu").classList.add("here", "show");
         document.getElementById("user_list_link").classList.add("active");

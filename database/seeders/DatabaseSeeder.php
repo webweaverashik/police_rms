@@ -17,17 +17,16 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             DesignationSeeder::class,
 
-
             ParliamentSeatSeeder::class,
             UpazilaSeeder::class,
             ZoneSeeder::class,
             UnionSeeder::class,
 
+            UserSeeder::class,
+
             PoliticalPartySeeder::class,
             SeatPartyCandidateSeeder::class,
             ProgramTypeSeeder::class,
-
-            UserSeeder::class,
 
             ReportSeeder::class,
             ReportAssignmentSeeder::class,

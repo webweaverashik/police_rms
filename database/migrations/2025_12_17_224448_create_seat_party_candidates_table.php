@@ -18,12 +18,12 @@ return new class extends Migration
             $table->foreignId('political_party_id')->constrained()->cascadeOnDelete();
 
             $table->string('candidate_name');
-            $table->string('candidate_age')->nullable();
             $table->string('candidate_address')->nullable();
             $table->string('political_background')->nullable();
             $table->string('election_symbol')->nullable();
 
-            $table->unique(['parliament_seat_id', 'political_party_id'], 'seat_party_unique');
+            // Optional safety (same candidate name under same seat & party)
+            $table->index(['parliament_seat_id', 'political_party_id', 'candidate_name'], 'seat_party_candidate_index');
 
             $table->timestamps();
         });
