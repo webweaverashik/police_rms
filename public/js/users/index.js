@@ -15,8 +15,8 @@ var KTUsersList = function () {
                   "pageLength": 10,
                   "lengthChange": true,
                   "autoWidth": false,  // Disable auto width
-                  'columnDefs': [{ 
-                        orderable: false, targets: [7, 8] 
+                  'columnDefs': [{
+                        orderable: false, targets: [7, 8]
                   }]
             });
 
@@ -138,6 +138,47 @@ var KTUsersList = function () {
             });
       };
 
+      // Filter Datatable
+      var handleFilter = function () {
+            // Select filter options
+            const filterForm = document.querySelector('[data-all-user-table-filter="form"]');
+            const filterButton = filterForm.querySelector('[data-all-user-table-filter="filter"]');
+            const resetButton = filterForm.querySelector('[data-all-user-table-filter="reset"]');
+            const selectOptions = filterForm.querySelectorAll('select');
+
+            // Filter datatable on submit
+            filterButton.addEventListener('click', function () {
+                  var filterString = '';
+
+                  // Get filter values
+                  selectOptions.forEach((item, index) => {
+                        if (item.value && item.value !== '') {
+                              if (index !== 0) {
+                                    filterString += ' ';
+                              }
+
+                              // Build filter value options
+                              filterString += item.value;
+                        }
+                  });
+
+                  // Filter datatable --- official docs reference: https://datatables.net/reference/api/search()
+                  datatable.search(filterString).draw();
+            });
+
+            // Reset datatable
+            resetButton.addEventListener('click', function () {
+                  // Reset filter form
+                  selectOptions.forEach((item, index) => {
+                        // Reset Select2 dropdown --- official docs reference: https://select2.org/programmatic-control/add-select-clear-items
+                        $(item).val(null).trigger('change');
+                  });
+
+                  // Filter datatable --- official docs reference: https://datatables.net/reference/api/search()
+                  datatable.search('').draw();
+            });
+      }
+
       return {
             // Public functions  
             init: function () {
@@ -151,81 +192,11 @@ var KTUsersList = function () {
                   handleSearch();
                   handleDeletion();
                   handleToggleActivation();
+                  handleFilter();
             }
       }
 }();
 
-var KTUsersAddUser = function () {
-      // Shared variables
-      const element = document.getElementById('kt_modal_add_user');
-      const form = element.querySelector('#kt_modal_add_user_form');
-      const modal = new bootstrap.Modal(element);
-
-      // Init add schedule modal
-      var initAddUser = () => {
-
-            // Cancel button handler
-            const cancelButton = element.querySelector('[data-add-users-modal-action="cancel"]');
-            cancelButton.addEventListener('click', e => {
-                  e.preventDefault();
-
-                  form.reset(); // Reset form			
-                  modal.hide();
-            });
-
-            // Close button handler
-            const closeButton = element.querySelector('[data-add-users-modal-action="close"]');
-            closeButton.addEventListener('click', e => {
-                  e.preventDefault();
-
-                  form.reset(); // Reset form			
-                  modal.hide();
-            });
-      }
-
-      return {
-            // Public functions
-            init: function () {
-                  initAddUser();
-            }
-      };
-}();
-
-var KTUsersEditUser = function () {
-      // Shared variables
-      const element = document.getElementById('kt_modal_edit_user');
-      const form = element.querySelector('#kt_modal_edit_user_form');
-      const modal = new bootstrap.Modal(element);
-
-      // Init add schedule modal
-      var initEditUser = () => {
-
-            // Cancel button handler
-            const cancelButton = element.querySelector('[data-edit-users-modal-action="cancel"]');
-            cancelButton.addEventListener('click', e => {
-                  e.preventDefault();
-
-                  form.reset(); // Reset form			
-                  modal.hide();
-            });
-
-            // Close button handler
-            const closeButton = element.querySelector('[data-edit-users-modal-action="close"]');
-            closeButton.addEventListener('click', e => {
-                  e.preventDefault();
-
-                  form.reset(); // Reset form			
-                  modal.hide();
-            });
-      }
-
-      return {
-            // Public functions
-            init: function () {
-                  initEditUser();
-            }
-      };
-}();
 
 var KTUsersEditPassword = function () {
       // Shared variables
@@ -469,7 +440,5 @@ var KTUsersEditPassword = function () {
 // On document ready
 KTUtil.onDOMContentLoaded(function () {
       KTUsersList.init();
-      KTUsersAddUser.init();
-      KTUsersEditUser.init();
       KTUsersEditPassword.init();
 });

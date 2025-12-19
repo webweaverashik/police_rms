@@ -14,45 +14,21 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            /*
-            |--------------------------------------------------------------------------
-            | Core Master Data
-            |--------------------------------------------------------------------------
-            */
             RoleSeeder::class,
             DesignationSeeder::class,
-            ZoneSeeder::class,
+
+
+            ParliamentSeatSeeder::class,
             UpazilaSeeder::class,
+            ZoneSeeder::class,
             UnionSeeder::class,
 
-            /*
-            |--------------------------------------------------------------------------
-            | Political Master Data
-            |--------------------------------------------------------------------------
-            */
-            ParliamentSeatSeeder::class,
             PoliticalPartySeeder::class,
-            SeatPartyCandidateSeeder::class, // 🔴 REQUIRED
-
-            /*
-            |--------------------------------------------------------------------------
-            | Program Master Data
-            |--------------------------------------------------------------------------
-            */
+            SeatPartyCandidateSeeder::class,
             ProgramTypeSeeder::class,
 
-            /*
-            |--------------------------------------------------------------------------
-            | Users
-            |--------------------------------------------------------------------------
-            */
             UserSeeder::class,
 
-            /*
-            |--------------------------------------------------------------------------
-            | Reports & Assignments
-            |--------------------------------------------------------------------------
-            */
             ReportSeeder::class,
             ReportAssignmentSeeder::class,
         ]);

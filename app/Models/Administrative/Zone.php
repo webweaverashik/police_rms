@@ -1,13 +1,18 @@
 <?php
 namespace App\Models\Administrative;
 
-use App\Models\User\User;
 use App\Models\Report\Report;
+use App\Models\User\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Zone extends Model
 {
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'upazila_id'];
+
+    public function upazila()
+    {
+        return $this->belongsTo(Upazila::class);
+    }
 
     public function users()
     {

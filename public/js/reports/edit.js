@@ -227,6 +227,117 @@ var KTEditReportForm = function () {
             dateFormat: "h:i K",
       });
 
+      // ===================================
+      // Load Upazilas by Parliament Seat
+      // ===================================
+      function initUpazilasBySeat() {
+            const seatSelect = $('select[name="parliament_seat_id"]');
+            const upazilaSelect = $('select[name="upazila_id"]');
+            const zoneSelect = $('select[name="zone_id"]');
+
+            if (!seatSelect.length || !upazilaSelect.length) return;
+
+            // ✅ Use jQuery .on('change') for Select2 compatibility
+            seatSelect.on('change', function () {
+                  const seatId = $(this).val();
+
+                  // Reset upazila and zone fields
+                  upazilaSelect
+                        .empty()
+                        .append('<option></option>')
+                        .prop('disabled', true)
+                        .trigger('change');
+
+                  if (zoneSelect.length) {
+                        zoneSelect
+                              .empty()
+                              .append('<option></option>')
+                              .prop('disabled', true)
+                              .trigger('change');
+                  }
+
+                  if (!seatId) return;
+
+                  // Build URL with query parameter
+                  const url = `${fetchUpazilasBySeatRoute}?parliament_seat_id=${seatId}`;
+
+                  fetch(url, {
+                        headers: {
+                              'Accept': 'application/json',
+                              'X-Requested-With': 'XMLHttpRequest'
+                        }
+                  })
+                        .then(response => response.json())
+                        .then(upazilas => {
+                              if (Array.isArray(upazilas) && upazilas.length > 0) {
+                                    upazilas.forEach(upazila => {
+                                          upazilaSelect.append(
+                                                `<option value="${upazila.id}">${upazila.name}</option>`
+                                          );
+                                    });
+                                    upazilaSelect.prop('disabled', false).trigger('change');
+                              } else {
+                                    toastr.warning('এই সংসদীয় আসনের জন্য কোনো উপজেলা পাওয়া যায়নি');
+                              }
+                        })
+                        .catch(error => {
+                              console.error('Error fetching upazilas:', error);
+                              toastr.error('উপজেলা লোড করা যায়নি');
+                        });
+            });
+      }
+
+      // =======================
+      // Load Zones by Upazila
+      // =======================
+      function initZonesByUpazila() {
+            const upazilaSelect = $('select[name="upazila_id"]');
+            const zoneSelect = $('select[name="zone_id"]');
+
+            if (!upazilaSelect.length || !zoneSelect.length) return;
+
+            // ✅ Use jQuery .on('change') for Select2 compatibility
+            upazilaSelect.on('change', function () {
+                  const upazilaId = $(this).val();
+
+                  // Reset zone field
+                  zoneSelect
+                        .empty()
+                        .append('<option></option>')
+                        .prop('disabled', true)
+                        .trigger('change');
+
+                  if (!upazilaId) return;
+
+                  // Build URL with query parameter
+                  const url = `${fetchZonesByUpazilaRoute}?upazila_id=${upazilaId}`;
+
+                  fetch(url, {
+                        headers: {
+                              'Accept': 'application/json',
+                              'X-Requested-With': 'XMLHttpRequest'
+                        }
+                  })
+                        .then(response => response.json())
+                        .then(zones => {
+                              if (Array.isArray(zones) && zones.length > 0) {
+                                    zones.forEach(zone => {
+                                          zoneSelect.append(
+                                                `<option value="${zone.id}">${zone.name}</option>`
+                                          );
+                                    });
+                                    zoneSelect.prop('disabled', false).trigger('change');
+                              } else {
+                                    toastr.warning('এই উপজেলার জন্য কোনো থানা পাওয়া যায়নি');
+                              }
+                        })
+                        .catch(error => {
+                              console.error('Error fetching zones:', error);
+                              toastr.error('থানা লোড করা যায়নি');
+                        });
+            });
+      }
+
       // =======================
       // Load Unions by Upazila
       // =======================
@@ -287,15 +398,15 @@ var KTEditReportForm = function () {
       // Load Political Parties by Seat
       // ================================
       function initSeatWiseParties() {
+            const seatSelect = $('select[name="parliament_seat_id"]');
             const partySelect = $('select[name="political_party_id"]');
             const candidateInput = $('input[name="candidate_name"]');
 
             function getSelectedSeatId() {
-                  const seat = $('input[name="parliament_seat_id"]:checked');
-                  return seat.length ? seat.val() : null;
+                  return seatSelect.val() || null;
             }
 
-            $('input[name="parliament_seat_id"]').on('change', function () {
+            seatSelect.on('change', function () {
                   const seatId = getSelectedSeatId();
 
                   // Reset
@@ -334,7 +445,7 @@ var KTEditReportForm = function () {
                         })
                         .catch(err => {
                               console.error(err);
-                              toastr.error('রাজনৈতিক দল লোড করা যায়নি');
+                              toastr.error('রাজনৈতিক দল লোড করা যায়নি');
                         });
             });
       }
@@ -345,12 +456,12 @@ var KTEditReportForm = function () {
       // Load Candidate by Seat + Party
       // =====================================
       function initCandidateBySeatAndParty() {
+            const seatSelect = $('select[name="parliament_seat_id"]');
             const partySelect = $('select[name="political_party_id"]');
             const candidateInput = $('input[name="candidate_name"]');
 
             function getSelectedSeatId() {
-                  const seat = $('input[name="parliament_seat_id"]:checked');
-                  return seat.length ? seat.val() : null;
+                  return seatSelect.val() || null;
             }
 
             partySelect.on('change', function () {
@@ -384,7 +495,7 @@ var KTEditReportForm = function () {
                         })
                         .catch(err => {
                               console.error(err);
-                              toastr.error('প্রার্থীর তথ্য লোড করা যায়নি');
+                              toastr.error('প্রার্থীর তথ্য লোড করা যায়নি');
                         });
             });
       }
@@ -395,6 +506,8 @@ var KTEditReportForm = function () {
             // public functions
             init: function () {
                   initValidation();
+                  initUpazilasBySeat();
+                  initZonesByUpazila();
                   initUnionByUpazila();
 
                   initSeatWiseParties();

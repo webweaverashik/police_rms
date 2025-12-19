@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('zones', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->foreignId('upazila_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

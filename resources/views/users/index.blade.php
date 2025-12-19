@@ -62,10 +62,63 @@
             <!--begin::Card toolbar-->
             <div class="card-toolbar">
                 <!--begin::Toolbar-->
-                <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
+                <div class="d-flex justify-content-end" data-all-user-table-filter="base">
+                    <!--begin::Filter-->
+                    <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click"
+                        data-kt-menu-placement="bottom-end">
+                        <i class="ki-outline ki-filter fs-2"></i>ফিল্টার</button>
+                    <!--begin::Menu 1-->
+                    <div class="menu menu-sub menu-sub-dropdown w-300px w-md-350px" data-kt-menu="true">
+                        <!--begin::Header-->
+                        <div class="px-7 py-5">
+                            <div class="fs-5 text-gray-900 fw-bold">ফিল্টার অপশন</div>
+                        </div>
+                        <!--end::Header-->
+                        <!--begin::Separator-->
+                        <div class="separator border-gray-200"></div>
+                        <!--end::Separator-->
+                        <!--begin::Content-->
+                        <div class="px-7 py-5" data-all-user-table-filter="form">
+                            <div class="mb-5">
+                                <label class="form-label fs-6 fw-semibold">রোল:</label>
+                                @php
+                                    $roleBn = [
+                                        'SuperAdmin' => 'সুপার এডমিন',
+                                        'Admin' => 'এডমিন',
+                                        'Viewer' => 'পর্যবেক্ষক',
+                                        'Magistrate' => 'ম্যাজিস্ট্রেট',
+                                        'Operator' => 'তৈরিকারি',
+                                    ];
+                                @endphp
+
+                                <select class="form-select form-select-solid fw-bold" data-kt-select2="true"
+                                    data-placeholder="সিলেক্ট করুন" data-allow-clear="true"
+                                    data-all-user-table-filter="status" data-hide-search="true">
+                                    <option></option>
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->id }}_{{ $role->name }}">
+                                            {{ $roleBn[$role->name] ?? $role->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <!--begin::Actions-->
+                            <div class="d-flex justify-content-end mt-5">
+                                <button type="reset" class="btn btn-light btn-active-light-primary fw-semibold me-2 px-6"
+                                    data-kt-menu-dismiss="true" data-all-user-table-filter="reset">রিসেট</button>
+                                <button type="submit" class="btn btn-primary fw-semibold px-6" data-kt-menu-dismiss="true"
+                                    data-all-user-table-filter="filter">এপ্লাই</button>
+                            </div>
+                            <!--end::Actions-->
+                        </div>
+                        <!--end::Content-->
+                    </div>
+                    <!--end::Menu 1-->
+
                     <!--begin::Add user-->
-                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
-                        <i class="ki-outline ki-plus fs-2"></i>নতুন ব্যবহারকারি</a>
+                    <a href="{{ route('users.create') }}" class="btn btn-primary">
+                        <i class="ki-outline ki-plus fs-2"></i>নতুন ইউজার</a>
                     <!--end::Add user-->
                 </div>
                 <!--end::Toolbar-->
@@ -79,12 +132,13 @@
             <table class="table table-hover align-middle table-row-dashed fs-6 gy-5 prms-table" id="kt_table_users">
                 <thead>
                     <tr class="fw-bold fs-5 gs-0">
-                        <th>#</th>
-                        <th>ব্যবহারকারির তথ্য</th>
+                        <th class="w-25px">#</th>
+                        <th>ইউজারের তথ্য</th>
                         <th>বিপি নম্বর</th>
                         <th>ইমেইল</th>
                         <th>মোবাইল</th>
                         <th>রোল</th>
+                        <th class="d-none">রোল (filter)</th>
                         <th>সর্বশেষ লগিন</th>
                         <th>সক্রিয়/নিষ্ক্রিয়</th>
                         <th>কার্যক্রম</th>
@@ -104,7 +158,11 @@
                                 <!--begin::user details-->
                                 <div class="d-flex flex-column">
                                     <span class="text-gray-800 mb-1">{{ $user->name }}</span>
-                                    <span class="fw-semibold">পদবী: {{ $user->designation->name }}</span>
+                                    <span class="fw-semibold">
+                                        {{ $user->designation->name }}
+                                        {{ $user->zones && $user->zones->isNotEmpty() && $user->isOperator() ? ', ' . $user->zones->first()->name : '' }}
+                                    </span>
+
                                 </div>
                             </td>
                             <td>{{ $user->bp_number ? $numto->bnNum($user->bp_number) : '-' }}</td>
@@ -131,7 +189,7 @@
                                     <span class="badge badge-light">N/A</span>
                                 @endif
                             </td>
-
+                            <td class="d-none">{{ $user->role_id }}_{{ $user->role->name }}</td>
 
                             <td>
                                 {{ $numto->bnNum($user->created_at->format('d')) }}-
@@ -165,8 +223,7 @@
                                         <i class="ki-outline ki-eye fs-2"></i>
                                     </a>
                                 @elseif ($user->id != auth()->user()->id)
-                                    <a href="#" title="সংশোধন" data-bs-toggle="modal"
-                                        data-bs-target="#kt_modal_edit_user" data-user-id="{{ $user->id }}"
+                                    <a href="{{ route('users.edit', $user->id) }}" title="সংশোধন"
                                         class="btn btn-icon text-hover-primary w-30px h-30px">
                                         <i class="ki-outline ki-pencil fs-2"></i>
                                     </a>
@@ -279,324 +336,6 @@
         <!--end::Modal dialog-->
     </div>
     <!--end::Modal - Edit User Password-->
-
-    <!--begin::Modal - Add User-->
-    <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true" data-bs-backdrop="static"
-        data-bs-keyboard="false">
-        <!--begin::Modal dialog-->
-        <div class="modal-dialog modal-dialog-centered mw-750px">
-            <!--begin::Modal content-->
-            <div class="modal-content">
-                <!--begin::Modal header-->
-                <div class="modal-header" id="kt_modal_add_user_header">
-                    <!--begin::Modal title-->
-                    <h2 class="fw-bold">Add New User</h2>
-                    <!--end::Modal title-->
-                    <!--begin::Close-->
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-add-users-modal-action="close">
-                        <i class="ki-outline ki-cross fs-1">
-                        </i>
-                    </div>
-                    <!--end::Close-->
-                </div>
-                <!--end::Modal header-->
-                <!--begin::Modal body-->
-                <div class="modal-body px-5 my-7">
-                    <!--begin::Form-->
-                    <form id="kt_modal_add_user_form" class="form" action="#" novalidate="novalidate">
-                        <!--begin::Scroll-->
-                        <div class="d-flex flex-column scroll-y px-5 px-lg-10" id="kt_modal_add_user_scroll"
-                            data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto"
-                            data-kt-scroll-dependencies="#kt_modal_add_user_header"
-                            data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
-                            <div class="row">
-                                <!--begin::Role Input-->
-                                <div class="col-lg-12">
-                                    <div class="fv-row mb-7">
-                                        <label class="required fw-semibold fs-6 mb-2">Role</label>
-
-                                        <!--begin::Row-->
-                                        <div class="row">
-                                            <div class="col-lg-4">
-                                                <!--begin::Option-->
-                                                <input type="radio" class="btn-check" name="user_role" value="admin"
-                                                    id="role_admin_input" />
-                                                <label
-                                                    class="btn btn-outline btn-outline-dashed btn-active-light-primary p-3 d-flex align-items-center"
-                                                    for="role_admin_input">
-                                                    <i class="las la-user-secret fs-2x me-5"></i>
-                                                    <!--begin::Info-->
-                                                    <span class="d-block fw-semibold text-start">
-                                                        <span class="text-gray-900 fw-bold d-block fs-6">Admin</span>
-                                                    </span>
-                                                    <!--end::Info-->
-                                                </label>
-                                                <!--end::Option-->
-                                            </div>
-
-                                            <div class="col-lg-4">
-                                                <!--begin::Option-->
-                                                <input type="radio" class="btn-check" name="user_role" value="manager"
-                                                    id="role_mananger_input" />
-                                                <label
-                                                    class="btn btn-outline btn-outline-dashed btn-active-light-primary p-3 d-flex align-items-center"
-                                                    for="role_mananger_input">
-                                                    <i class="las la-user-ninja fs-2x me-5"></i>
-                                                    <!--begin::Info-->
-                                                    <span class="d-block fw-semibold text-start">
-                                                        <span class="text-gray-900 fw-bold d-block fs-6">Manager</span>
-                                                    </span>
-                                                    <!--end::Info-->
-                                                </label>
-                                                <!--end::Option-->
-                                            </div>
-
-                                            <div class="col-lg-4">
-                                                <!--begin::Option-->
-                                                <input type="radio" class="btn-check" name="user_role"
-                                                    value="accountant" id="role_accountant_input" checked="checked" />
-                                                <label
-                                                    class="btn btn-outline btn-outline-dashed btn-active-light-primary p-3 d-flex align-items-center"
-                                                    for="role_accountant_input">
-                                                    <i class="las la-user fs-2x me-5"></i>
-                                                    <!--begin::Info-->
-                                                    <span class="d-block fw-semibold text-start">
-                                                        <span class="text-gray-900 fw-bold d-block fs-6">Accountant</span>
-                                                    </span>
-                                                    <!--end::Info-->
-                                                </label>
-                                                <!--end::Option-->
-                                            </div>
-                                        </div>
-                                        <!--end::Row-->
-                                    </div>
-                                </div>
-                                <!--end::Role Input -->
-
-                                <!--begin::User name input-->
-                                <div class="col-lg-6" id="user_name_input_div">
-                                    <div class="fv-row mb-7">
-                                        <!--begin::Label-->
-                                        <label class="required fw-semibold fs-6 mb-2">Name</label>
-                                        <!--end::Label-->
-                                        <!--begin::Input-->
-                                        <input type="text" name="user_name"
-                                            class="form-control form-control-solid mb-3 mb-lg-0"
-                                            placeholder="Write full name" value="{{ old('user_name') }}" required />
-                                        <!--end::Input-->
-                                    </div>
-                                </div>
-                                <!--end::User name input-->
-
-                                <!--begin::User email input-->
-                                <div class="col-lg-6">
-                                    <div class="fv-row mb-7">
-                                        <label class="required fw-semibold fs-6 mb-2">Email</label>
-
-                                        <input type="email" name="user_email"
-                                            class="form-control form-control-solid mb-3 mb-lg-0"
-                                            placeholder="test@mail.com" value="{{ old('user_email') }}" required />
-                                    </div>
-                                </div>
-                                <!--end::User email input-->
-
-                                <!--begin::User mobile input-->
-                                <div class="col-lg-6">
-                                    <div class="fv-row mb-7">
-                                        <label class="required fw-semibold fs-6 mb-2">Mobile No.</label>
-
-                                        <input type="text" name="user_mobile"
-                                            class="form-control form-control-solid mb-3 mb-lg-0"
-                                            placeholder="e.g. 01812345678" value="{{ old('user_mobile') }}" required />
-                                    </div>
-                                </div>
-                                <!--end::User mobile input-->
-                            </div>
-
-
-
-                        </div>
-                        <!--end::Scroll-->
-
-                        <!--begin::Actions-->
-                        <div class="text-center pt-10">
-                            <button type="reset" class="btn btn-light me-3"
-                                data-add-users-modal-action="cancel">Discard</button>
-                            <button type="submit" class="btn btn-primary" data-add-users-modal-action="submit">
-                                <span class="indicator-label">Submit</span>
-                                <span class="indicator-progress">Please wait...
-                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                            </button>
-                        </div>
-                        <!--end::Actions-->
-                    </form>
-                    <!--end::Form-->
-                </div>
-                <!--end::Modal body-->
-            </div>
-            <!--end::Modal content-->
-        </div>
-        <!--end::Modal dialog-->
-    </div>
-    <!--end::Modal - Add User-->
-
-    <!--begin::Modal - Edit User-->
-    <div class="modal fade" id="kt_modal_edit_user" tabindex="-1" aria-hidden="true" data-bs-backdrop="static"
-        data-bs-keyboard="false">
-        <!--begin::Modal dialog-->
-        <div class="modal-dialog modal-dialog-centered mw-750px">
-            <!--begin::Modal content-->
-            <div class="modal-content">
-                <!--begin::Modal header-->
-                <div class="modal-header">
-                    <!--begin::Modal title-->
-                    <h2 class="fw-bold" id="kt_modal_edit_user_title">Update User</h2>
-                    <!--end::Modal title-->
-                    <!--begin::Close-->
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-edit-users-modal-action="close">
-                        <i class="ki-outline ki-cross fs-1">
-                        </i>
-                    </div>
-                    <!--end::Close-->
-                </div>
-                <!--end::Modal header-->
-                <!--begin::Modal body-->
-                <div class="modal-body px-5 my-7">
-                    <!--begin::Form-->
-                    <form id="kt_modal_edit_user_form" class="form" action="#" novalidate="novalidate">
-                        <!--begin::Scroll-->
-                        <div class="d-flex flex-column scroll-y px-5 px-lg-10" id="kt_modal_edit_user_scroll"
-                            data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto"
-                            data-kt-scroll-dependencies="#kt_modal_edit_user_header"
-                            data-kt-scroll-wrappers="#kt_modal_edit_user_scroll" data-kt-scroll-offset="300px">
-
-                            <div class="row">
-                                <!--begin::Role Input-->
-                                <div class="col-lg-12">
-                                    <div class="fv-row mb-7">
-                                        <label class="required fw-semibold fs-6 mb-2">Role</label>
-
-                                        <!--begin::Row-->
-                                        <div class="row">
-                                            <div class="col-lg-4">
-                                                <!--begin::Option-->
-                                                <input type="radio" class="btn-check" name="user_role_edit"
-                                                    value="admin" id="role_admin_edit" />
-                                                <label
-                                                    class="btn btn-outline btn-outline-dashed btn-active-light-primary p-3 d-flex align-items-center"
-                                                    for="role_admin_edit">
-                                                    <i class="las la-user-secret fs-2x me-5"></i>
-                                                    <!--begin::Info-->
-                                                    <span class="d-block fw-semibold text-start">
-                                                        <span class="text-gray-900 fw-bold d-block fs-6">Admin</span>
-                                                    </span>
-                                                    <!--end::Info-->
-                                                </label>
-                                                <!--end::Option-->
-                                            </div>
-
-                                            <div class="col-lg-4">
-                                                <!--begin::Option-->
-                                                <input type="radio" class="btn-check" name="user_role_edit"
-                                                    value="manager" id="role_manager_edit" />
-                                                <label
-                                                    class="btn btn-outline btn-outline-dashed btn-active-light-primary p-3 d-flex align-items-center"
-                                                    for="role_manager_edit">
-                                                    <i class="las la-user-ninja fs-2x me-5"></i>
-                                                    <!--begin::Info-->
-                                                    <span class="d-block fw-semibold text-start">
-                                                        <span class="text-gray-900 fw-bold d-block fs-6">Manager</span>
-                                                    </span>
-                                                    <!--end::Info-->
-                                                </label>
-                                                <!--end::Option-->
-                                            </div>
-
-                                            <div class="col-lg-4">
-                                                <!--begin::Option-->
-                                                <input type="radio" class="btn-check" name="user_role_edit"
-                                                    value="accountant" id="role_accountant_edit" />
-                                                <label
-                                                    class="btn btn-outline btn-outline-dashed btn-active-light-primary p-3 d-flex align-items-center"
-                                                    for="role_accountant_edit">
-                                                    <i class="las la-user fs-2x me-5"></i>
-                                                    <!--begin::Info-->
-                                                    <span class="d-block fw-semibold text-start">
-                                                        <span class="text-gray-900 fw-bold d-block fs-6">Accountant</span>
-                                                    </span>
-                                                    <!--end::Info-->
-                                                </label>
-                                                <!--end::Option-->
-                                            </div>
-                                        </div>
-                                        <!--end::Row-->
-                                    </div>
-                                </div>
-                                <!--end::Role Input -->
-
-                                <!--begin::User name input-->
-                                <div class="col-lg-6" id="user_name_edit_div">
-                                    <div class="fv-row mb-7">
-                                        <!--begin::Label-->
-                                        <label class="required fw-semibold fs-6 mb-2">Name</label>
-                                        <!--end::Label-->
-                                        <!--begin::Input-->
-                                        <input type="text" name="user_name_edit"
-                                            class="form-control form-control-solid mb-3 mb-lg-0"
-                                            placeholder="Write full name" required />
-                                        <!--end::Input-->
-                                    </div>
-                                </div>
-                                <!--end::User name input-->
-
-                                <!--begin::User email input-->
-                                <div class="col-lg-6">
-                                    <div class="fv-row mb-7">
-                                        <label class="fw-semibold fs-6 mb-2 required">Email</label>
-
-                                        <input type="email" name="user_email_edit"
-                                            class="form-control form-control-solid mb-3 mb-lg-0"
-                                            placeholder="test@mail.com" required />
-                                    </div>
-                                </div>
-                                <!--end::User email input-->
-
-                                <!--begin::User mobile input-->
-                                <div class="col-lg-6">
-                                    <div class="fv-row mb-7">
-                                        <label class="required fw-semibold fs-6 mb-2">Mobile No.</label>
-
-                                        <input type="text" name="user_mobile_edit"
-                                            class="form-control form-control-solid mb-3 mb-lg-0"
-                                            placeholder="e.g. 01812345678" required />
-                                    </div>
-                                </div>
-                                <!--end::User mobile input-->
-                            </div>
-                        </div>
-                        <!--end::Scroll-->
-
-                        <!--begin::Actions-->
-                        <div class="text-center pt-10">
-                            <button type="reset" class="btn btn-light me-3"
-                                data-edit-users-modal-action="cancel">Discard</button>
-                            <button type="submit" class="btn btn-primary" data-edit-users-modal-action="submit">
-                                <span class="indicator-label">Update</span>
-                                <span class="indicator-progress">Please wait...
-                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                            </button>
-                        </div>
-                        <!--end::Actions-->
-                    </form>
-                    <!--end::Form-->
-                </div>
-                <!--end::Modal body-->
-            </div>
-            <!--end::Modal content-->
-        </div>
-        <!--end::Modal dialog-->
-    </div>
-    <!--end::Modal - Edit User-->
 @endsection
 
 

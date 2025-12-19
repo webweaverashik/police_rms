@@ -54,7 +54,7 @@
                 <!--begin::Search-->
                 <div class="d-flex align-items-center position-relative my-1">
                     <i class="ki-outline ki-magnifier fs-3 position-absolute ms-5"></i> <input type="text"
-                        data-all-reports-table-filter="search" class="form-control form-control-solid w-350px ps-12"
+                        data-all-reports-table-filter="search" class="form-control form-control-solid w-250px w-lg-450px ps-12"
                         placeholder="প্রতিবেদনে খুঁজুন যেমন: প্রার্থীর নাম">
                 </div>
                 <!--end::Search-->

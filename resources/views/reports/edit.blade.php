@@ -64,9 +64,9 @@
             <div class="card-body pt-0">
                 <div class="row">
                     <!-- Parliament Seat -->
-                    <div class="col-lg-12">
+                    <div class="col-lg-3">
                         <div class="mb-8 fv-row">
-                            <label class="required fw-semibold fs-4 mb-4 d-block">
+                            <label class="required form-label fs-4">
                                 সংসদীয় আসন
                                 <span class="ms-1" data-bs-toggle="tooltip"
                                     title="প্রোগ্রামটি যে সংসদীয় আসনের তা সিলেক্ট করুন">
@@ -74,35 +74,28 @@
                                 </span>
                             </label>
 
-                            <div class="row row-cols-2 row-cols-xl-4 g-4">
+                            <select name="parliament_seat_id" class="form-select form-select-solid fs-4"
+                                data-control="select2" data-placeholder="আসন বাছাই করুন" data-allow-clear="true"
+                                data-hide-search="true" required>
+                                <option></option>
                                 @foreach ($parliamentSeats as $seat)
-                                    <div class="col">
-                                        <input type="radio" class="btn-check" name="parliament_seat_id"
-                                            id="seat_{{ $seat->id }}" value="{{ $seat->id }}" required
-                                            @if ($report->parliament_seat_id == $seat->id) checked @endif>
-
-                                        <label for="seat_{{ $seat->id }}"
-                                            class="btn btn-outline btn-outline-dashed btn-active-light-primary btn-radio-lg w-100 d-flex align-items-center fs-4 p-6">
-
-                                            <!-- Icon -->
-                                            <i class="ki-outline ki-map fs-2x me-3"></i>
-
-                                            <!-- Text -->
-                                            <span class="fw-bold">
-                                                {{ $seat->name }}
-                                            </span>
-
-                                        </label>
-                                    </div>
+                                    <option value="{{ $seat->id }}" @if ($report->parliament_seat_id == $seat->id) selected @endif>
+                                        {{ $seat->name }}
+                                    </option>
                                 @endforeach
-                            </div>
+                            </select>
                         </div>
                     </div>
 
                     <!-- Upazila -->
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <div class="mb-8 fv-row">
-                            <label class="required form-label fs-4">উপজেলা</label>
+                            <label class="required form-label fs-4">উপজেলা
+                                <span class="ms-1" data-bs-toggle="tooltip"
+                                    title="প্রথমে সংসদীয় আসন সিলেক্ট করুন। এরপর সেই আসনের উপজেলার লিস্ট দেখাবে।">
+                                    <i class="ki-outline ki-information fs-4"></i>
+                                </span>
+                            </label>
                             <select name="upazila_id" class="form-select form-select-solid fs-4" data-control="select2"
                                 data-placeholder="উপজেলা বাছাই করুন" data-allow-clear="true" data-hide-search="true"
                                 required>
@@ -116,33 +109,17 @@
                         </div>
                     </div>
 
-                    <!-- Union -->
-                    <div class="col-lg-4">
+                    <!-- Zone -->
+                    <div class="col-lg-3">
                         <div class="mb-8 fv-row">
-                            <label class="required form-label fs-4">ইউনিয়ন
+                            <label class="required form-label fs-4">থানা
                                 <span class="ms-1" data-bs-toggle="tooltip"
-                                    title="প্রথম উপজেলা সিলেক্ট করুন। এরপর সেই উপজেলার ইউনিয়ন লিস্ট দেখাবে।">
+                                    title="প্রথমে উপজেলা সিলেক্ট করুন। এরপর সেই উপজেলার থানার লিস্ট দেখাবে।">
                                     <i class="ki-outline ki-information fs-4"></i>
                                 </span>
                             </label>
-                            <select name="union_id" class="form-select form-select-solid fs-4" data-control="select2"
-                                data-placeholder="ইউনিয়ন বাছাই করুন" data-allow-clear="true" disabled required>
-                                <option></option>
-                                @foreach ($unions as $union)
-                                    <option value="{{ $union->id }}" @if ($report->union_id == $union->id) selected @endif>
-                                        {{ $union->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Zone -->
-                    <div class="col-lg-4">
-                        <div class="mb-8 fv-row">
-                            <label class="required form-label fs-4">থানা</label>
                             <select name="zone_id" class="form-select form-select-solid fs-4" data-control="select2"
-                                data-placeholder="থানা বাছাই করুন" data-allow-clear="true" required>
+                                data-placeholder="থানা বাছাই করুন" data-allow-clear="true" data-hide-search="true" required>
                                 <option></option>
                                 @foreach ($zones as $zone)
                                     <option value="{{ $zone->id }}" @if ($report->zone_id == $zone->id) selected @endif>
@@ -153,6 +130,26 @@
                         </div>
                     </div>
 
+                    <!-- Union -->
+                    <div class="col-lg-3">
+                        <div class="mb-8 fv-row">
+                            <label class="required form-label fs-4">ইউনিয়ন / পৌরসভা
+                                <span class="ms-1" data-bs-toggle="tooltip"
+                                    title="প্রথম উপজেলা সিলেক্ট করুন। এরপর সেই উপজেলার ইউনিয়ন লিস্ট দেখাবে।">
+                                    <i class="ki-outline ki-information fs-4"></i>
+                                </span>
+                            </label>
+                            <select name="union_id" class="form-select form-select-solid fs-4" data-control="select2"
+                                data-placeholder="ইউনিয়ন বাছাই করুন" data-allow-clear="true" data-hide-search="true" required>
+                                <option></option>
+                                @foreach ($unions as $union)
+                                    <option value="{{ $union->id }}" @if ($report->union_id == $union->id) selected @endif>
+                                        {{ $union->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -198,8 +195,7 @@
                                     <i class="ki-outline ki-information fs-4"></i>
                                 </span></label>
                             <input type="text" name="candidate_name" class="form-control form-control-solid fs-4"
-                                placeholder="প্রার্থীর নাম লিখুন" required
-                                value="{{ $report->candidate_name }}">
+                                placeholder="প্রার্থীর নাম লিখুন" required value="{{ $report->candidate_name }}">
                         </div>
                     </div>
 
@@ -378,6 +374,8 @@
         const updateReportRoute = "{{ route('reports.update', ':id') }}".replace(':id', reportId);
 
         // AJAX routes
+        const fetchUpazilasBySeatRoute = "{{ route('ajax.fetch.upazilas.by.seat') }}";
+        const fetchZonesByUpazilaRoute = "{{ route('ajax.fetch.zones.by.upazila') }}";
         const fetchUnionRoute = "{{ route('ajax.union', ':upazila_id') }}";
         const fetchSeatPartiesRoute = "{{ route('ajax.seat.parties') }}";
         const fetchCandidateRoute = "{{ route('ajax.seat.party.candidate') }}";

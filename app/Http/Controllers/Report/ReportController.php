@@ -75,12 +75,10 @@ class ReportController extends Controller
             return redirect()->route('reports.index')->with('warning', 'আপনার প্রতিবেদন তৈরির অনুমতি নেই');
         }
 
-        $upazilas        = Upazila::all();
-        $zones           = Zone::all();
         $parliamentSeats = ParliamentSeat::all();
         $programTypes    = ProgramType::all();
 
-        return view('reports.create', compact('upazilas', 'zones', 'parliamentSeats', 'programTypes'));
+        return view('reports.create', compact('parliamentSeats', 'programTypes'));
     }
 
     /**
@@ -169,19 +167,26 @@ class ReportController extends Controller
 
         $report = Report::findOrFail($id);
 
-        $upazilas         = Upazila::all();
-        $unions           = Union::all();
-        $zones            = Zone::all();
+        // ✅ Only upazilas under this parliament seat
+        $upazilas = Upazila::where('parliament_seat_id', $report->parliament_seat_id)->orderBy('name')->get();
+
+        // ✅ Only zones under this upazila
+        $zones = Zone::where('upazila_id', $report->upazila_id)->orderBy('name')->get();
+
+        // ✅ Only unions under this upazila
+        $unions = Union::where('upazila_id', $report->upazila_id)->orderBy('name')->get();
+
+        // ✅ Political parties limited to this parliament seat
         $politicalParties = PoliticalParty::whereHas('seatPartyCandidates', function ($q) use ($report) {
             $q->where('parliament_seat_id', $report->parliament_seat_id);
         })
             ->orderBy('name')
             ->get();
 
-        $parliamentSeats = ParliamentSeat::all();
-        $programTypes    = ProgramType::all();
+        $parliamentSeats = ParliamentSeat::orderBy('name')->get();
+        $programTypes    = ProgramType::orderBy('name')->get();
 
-        return view('reports.edit', compact('report', 'upazilas', 'unions', 'zones', 'politicalParties', 'parliamentSeats', 'programTypes'));
+        return view('reports.edit', compact('report', 'upazilas', 'zones', 'unions', 'politicalParties', 'parliamentSeats', 'programTypes'));
     }
 
     /**
@@ -292,7 +297,7 @@ class ReportController extends Controller
         // Final output
         $reportDateTime = $bnDate . ', ' . $bnHour . ':' . $bnMinute . ' ' . $bnMeridiem . ' খ্রিঃ';
 
-        return PDF::loadView('reports.pdf', compact('report', 'reportDateTime'))->stream($report->program_title . ' - ' . $report->candidate_name . '.pdf');
+        return PDF::loadView('reports.pdf', compact('report', 'reportDateTime'))->download($report->program_title . ' - ' . $report->candidate_name . '.pdf');
     }
 
     /**

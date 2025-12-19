@@ -136,10 +136,7 @@
                             <!--end:Menu sub-->
                         </div>
                         <!--end: Analytics Info Menu item-->
-                    @endif
 
-
-                    @if (in_array(auth()->user()->role->name, ['Admin', 'SuperAdmin']))
                         <!--begin:Location Info Menu item-->
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="location_info_menu">
                             <!--begin:Menu link-->
@@ -183,7 +180,9 @@
                             <!--end:Menu sub-->
                         </div>
                         <!--end: Location Info Menu item-->
+                    @endif
 
+                    @if (in_array(auth()->user()->role->name, ['Admin', 'SuperAdmin']))
                         <!--begin:Political Info Menu item-->
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="political_info_menu">
                             <!--begin:Menu link-->

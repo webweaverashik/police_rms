@@ -2,6 +2,7 @@
 namespace App\Models\Political;
 
 use App\Models\Report\Report;
+use App\Models\Administrative\Upazila;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Political\SeatPartyCandidate;
 
@@ -17,5 +18,10 @@ class ParliamentSeat extends Model
     public function seatPartyCandidates()
     {
         return $this->hasMany(SeatPartyCandidate::class);
+    }
+
+    public function upazilas()
+    {
+        return $this->hasMany(Upazila::class);
     }
 }

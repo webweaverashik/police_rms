@@ -1,9 +1,10 @@
 <?php
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
+use App\Models\User\Role;
 use App\Models\User\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -17,12 +18,15 @@ class UserController extends Controller
             return redirect()->route('reports.index')->with('warning', 'এই লিংকে আপনার অনুমতি নেই');
         }
 
-        $users = User::with(['role:id,name', 'designation:id,name', 'zones:id,name', 'loginActivities'])
+       $users = User::with(['role:id,name', 'designation:id,name', 'zones:id,name', 'loginActivities'])
             ->withCount('reports')
             ->latest()
             ->get();
 
-        return view('users.index', compact('users'));
+        // Filter Data
+        $roles = Role::all();
+
+        return view('users.index', compact('users', 'roles'));
     }
 
     /**
@@ -30,7 +34,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create');
     }
 
     /**
@@ -64,7 +68,7 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('users.edit');
     }
 
     /**

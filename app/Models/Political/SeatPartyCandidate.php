@@ -10,6 +10,9 @@ class SeatPartyCandidate extends Model
         'parliament_seat_id',
         'political_party_id',
         'candidate_name',
+        'candidate_age',
+        'candidate_address',
+        'political_background',
         'election_symbol'
     ];
 

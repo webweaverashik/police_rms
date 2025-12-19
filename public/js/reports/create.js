@@ -45,7 +45,7 @@ var KTCreateReportForm = function () {
                               'parliament_seat_id': {
                                     validators: {
                                           notEmpty: {
-                                                message: 'সংসদীয় আসন সিলেক্ট করুন'
+                                                message: 'সংসদীয় আসন সিলেক্ট করুন'
                                           }
                                     }
                               },
@@ -59,7 +59,7 @@ var KTCreateReportForm = function () {
                               'union_id': {
                                     validators: {
                                           notEmpty: {
-                                                message: 'ইউনিয়ন সিলেক্ট করুন'
+                                                message: 'ইউনিয়ন সিলেক্ট করুন'
                                           },
                                     }
                               },
@@ -80,36 +80,15 @@ var KTCreateReportForm = function () {
                               'candidate_name': {
                                     validators: {
                                           notEmpty: {
-                                                message: 'প্রার্থীর নাম প্রয়োজন।'
+                                                message: 'প্রার্থীর নাম প্রয়োজন।'
                                           },
                                     }
                               },
-                              // 'program_date': {
-                              //       validators: {
-                              //             notEmpty: {
-                              //                   message: 'তারিখ উল্লেখ করুন'
-                              //             },
-                              //       }
-                              // },
-                              // 'program_time': {
-                              //       validators: {
-                              //             notEmpty: {
-                              //                   message: 'সময় উল্লেখ করুন'
-                              //             },
-                              //       }
-                              // },
-                              // 'location_name': {
-                              //       validators: {
-                              //             notEmpty: {
-                              //                   message: 'প্রোগ্রামারের স্থান উল্লেখ করুন'
-                              //             },
-                              //       }
-                              // },
                               'tentative_attendee_count': {
                                     validators: {
                                           greaterThan: {
                                                 min: 10,
-                                                message: 'ন্যূনতম ১০ জন সংখ্যা দেওয়া যাবে নতুবা ফাঁকা রাখুন।'
+                                                message: 'ন্যূনতম ১০ জন সংখ্যা দেওয়া যাবে নতুবা ফাঁকা রাখুন।'
                                           }
                                     }
                               },
@@ -123,24 +102,17 @@ var KTCreateReportForm = function () {
                               'program_status': {
                                     validators: {
                                           notEmpty: {
-                                                message: 'প্রোগ্রামের অবস্থা জানানো প্রয়োজন।'
+                                                message: 'প্রোগ্রামের অবস্থা জানানো প্রয়োজন।'
                                           },
                                     }
                               },
                               'program_title': {
                                     validators: {
                                           notEmpty: {
-                                                message: 'প্রোগ্রামের বিষয় লিখুন।'
+                                                message: 'প্রোগ্রামের বিষয় লিখুন।'
                                           },
                                     }
                               },
-                              // 'program_description': {
-                              //       validators: {
-                              //             notEmpty: {
-                              //                   message: 'প্রোগ্রামের বিস্তারিত লিখুন।'
-                              //             },
-                              //       }
-                              // },
                         },
                         plugins: {
                               trigger: new FormValidation.plugins.Trigger(),
@@ -202,13 +174,13 @@ var KTCreateReportForm = function () {
                                                 submitButton.disabled = false;
 
                                                 if (data.success) {
-                                                      toastr.success(data.message || 'প্রতিবেদনটি সফলভাবে দাখিল হয়েছে।');
+                                                      toastr.success(data.message || 'প্রতিবেদনটি সফলভাবে দাখিল হয়েছে।');
                                                       // ✅ Redirect to reports page
                                                       setTimeout(() => {
                                                             window.location.href = data.redirect || '/reports';
                                                       }, 1200);
                                                 } else {
-                                                      toastr.error(data.message || 'প্রতিবেদনটি তৈরি করা যায়নি।');
+                                                      toastr.error(data.message || 'প্রতিবেদনটি তৈরি করা যায়নি।');
                                                 }
                                           })
                                           .catch(error => {
@@ -219,7 +191,7 @@ var KTCreateReportForm = function () {
                                           });
 
                               } else {
-                                    toastr.warning('অনুগ্রহ করে প্রয়োজনীয় সকল তথ্য দিন');
+                                    toastr.warning('অনুগ্রহ করে প্রয়োজনীয় সকল তথ্য দিন');
                               }
                         });
                   });
@@ -237,6 +209,117 @@ var KTCreateReportForm = function () {
             enableTime: true,
             dateFormat: "h:i K",
       });
+
+      // ===================================
+      // Load Upazilas by Parliament Seat
+      // ===================================
+      function initUpazilasBySeat() {
+            const seatSelect = $('select[name="parliament_seat_id"]');
+            const upazilaSelect = $('select[name="upazila_id"]');
+            const zoneSelect = $('select[name="zone_id"]');
+
+            if (!seatSelect.length || !upazilaSelect.length) return;
+
+            // ✅ Use jQuery .on('change') for Select2 compatibility
+            seatSelect.on('change', function () {
+                  const seatId = $(this).val();
+
+                  // Reset upazila and zone fields
+                  upazilaSelect
+                        .empty()
+                        .append('<option></option>')
+                        .prop('disabled', true)
+                        .trigger('change');
+
+                  if (zoneSelect.length) {
+                        zoneSelect
+                              .empty()
+                              .append('<option></option>')
+                              .prop('disabled', true)
+                              .trigger('change');
+                  }
+
+                  if (!seatId) return;
+
+                  // Build URL with query parameter
+                  const url = `${fetchUpazilasBySeatRoute}?parliament_seat_id=${seatId}`;
+
+                  fetch(url, {
+                        headers: {
+                              'Accept': 'application/json',
+                              'X-Requested-With': 'XMLHttpRequest'
+                        }
+                  })
+                        .then(response => response.json())
+                        .then(upazilas => {
+                              if (Array.isArray(upazilas) && upazilas.length > 0) {
+                                    upazilas.forEach(upazila => {
+                                          upazilaSelect.append(
+                                                `<option value="${upazila.id}">${upazila.name}</option>`
+                                          );
+                                    });
+                                    upazilaSelect.prop('disabled', false).trigger('change');
+                              } else {
+                                    toastr.warning('এই সংসদীয় আসনের জন্য কোনো উপজেলা পাওয়া যায়নি');
+                              }
+                        })
+                        .catch(error => {
+                              console.error('Error fetching upazilas:', error);
+                              toastr.error('উপজেলা লোড করা যায়নি');
+                        });
+            });
+      }
+
+      // =======================
+      // Load Zones by Upazila
+      // =======================
+      function initZonesByUpazila() {
+            const upazilaSelect = $('select[name="upazila_id"]');
+            const zoneSelect = $('select[name="zone_id"]');
+
+            if (!upazilaSelect.length || !zoneSelect.length) return;
+
+            // ✅ Use jQuery .on('change') for Select2 compatibility
+            upazilaSelect.on('change', function () {
+                  const upazilaId = $(this).val();
+
+                  // Reset zone field
+                  zoneSelect
+                        .empty()
+                        .append('<option></option>')
+                        .prop('disabled', true)
+                        .trigger('change');
+
+                  if (!upazilaId) return;
+
+                  // Build URL with query parameter
+                  const url = `${fetchZonesByUpazilaRoute}?upazila_id=${upazilaId}`;
+
+                  fetch(url, {
+                        headers: {
+                              'Accept': 'application/json',
+                              'X-Requested-With': 'XMLHttpRequest'
+                        }
+                  })
+                        .then(response => response.json())
+                        .then(zones => {
+                              if (Array.isArray(zones) && zones.length > 0) {
+                                    zones.forEach(zone => {
+                                          zoneSelect.append(
+                                                `<option value="${zone.id}">${zone.name}</option>`
+                                          );
+                                    });
+                                    zoneSelect.prop('disabled', false).trigger('change');
+                              } else {
+                                    toastr.warning('এই উপজেলার জন্য কোনো থানা পাওয়া যায়নি');
+                              }
+                        })
+                        .catch(error => {
+                              console.error('Error fetching zones:', error);
+                              toastr.error('থানা লোড করা যায়নি');
+                        });
+            });
+      }
 
       // =======================
       // Load Unions by Upazila
@@ -281,14 +364,14 @@ var KTCreateReportForm = function () {
                                     });
                                     unionSelect.prop('disabled', false);
                               } else {
-                                    toastr.warning('এই উপজেলার জন্য কোনো ইউনিয়ন পাওয়া যায়নি');
+                                    toastr.warning('এই উপজেলার জন্য কোনো ইউনিয়ন পাওয়া যায়নি');
                               }
 
                               unionSelect.trigger('change');
                         })
                         .catch(error => {
                               console.error(error);
-                              toastr.error('ইউনিয়ন লোড করা যায়নি');
+                              toastr.error('ইউনিয়ন লোড করা যায়নি');
                         });
             });
       }
@@ -297,15 +380,15 @@ var KTCreateReportForm = function () {
       // Load Political Parties by Seat
       // ================================
       function initSeatWiseParties() {
+            const seatSelect = $('select[name="parliament_seat_id"]');
             const partySelect = $('select[name="political_party_id"]');
             const candidateInput = $('input[name="candidate_name"]');
 
             function getSelectedSeatId() {
-                  const seat = $('input[name="parliament_seat_id"]:checked');
-                  return seat.length ? seat.val() : null;
+                  return seatSelect.val() || null;
             }
 
-            $('input[name="parliament_seat_id"]').on('change', function () {
+            seatSelect.on('change', function () {
                   const seatId = getSelectedSeatId();
 
                   // Reset
@@ -335,32 +418,28 @@ var KTCreateReportForm = function () {
                                                 `<option value="${party.id}">${party.name}</option>`
                                           );
                                     });
-
                                     // ✅ Enable party select AFTER seat chosen
                                     partySelect.prop('disabled', false);
                               }
-
                               partySelect.trigger('change');
                         })
                         .catch(err => {
                               console.error(err);
-                              toastr.error('রাজনৈতিক দল লোড করা যায়নি');
+                              toastr.error('রাজনৈতিক দল লোড করা যায়নি');
                         });
             });
       }
-
-
 
       // =====================================
       // Load Candidate by Seat + Party
       // =====================================
       function initCandidateBySeatAndParty() {
+            const seatSelect = $('select[name="parliament_seat_id"]');
             const partySelect = $('select[name="political_party_id"]');
             const candidateInput = $('input[name="candidate_name"]');
 
             function getSelectedSeatId() {
-                  const seat = $('input[name="parliament_seat_id"]:checked');
-                  return seat.length ? seat.val() : null;
+                  return seatSelect.val() || null;
             }
 
             partySelect.on('change', function () {
@@ -394,27 +473,132 @@ var KTCreateReportForm = function () {
                         })
                         .catch(err => {
                               console.error(err);
-                              toastr.error('প্রার্থীর তথ্য লোড করা যায়নি');
+                              toastr.error('প্রার্থীর তথ্য লোড করা যায়নি');
                         });
             });
       }
 
+      // =====================================
+      // Add Program Type - Mini Popup
+      // =====================================
+      function initAddProgramType() {
+            const wrapper = $('#programTypeWrapper');
+            const popup = $('#programTypePopup');
+            const toggleBtn = $('#toggleProgramTypePopup');
+            const input = $('#newProgramTypeName');
+            const saveBtn = $('#saveProgramTypeBtn');
+            const cancelBtn = $('#cancelProgramTypeBtn');
+            const errorDiv = $('#programTypeError');
+            const select = $('select[name="program_type_id"]');
 
+            if (!wrapper.length) return;
+
+            // Toggle popup
+            toggleBtn.on('click', function (e) {
+                  e.stopPropagation();
+                  popup.toggleClass('show');
+                  if (popup.hasClass('show')) {
+                        input.focus();
+                  }
+            });
+
+            // Cancel / Close
+            cancelBtn.on('click', function () {
+                  closePopup();
+            });
+
+            // Close popup helper
+            function closePopup() {
+                  popup.removeClass('show');
+                  input.val('').removeClass('is-invalid');
+                  errorDiv.text('').hide();
+            }
+
+            // Close on outside click
+            $(document).on('click', function (e) {
+                  if (!wrapper.is(e.target) && wrapper.has(e.target).length === 0) {
+                        closePopup();
+                  }
+            });
+
+            // Clear error on input
+            input.on('input', function () {
+                  $(this).removeClass('is-invalid');
+                  errorDiv.text('').hide();
+            });
+
+            // Handle Enter & Escape keys
+            input.on('keydown', function (e) {
+                  if (e.key === 'Enter') {
+                        e.preventDefault();
+                        saveBtn.click();
+                  } else if (e.key === 'Escape') {
+                        closePopup();
+                  }
+            });
+
+            // Save new program type
+            saveBtn.on('click', function () {
+                  const name = input.val().trim();
+
+                  if (!name) {
+                        input.addClass('is-invalid');
+                        errorDiv.text('নাম প্রয়োজন').show();
+                        return;
+                  }
+
+                  // Show loading
+                  const originalHtml = saveBtn.html();
+                  saveBtn.html('<span class="spinner-border spinner-border-sm"></span>').prop('disabled', true);
+
+                  // AJAX request
+                  $.ajax({
+                        url: storeProgramTypeRoute,
+                        method: 'POST',
+                        data: {
+                              name: name,
+                              _token: $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function (data) {
+                              // Add new option and select it
+                              const newOption = new Option(data.program_type.name, data.program_type.id, true, true);
+                              select.append(newOption).trigger('change');
+
+                              closePopup();
+                              toastr.success(data.message || 'সফলভাবে যোগ হয়েছে');
+                        },
+                        error: function (xhr) {
+                              if (xhr.status === 422 && xhr.responseJSON?.errors?.name) {
+                                    input.addClass('is-invalid');
+                                    errorDiv.text(xhr.responseJSON.errors.name[0]).show();
+                              } else {
+                                    toastr.error('যোগ করা যায়নি');
+                              }
+                        },
+                        complete: function () {
+                              saveBtn.html(originalHtml).prop('disabled', false);
+                        }
+                  });
+            });
+      }
 
       // Public functions
       return {
             // public functions
             init: function () {
                   initValidation();
+                  initUpazilasBySeat();
+                  initZonesByUpazila();
                   initUnionByUpazila();
 
                   initSeatWiseParties();
                   initCandidateBySeatAndParty();
+
+                  initAddProgramType();
             }
       };
 
 }();
-
 
 // On document ready
 KTUtil.onDOMContentLoaded(function () {

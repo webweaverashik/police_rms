@@ -685,7 +685,7 @@
                                         {{ auth()->user()->name }}
                                     </div>
                                     <span
-                                        class="fw-semibold text-gray-700 fs-6">{{ auth()->user()->designation->name }}</span>
+                                        class="fw-semibold text-gray-700 fs-6">{{ auth()->user()->designation->name }} {{ auth()->user()->zones && auth()->user()->zones->isNotEmpty() && (auth()->user()->isOperator() || auth()->user()->isViewer()) ? ', ' . auth()->user()->zones->first()->name : '' }}</span>
                                     <span class="fw-semibold text-muted fs-7">
                                         {{ auth()->user()->email }} </span>
                                 </div>

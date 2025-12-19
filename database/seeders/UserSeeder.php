@@ -49,15 +49,15 @@ class UserSeeder extends Seeder
         | Zones (Bangla)
         |--------------------------------------------------------------------------
         */
-        $kalapara        = Zone::where('name', 'কলাপাড়া')->firstOrFail();
-        $galachipa       = Zone::where('name', 'গলাচিপা')->firstOrFail();
-        $dashmina        = Zone::where('name', 'দশমিনা')->firstOrFail();
-        $dumki           = Zone::where('name', 'দুমকি')->firstOrFail();
-        $patuakhaliSadar = Zone::where('name', 'পটুয়াখালী সদর')->firstOrFail();
-        $bauphal         = Zone::where('name', 'বাউফল')->firstOrFail();
-        $mohipur         = Zone::where('name', 'মহিপুর')->firstOrFail();
-        $mirzaganj       = Zone::where('name', 'মির্জাগঞ্জ')->firstOrFail();
-        $rangabali       = Zone::where('name', 'রাঙ্গাবালী')->firstOrFail();
+        $kalapara        = Zone::where('name', 'কলাপাড়া থানা')->firstOrFail();
+        $galachipa       = Zone::where('name', 'গলাচিপা থানা')->firstOrFail();
+        $dashmina        = Zone::where('name', 'দশমিনা থানা')->firstOrFail();
+        $dumki           = Zone::where('name', 'দুমকি থানা')->firstOrFail();
+        $patuakhaliSadar = Zone::where('name', 'পটুয়াখালী সদর থানা')->firstOrFail();
+        $bauphal         = Zone::where('name', 'বাউফল থানা')->firstOrFail();
+        $mohipur         = Zone::where('name', 'মহিপুর থানা')->firstOrFail();
+        $mirzaganj       = Zone::where('name', 'মির্জাগঞ্জ থানা')->firstOrFail();
+        $rangabali       = Zone::where('name', 'রাঙ্গাবালী থানা')->firstOrFail();
 
         /*
         |--------------------------------------------------------------------------
