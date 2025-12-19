@@ -4,6 +4,8 @@ namespace App\Http\Controllers\User;
 use App\Models\User\Role;
 use App\Models\User\User;
 use Illuminate\Http\Request;
+use App\Models\User\Designation;
+use App\Models\Administrative\Zone;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
@@ -18,7 +20,7 @@ class UserController extends Controller
             return redirect()->route('reports.index')->with('warning', 'এই লিংকে আপনার অনুমতি নেই');
         }
 
-       $users = User::with(['role:id,name', 'designation:id,name', 'zones:id,name', 'loginActivities'])
+        $users = User::with(['role:id,name', 'designation:id,name', 'zones:id,name', 'loginActivities'])
             ->withCount('reports')
             ->latest()
             ->get();
@@ -34,7 +36,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        $roles       = Role::all();
+        $zones       = Zone::all();
+        $designations = Designation::all();
+
+        return view('users.create', compact('roles', 'zones', 'designations'));
     }
 
     /**
