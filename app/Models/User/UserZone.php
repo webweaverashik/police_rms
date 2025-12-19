@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserZone extends Model
 {
+    protected $table = 'user_zone';
+
     protected $fillable = [
         'user_id',
         'zone_id',

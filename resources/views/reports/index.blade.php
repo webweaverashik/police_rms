@@ -321,7 +321,8 @@
                             {{-- Time --}}
                             <td>
                                 @if ($report->program_time)
-                                    {{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('h')) }}:{{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('i')) }} {{ \Carbon\Carbon::parse($report->program_time)->format('A') }}
+                                    {{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('h')) }}:{{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('i')) }}
+                                    {{ \Carbon\Carbon::parse($report->program_time)->format('A') }}
                                 @else
                                     -
                                 @endif
@@ -380,6 +381,13 @@
                                                     class="bi bi-download fs-3 me-2"></i> ডাউনলোড করুন</a>
                                         </div>
 
+                                        <div class="menu-item px-3">
+                                            <a href="#" class="menu-link px-3 text-hover-warning assign-report"
+                                                data-report-id="{{ $report->id }}"><i
+                                                    class="ki-outline ki-user-tick fs-3 me-2"></i>
+                                                ম্যাজিস্ট্রেটকে প্রেরণ</a>
+                                        </div>
+
                                         @if (auth()->user()->isSuperAdmin())
                                             <div class="menu-item px-3">
                                                 <a href="{{ route('reports.edit', $report->id) }}"
@@ -418,6 +426,29 @@
         <!--end::Card body-->
     </div>
     <!--end::Card-->
+
+    <div class="modal fade" id="assignMagistrateModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">ম্যাজিস্ট্রেট নির্বাচন</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <input id="magistrateTagify" class="form-control">
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">বাতিল</button>
+                    <button class="btn btn-primary" id="saveMagistrateAssignment">সংরক্ষণ</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 
@@ -428,6 +459,8 @@
 @push('page-js')
     <script>
         const reportDeleteRoute = "{{ route('reports.destroy', ':id') }}";
+        const reportMagistratesRoute = "{{ route('reports.magistrates', ':id') }}";
+        const reportAssignRoute = "{{ route('reports.assignMagistrates', ':id') }}";
     </script>
 
     <script src="{{ asset('js/reports/index.js') }}"></script>

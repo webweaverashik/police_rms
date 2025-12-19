@@ -25,7 +25,7 @@
         }
 
         .subject {
-            margin: 20px 0;
+            margin: 10px 0;
         }
 
         .content {
@@ -34,7 +34,7 @@
         }
 
         .signature {
-            margin-top: 50px;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -74,6 +74,45 @@
             <tbody>
                 <tr>
                     <td style="border: 1px solid #000;">
+                        সংসদীয় আসন
+                    </td>
+                    <td style="border: 1px solid #000;">
+                        {{ $report->parliamentSeat->name }}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000;">
+                        উপজেলা
+                    </td>
+                    <td style="border: 1px solid #000;">
+                        {{ $report->upazila->name }}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000;">
+                        ইউনিয়ন / পৌরসভা
+                    </td>
+                    <td style="border: 1px solid #000;">
+                        {{ $report->union->name }}
+                    </td>
+                </tr>
+                @if ($report->location_name)
+                    <tr>
+                        <td style="border: 1px solid #000;">
+                            প্রোগ্রামের স্থান
+                        </td>
+                        <td style="border: 1px solid #000;">
+                            {{ $report->location_name }}
+                        </td>
+                    </tr>
+                @endif
+            </tbody>
+        </table>
+
+        <table width="100%" cellpadding="6" cellspacing="0" style="border-collapse: collapse; margin-bottom: 20px;">
+            <tbody>
+                <tr>
+                    <td style="border: 1px solid #000;">
                         রাজনৈতিক দল
                     </td>
                     <td style="border: 1px solid #000;">
@@ -93,15 +132,20 @@
                 @if ($report->program_date)
                     <tr>
                         <td width="30%" style="border: 1px solid #000;">
-                            প্রোগ্রামের তারিখ
+                            প্রোগ্রামের তারিখ ও সময়
                         </td>
                         <td width="70%" style="border: 1px solid #000;">
-                            {{ $numto->bnNum(\Carbon\Carbon::parse($report->program_date)->format('d')) }}-{{ $numto->bnNum(\Carbon\Carbon::parse($report->program_date)->format('m')) }}-{{ $numto->bnNum(\Carbon\Carbon::parse($report->program_date)->format('Y')) }}
+                            {{ $numto->bnNum(\Carbon\Carbon::parse($report->program_date)->format('d')) }}-{{ $numto->bnNum(\Carbon\Carbon::parse($report->program_date)->format('m')) }}-{{ $numto->bnNum(\Carbon\Carbon::parse($report->program_date)->format('Y')) }},
+                            
+                            @if ($report->program_time)
+                                {{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('h')) }}:{{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('i')) }}
+                                {{ \Carbon\Carbon::parse($report->program_time)->format('A') === 'AM' ? 'পূর্বাহ্ণ' : 'অপরাহ্ণ' }}
+                            @endif
                         </td>
                     </tr>
                 @endif
 
-                @if ($report->program_time)
+                {{-- @if ($report->program_time)
                     <tr>
                         <td style="border: 1px solid #000;">
                             প্রোগ্রামের সময়
@@ -111,18 +155,8 @@
                             {{ \Carbon\Carbon::parse($report->program_time)->format('A') }}
                         </td>
                     </tr>
-                @endif
+                @endif --}}
 
-                @if ($report->location_name)
-                    <tr>
-                        <td style="border: 1px solid #000;">
-                            প্রোগ্রামের স্থান
-                        </td>
-                        <td style="border: 1px solid #000;">
-                            {{ $report->location_name }}
-                        </td>
-                    </tr>
-                @endif
 
 
                 @if ($report->program_chair)
@@ -171,7 +205,7 @@
         <p>বিনীত</p>
         <p>
             {{ $report->createdBy->name }}<br>
-            {{ $report->createdBy->designation->name }}<br>
+            {{ $report->createdBy->designation->name }}, {{ $report->createdBy->zones->first()->name }} থানা<br>
             ডিএসবি, পটুয়াখালী।
         </p>
     </div>

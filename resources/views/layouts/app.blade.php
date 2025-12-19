@@ -77,8 +77,9 @@
 
                                 @yield('content')
 
-                                @if (auth()->user()->isOperator())
-                                    <div class="fixed-bottom operator-bottom-bar bg-white shadow-lg border-top py-3 px-4" style="z-index: 1000;">
+                                @if (auth()->user()->isOperator() || auth()->user()->isMagistrate())
+                                    <div class="fixed-bottom operator-bottom-bar bg-white shadow-lg border-top py-3 px-4"
+                                        style="z-index: 1000;">
                                         <div class="d-flex justify-content-around align-items-center">
 
                                             @php $isHome = request()->routeIs('dashboard'); @endphp
@@ -87,7 +88,8 @@
                                                 <i
                                                     class="ki-outline ki-home-2 fs-2 mb-1 {{ $isHome ? 'text-primary' : 'text-gray-500' }}"></i>
                                                 <span
-                                                    class="fs-6 fw-bold {{ $isHome ? 'text-primary' : 'text-gray-500' }}">হোম পেজ</span>
+                                                    class="fs-6 fw-bold {{ $isHome ? 'text-primary' : 'text-gray-500' }}">হোম
+                                                    পেজ</span>
                                             </a>
 
                                             @php $isReports = request()->routeIs('reports.*'); @endphp
@@ -96,7 +98,13 @@
                                                 <i
                                                     class="ki-outline ki-document fs-2 mb-1 {{ $isReports ? 'text-primary' : 'text-gray-500' }}"></i>
                                                 <span
-                                                    class="fs-6 fw-bold {{ $isReports ? 'text-primary' : 'text-gray-500' }}">আমার প্রতিবেদন</span>
+                                                    class="fs-6 fw-bold {{ $isReports ? 'text-primary' : 'text-gray-500' }}">
+                                                    @if (auth()->user()->isOperator())
+                                                        আমার প্রতিবেদন
+                                                    @else
+                                                        সকল প্রতিবেদন
+                                                    @endif
+                                                </span>
                                             </a>
 
                                             @php $isProfile = request()->routeIs('profile'); @endphp
@@ -105,7 +113,8 @@
                                                 <i
                                                     class="ki-outline ki-user fs-2 mb-1 {{ $isProfile ? 'text-primary' : 'text-gray-500' }}"></i>
                                                 <span
-                                                    class="fs-6 fw-bold {{ $isProfile ? 'text-primary' : 'text-gray-500' }}">আমার প্রোফাইল</span>
+                                                    class="fs-6 fw-bold {{ $isProfile ? 'text-primary' : 'text-gray-500' }}">আমার
+                                                    প্রোফাইল</span>
                                             </a>
 
                                         </div>

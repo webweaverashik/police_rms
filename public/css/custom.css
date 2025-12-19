@@ -60,3 +60,9 @@ html[data-bs-theme="dark"] .operator-bottom-bar a:hover i,
 html[data-bs-theme="dark"] .operator-bottom-bar a:hover span {
       color: #ffffff !important;
 }
+
+
+.tagify__dropdown {
+      z-index: 1060 !important;
+      /* higher than Bootstrap modal (1055) */
+}

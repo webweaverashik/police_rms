@@ -9,6 +9,7 @@ use App\Models\Political\ParliamentSeat;
 use App\Models\Political\PoliticalParty;
 use App\Models\Report\ProgramType;
 use App\Models\Report\Report;
+use App\Models\Report\ReportAssignment;
 use App\Models\User\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -168,9 +169,9 @@ class ReportController extends Controller
 
         $report = Report::findOrFail($id);
 
-        $upazilas                = Upazila::all();
-        $unions                  = Union::all();
-        $zones                   = Zone::all();
+        $upazilas         = Upazila::all();
+        $unions           = Union::all();
+        $zones            = Zone::all();
         $politicalParties = PoliticalParty::whereHas('seatPartyCandidates', function ($q) use ($report) {
             $q->where('parliament_seat_id', $report->parliament_seat_id);
         })
@@ -291,6 +292,60 @@ class ReportController extends Controller
         // Final output
         $reportDateTime = $bnDate . ', ' . $bnHour . ':' . $bnMinute . ' ' . $bnMeridiem . ' খ্রিঃ';
 
-        return PDF::loadView('reports.pdf', compact('report', 'reportDateTime'))->download($report->program_title . ' - ' . $report->candidate_name . '.pdf');
+        return PDF::loadView('reports.pdf', compact('report', 'reportDateTime'))->stream($report->program_title . ' - ' . $report->candidate_name . '.pdf');
+    }
+
+    /**
+     * Magistrate assignment to report
+     */
+    public function getMagistrates(Report $report)
+    {
+        $magistrates = User::whereHas('role', function ($q) {
+            $q->where('name', 'Magistrate');
+        })
+            ->with('role')
+            ->get()
+            ->map(function ($user) {
+                return [
+                    'id'          => $user->id,
+                    'name'        => $user->name,
+                    'designation' => $user->designation->name, // Magistrate
+                    'avatar'      => asset('assets/img/dummy.png'),
+                ];
+            });
+
+        $assigned = ReportAssignment::where('report_id', $report->id)->pluck('user_id');
+
+        return response()->json([
+            'magistrates' => $magistrates,
+            'assigned'    => $assigned,
+        ]);
+    }
+
+    public function assignMagistrates(Request $request, Report $report)
+    {
+        $request->validate([
+            'user_ids'   => 'array',
+            'user_ids.*' => 'exists:users,id',
+        ]);
+
+        // Remove old assignments
+        ReportAssignment::where('report_id', $report->id)->delete();
+
+        // Insert new
+        foreach ($request->user_ids as $userId) {
+            ReportAssignment::create([
+                'report_id'   => $report->id,
+                'user_id'     => $userId,
+                'assigned_by' => auth()->id(),
+            ]);
+        }
+
+        Cache::flush();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'ম্যাজিস্ট্রেট সফলভাবে নির্ধারণ করা হয়েছে।',
+        ]);
     }
 }
