@@ -81,23 +81,6 @@
                         </div>
                     </div>
 
-                    <!-- Designations -->
-                    <div class="col-lg-4">
-                        <div class="mb-8 fv-row">
-                            <label class="required form-label fs-4">পদবী
-                            </label>
-                            <select name="designation_id" class="form-select form-select-solid fs-4" data-control="select2"
-                                data-placeholder="পদবী বাছাই করুন" data-allow-clear="true" required>
-                                <option></option>
-                                @foreach ($designations as $designation)
-                                    <option value="{{ $designation->id }}">
-                                        {{ $designation->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
                     <!-- Role -->
                     <div class="col-lg-4">
                         <div class="mb-8 fv-row">
@@ -118,7 +101,7 @@
                             @endphp
 
                             <select name="role_id" class="form-select form-select-solid fs-4" data-control="select2"
-                                data-placeholder="রোল বাছাই করুন" data-allow-clear="true" data-hide-search="true" required>
+                                data-placeholder="রোল বাছাই করুন" data-hide-search="true" required>
                                 <option></option>
                                 @foreach ($roles as $role)
                                     <option value="{{ $role->id }}">
@@ -129,6 +112,22 @@
                         </div>
                     </div>
 
+                    <!-- Designations -->
+                    <div class="col-lg-4">
+                        <div class="mb-8 fv-row">
+                            <label class="required form-label fs-4">পদবী
+                            </label>
+                            <select name="designation_id" class="form-select form-select-solid fs-4" data-control="select2"
+                                data-placeholder="পদবী বাছাই করুন" data-hide-search="true" required>
+                                <option></option>
+                                @foreach ($designations as $designation)
+                                    <option value="{{ $designation->id }}">
+                                        {{ $designation->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
 
                     <!-- Zone Assignment -->
                     <div class="col-lg-4 d-none">
@@ -140,7 +139,7 @@
                             </label>
 
                             <select name="zone_id" class="form-select form-select-solid fs-4" data-control="select2"
-                                data-placeholder="থানা বাছাই করুন" data-allow-clear="true" required disabled>
+                                data-placeholder="থানা বাছাই করুন" data-hide-search="true" required disabled>
                                 <option></option>
                                 @foreach ($zones as $zone)
                                     <option value="{{ $zone->id }}">
@@ -170,7 +169,7 @@
                         <div class="mb-8 fv-row">
                             <label class="form-label fs-4 required">ইমেইল এড্রেস</label>
                             <input type="email" name="email" class="form-control form-control-solid fs-4"
-                                placeholder="ইমেইল এড্রেস লিখুন">
+                                placeholder="ইমেইল এড্রেস লিখুন" required>
                         </div>
                     </div>
 
@@ -212,7 +211,7 @@
     <script>
         const storeUserRoute = "{{ route('users.store') }}";
     </script>
-    
+
     <script src="{{ asset('js/users/create.js') }}"></script>
 
     <script>

@@ -299,7 +299,7 @@
                             <td class="d-none">{{ $report->politicalParty->id }}_{{ $report->politicalParty->name }}</td>
 
                             {{-- Candidate (NEW LOGIC) --}}
-                            <td>{{ $report->candidate_name }}</td>
+                            <td>{{ $report->candidate_name ?? '-' }}</td>
 
                             <td>{{ $report->program_special_guest ?? '-' }}</td>
                             <td>{{ $report->program_chair ?? '-' }}</td>

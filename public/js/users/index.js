@@ -16,7 +16,7 @@ var KTUsersList = function () {
                   "lengthChange": true,
                   "autoWidth": false,  // Disable auto width
                   'columnDefs': [{
-                        orderable: false, targets: [7, 8]
+                        orderable: false, targets: [9, 10]
                   }]
             });
 

@@ -121,8 +121,7 @@
                             </label>
 
                             <select name="parliament_seat_id" class="form-select form-select-solid fs-4"
-                                data-control="select2" data-placeholder="আসন বাছাই করুন" data-allow-clear="true"
-                                data-hide-search="true" required>
+                                data-control="select2" data-placeholder="আসন বাছাই করুন" data-hide-search="true" required>
                                 <option></option>
                                 @foreach ($parliamentSeats as $seat)
                                     <option value="{{ $seat->id }}">
@@ -143,8 +142,7 @@
                                 </span>
                             </label>
                             <select name="upazila_id" class="form-select form-select-solid fs-4" data-control="select2"
-                                data-placeholder="উপজেলা বাছাই করুন" data-allow-clear="true" data-hide-search="true"
-                                required disabled>
+                                data-placeholder="উপজেলা বাছাই করুন" data-hide-search="true" required disabled>
                                 <option></option>
                             </select>
                         </div>
@@ -160,8 +158,7 @@
                                 </span>
                             </label>
                             <select name="zone_id" class="form-select form-select-solid fs-4" data-control="select2"
-                                data-placeholder="থানা বাছাই করুন" data-allow-clear="true" data-hide-search="true" required
-                                disabled>
+                                data-placeholder="থানা বাছাই করুন" data-hide-search="true" required disabled>
                                 <option></option>
                             </select>
                         </div>
@@ -177,8 +174,7 @@
                                 </span>
                             </label>
                             <select name="union_id" class="form-select form-select-solid fs-4" data-control="select2"
-                                data-placeholder="ইউনিয়ন বাছাই করুন" data-allow-clear="true" data-hide-search="true"
-                                disabled required>
+                                data-placeholder="ইউনিয়ন বাছাই করুন" data-hide-search="true" disabled required>
                                 <option></option>
                             </select>
                         </div>
@@ -209,8 +205,7 @@
                                     <i class="ki-outline ki-information fs-4"></i>
                                 </span></label>
                             <select name="political_party_id" class="form-select form-select-solid fs-4"
-                                data-control="select2" data-placeholder="রাজনৈতিক দল বাছাই করুন" data-allow-clear="true"
-                                required disabled>
+                                data-control="select2" data-placeholder="রাজনৈতিক দল বাছাই করুন" required disabled>
                                 <option></option>
                             </select>
                         </div>
@@ -219,14 +214,13 @@
                     <!-- Candidate Name -->
                     <div class="col-lg-4">
                         <div class="mb-8 fv-row">
-                            <label class="form-label fs-4 required">প্রার্থীর নাম <span class="ms-1"
-                                    data-bs-toggle="tooltip"
-                                    title="সংসদীয় আসন ও রাজনৈতিক দল উভয় সিলেক্ট করলে প্রার্থীর নাম অটো চলে আসবে বা আপনি চাইলে লিখেও দিতে পারেন।">
+                            <label class="form-label fs-4">প্রার্থীর নাম <span class="ms-1" data-bs-toggle="tooltip"
+                                    title="সংসদীয় আসন ও রাজনৈতিক দল উভয় সিলেক্ট করলে প্রার্থীর নাম অটো চলে আসবে বা আপনি চাইলে নাও দিতে পারেন।">
                                     <i class="ki-outline ki-information fs-4"></i>
                                 </span></label>
-                            <select name="candidate_name" class="form-select form-select-solid fs-4"
-                                data-control="select2" data-placeholder="প্রার্থী বাছাই করুন" data-allow-clear="true" data-hide-search="true"
-                                required disabled>
+                            <select name="candidate_name" class="form-select form-select-solid fs-4" data-control="select2"
+                                data-placeholder="প্রার্থী বাছাই করুন" data-allow-clear="true" data-hide-search="true"
+                                disabled>
                                 <option></option>
                             </select>
                         </div>
@@ -265,8 +259,7 @@
 
                             <div class="d-flex gap-2 position-relative" id="programTypeWrapper">
                                 <select name="program_type_id" class="form-select form-select-solid fs-4 flex-grow-1"
-                                    data-control="select2" data-placeholder="প্রোগ্রামের ধরণ বাছাই করুন"
-                                    data-allow-clear="true" required>
+                                    data-control="select2" data-placeholder="প্রোগ্রামের ধরণ বাছাই করুন" required>
                                     <option></option>
                                     @foreach ($programTypes as $type)
                                         <option value="{{ $type->id }}">{{ $type->name }}</option>
@@ -307,18 +300,30 @@
                         <div class="mb-8 fv-row">
                             <label class="form-label fs-4">তারিখ <span class="text-muted fst-italic">(প্রযোজ্য
                                     ক্ষেত্রে)</span></label>
-                            <input name="program_date" id="program_date_picker" placeholder="তারিখ সিলেক্ট করুন"
-                                class="form-control form-control-solid fs-4">
+                            <div class="flatpickr-wrapper position-relative" id="program_date_wrapper">
+                                <input name="program_date" data-input placeholder="তারিখ সিলেক্ট করুন"
+                                    class="form-control form-control-solid fs-4 pe-10">
+                                <a class="flatpickr-clear position-absolute end-0 top-50 translate-middle-y me-3 d-none"
+                                    data-clear title="মুছে ফেলুন" style="cursor: pointer;">
+                                    <i class="ki-outline ki-cross fs-2 text-gray-500 text-hover-danger"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Program Time -->
                     <div class="col-6 col-lg-2">
                         <div class="mb-8 fv-row">
-                            <label class="form-label fs-4">সময় <span class="text-muted fst-italic">(প্রযোজ্য
+                            <label class="form-label fs-4">সময় <span class="text-muted fst-italic">(প্রযোজ্য
                                     ক্ষেত্রে)</span></label>
-                            <input name="program_time" id="program_time_picker" placeholder="সময় সেট করুন"
-                                class="form-control form-control-solid fs-4">
+                            <div class="flatpickr-wrapper position-relative" id="program_time_wrapper">
+                                <input name="program_time" data-input placeholder="সময় সেট করুন"
+                                    class="form-control form-control-solid fs-4 pe-10">
+                                <a class="flatpickr-clear position-absolute end-0 top-50 translate-middle-y me-3 d-none"
+                                    data-clear title="মুছে ফেলুন" style="cursor: pointer;">
+                                    <i class="ki-outline ki-cross fs-2 text-gray-500 text-hover-danger"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
 

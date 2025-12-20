@@ -104,7 +104,7 @@ class ReportController extends Controller
                 'zone_id'                  => $request->zone_id,
 
                 'political_party_id'       => $request->political_party_id,
-                'candidate_name'           => $request->candidate_name,
+                'candidate_name'           => $request->candidate_name ?? null,
 
                 'program_special_guest'    => $request->filled('program_special_guest') ? $request->program_special_guest : null,
                 'program_chair'            => $request->filled('program_chair') ? $request->program_chair : null,
@@ -225,7 +225,7 @@ class ReportController extends Controller
 
                 // Editable fields
                 'political_party_id'       => $request->political_party_id,
-                'candidate_name'           => $request->candidate_name,
+                'candidate_name'           => $request->candidate_name ?? null,
 
                 'program_special_guest'    => $request->filled('program_special_guest') ? $request->program_special_guest : null,
 
@@ -295,9 +295,9 @@ class ReportController extends Controller
         $bnMeridiem = $date->format('A') === 'AM' ? 'পূর্বাহ্ণ' : 'অপরাহ্ণ';
 
         // Final output
-        $reportDateTime = $bnDate . ', ' . $bnHour . ':' . $bnMinute . ' ' . $bnMeridiem . ' খ্রিঃ';
+        $reportDateTime = $bnDate . ', ' . $bnHour . ':' . $bnMinute . ' ' . $bnMeridiem;
 
-        return PDF::loadView('reports.pdf', compact('report', 'reportDateTime'))->download($report->program_title . ' - ' . $report->candidate_name . '.pdf');
+        return PDF::loadView('reports.pdf', compact('report', 'reportDateTime'))->stream($report->program_title . ' - ' . $report->candidate_name . '.pdf');
     }
 
     /**

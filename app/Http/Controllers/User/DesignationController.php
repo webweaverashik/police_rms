@@ -1,8 +1,8 @@
 <?php
-
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\User\Designation;
 use Illuminate\Http\Request;
 
 class DesignationController extends Controller
@@ -12,7 +12,9 @@ class DesignationController extends Controller
      */
     public function index()
     {
-        //
+        $designations = Designation::all();
+
+        return view('users.designations.index', compact('designations'));
     }
 
     /**

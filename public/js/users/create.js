@@ -4,6 +4,78 @@
 var KTCreateUserForm = function () {
       // Elements
       const form = document.getElementById('kt_create_user_form');
+      const roleSelect = form ? form.querySelector('select[name="role_id"]') : null;
+      const zoneWrapper = form ? form.querySelector('select[name="zone_id"]').closest('.col-lg-4') : null;
+      const zoneSelect = form ? form.querySelector('select[name="zone_id"]') : null;
+
+      // Roles that require zone assignment
+      const rolesRequiringZone = ['Viewer', 'Operator'];
+
+      // Role name mapping (Bengali to English)
+      const roleBnToEn = {
+            'সুপার এডমিন': 'SuperAdmin',
+            'এডমিন': 'Admin',
+            'পর্যবেক্ষক': 'Viewer',
+            'ম্যাজিস্ট্রেট': 'Magistrate',
+            'তৈরিকারি': 'Operator',
+      };
+
+      // FormValidation instance
+      var validator = null;
+
+      // ---- Handle Role Change for Zone Visibility ----
+      var initRoleZoneToggle = function () {
+            if (!roleSelect || !zoneWrapper || !zoneSelect) return;
+
+            // Using Select2 change event
+            $(roleSelect).on('change', function () {
+                  const selectedOption = this.options[this.selectedIndex];
+                  const selectedText = selectedOption ? selectedOption.text.trim() : '';
+                  const roleName = roleBnToEn[selectedText] || selectedText;
+
+                  if (rolesRequiringZone.includes(roleName)) {
+                        // Show zone assignment field
+                        zoneWrapper.classList.remove('d-none');
+                        zoneSelect.disabled = false;
+
+                        // Re-initialize Select2 after enabling
+                        $(zoneSelect).prop('disabled', false);
+
+                        // Enable validation for zone_id
+                        if (validator) {
+                              validator.enableValidator('zone_id');
+                        }
+                  } else {
+                        // Hide zone assignment field
+                        zoneWrapper.classList.add('d-none');
+                        zoneSelect.disabled = true;
+
+                        // Clear and disable Select2
+                        $(zoneSelect).val(null).trigger('change').prop('disabled', true);
+
+                        // Clear validation state
+                        $(zoneSelect).next('.select2').find('.select2-selection')
+                              .removeClass('is-valid is-invalid');
+
+                        // Clear error messages for zone_id
+                        const zoneErrorContainer = zoneWrapper.querySelector('.fv-plugins-message-container');
+                        if (zoneErrorContainer) {
+                              zoneErrorContainer.innerHTML = '';
+                        }
+
+                        // Disable validation for zone_id
+                        if (validator) {
+                              validator.disableValidator('zone_id');
+                        }
+                  }
+            });
+
+            // Initialize on page load - check if role is already selected
+            const initialOption = roleSelect.options[roleSelect.selectedIndex];
+            if (initialOption && initialOption.value) {
+                  $(roleSelect).trigger('change');
+            }
+      };
 
       // ---- Reset Select2 inputs ----
       function resetSelect2Inputs() {
@@ -19,26 +91,33 @@ var KTCreateUserForm = function () {
 
             // 3) Remove ALL FormValidation error messages
             $(form).find('.fv-plugins-message-container').each(function () {
-                  $(this).empty();  // Clear inner validation messages
-                  // Optionally remove "enabled" class:
+                  $(this).empty();
                   $(this).removeClass('fv-plugins-message-container--enabled');
             });
+
+            // 4) Hide zone field on reset
+            if (zoneWrapper && zoneSelect) {
+                  zoneWrapper.classList.add('d-none');
+                  $(zoneSelect).prop('disabled', true);
+                  if (validator) {
+                        validator.disableValidator('zone_id');
+                  }
+            }
       }
 
       const resetButton = document.getElementById('kt_create_user_form_reset');
 
       if (resetButton) {
             resetButton.addEventListener('click', e => {
-                  resetSelect2Inputs()
+                  resetSelect2Inputs();
             });
       }
-      // --------------------
 
       // Form validation
       var initValidation = function () {
             if (!form) return;
 
-            var validator = FormValidation.formValidation(
+            validator = FormValidation.formValidation(
                   form,
                   {
                         fields: {
@@ -46,6 +125,14 @@ var KTCreateUserForm = function () {
                                     validators: {
                                           notEmpty: {
                                                 message: 'ইউজারের নাম লিখুন'
+                                          }
+                                    }
+                              },
+                              'bp_number': {
+                                    validators: {
+                                          regexp: {
+                                                regexp: /^[0-9]+$/,
+                                                message: 'বিপি নাম্বার শুধুমাত্র সংখ্যা হতে হবে।'
                                           }
                                     }
                               },
@@ -64,13 +151,7 @@ var KTCreateUserForm = function () {
                                     }
                               },
                               'zone_id': {
-                                    validators: {
-                                          notEmpty: {
-                                                message: 'থানা সিলেক্ট করুন'
-                                          }
-                                    }
-                              },
-                              'zone_id': {
+                                    enabled: false, // Disabled by default, enabled when Viewer/Operator selected
                                     validators: {
                                           notEmpty: {
                                                 message: 'থানা সিলেক্ট করুন'
@@ -80,7 +161,7 @@ var KTCreateUserForm = function () {
                               'email': {
                                     validators: {
                                           notEmpty: {
-                                                message: 'লগিন করার জন্য ইউজারের ইমেইল প্রয়োজন'
+                                                message: 'লগিন করার জন্য ইউজারের ইমেইল প্রয়োজন'
                                           },
                                           emailAddress: {
                                                 message: 'অনুগ্রহ করে সঠিক ইমেইল দিন',
@@ -119,7 +200,7 @@ var KTCreateUserForm = function () {
 
             if (submitButton && validator) {
                   submitButton.addEventListener('click', function (e) {
-                        e.preventDefault(); // Prevent default button behavior
+                        e.preventDefault();
 
                         validator.validate().then(function (status) {
                               if (status === 'Valid') {
@@ -134,7 +215,7 @@ var KTCreateUserForm = function () {
                                           method: "POST",
                                           body: formData,
                                           headers: {
-                                                'Accept': 'application/json', // Explicitly ask for JSON
+                                                'Accept': 'application/json',
                                                 'X-Requested-With': 'XMLHttpRequest'
                                           }
                                     })
@@ -142,41 +223,39 @@ var KTCreateUserForm = function () {
                                                 const data = await response.json();
 
                                                 if (!response.ok) {
-                                                      const message = data.message || 'Something went wrong';
-                                                      const errors = data.errors
-                                                            ? [...new Set(Object.values(data.errors).flat())].join('<br>')
-                                                            : '';
                                                       throw {
-                                                            message: data.message || 'প্রতিবেদন এন্ট্রি অসফল',
-                                                            response: new Response(JSON.stringify(data), {
-                                                                  status: 422,
-                                                                  headers: { 'Content-type': 'application/json' }
-                                                            })
+                                                            message: data.message || 'ইউজার তৈরি অসফল',
+                                                            errors: data.errors || null
                                                       };
-
                                                 }
 
                                                 return data;
                                           })
-
                                           .then(data => {
                                                 submitButton.removeAttribute('data-kt-indicator');
                                                 submitButton.disabled = false;
 
                                                 if (data.success) {
-                                                      toastr.success(data.message || 'প্রতিবেদনটি সফলভাবে দাখিল হয়েছে।');
-                                                      // ✅ Redirect to reports page
+                                                      toastr.success(data.message || 'ইউজার সফলভাবে তৈরি হয়েছে।');
+                                                      // Redirect to users index page
                                                       setTimeout(() => {
-                                                            window.location.href = data.redirect || '/reports';
+                                                            window.location.href = data.redirect || '/users';
                                                       }, 1200);
                                                 } else {
-                                                      toastr.error(data.message || 'প্রতিবেদনটি তৈরি করা যায়নি।');
+                                                      toastr.error(data.message || 'ইউজার তৈরি করা যায়নি।');
                                                 }
                                           })
                                           .catch(error => {
                                                 submitButton.removeAttribute('data-kt-indicator');
                                                 submitButton.disabled = false;
-                                                toastr.error(error.message || 'Failed to create report');
+
+                                                // Handle validation errors from server
+                                                if (error.errors) {
+                                                      const errorMessages = [...new Set(Object.values(error.errors).flat())].join('<br>');
+                                                      toastr.error(errorMessages || error.message);
+                                                } else {
+                                                      toastr.error(error.message || 'ইউজার তৈরি করতে সমস্যা হয়েছে');
+                                                }
                                                 console.error('Error:', error);
                                           });
 
@@ -186,16 +265,15 @@ var KTCreateUserForm = function () {
                         });
                   });
             }
-      }
+      };
 
       // Public functions
       return {
-            // public functions
             init: function () {
                   initValidation();
+                  initRoleZoneToggle();
             }
       };
-
 }();
 
 // On document ready

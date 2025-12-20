@@ -8,16 +8,16 @@
         body {
             font-family: solaimanlipi;
             font-size: 16px;
-            line-height: 1.3;
+            line-height: 1.2;
         }
 
         .date {
             text-align: left;
-            margin-bottom: 20px;
+            margin-bottom: 0;
         }
 
         .to {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .to p {
@@ -25,16 +25,16 @@
         }
 
         .subject {
-            margin: 10px 0;
+            margin: 0;
         }
 
         .content {
             text-align: justify;
-            margin-bottom: 20px;
+            margin-bottom: 0;
         }
 
         .signature {
-            margin-top: 20px;
+            margin-top: 0
         }
     </style>
 </head>
@@ -60,8 +60,7 @@
 
     <!-- Subject -->
     <div class="subject">
-        বিষয়ঃ {{ $report->program_title }}<br>
-        ধরণঃ {{ $report->programType->name }}
+        বিষয়ঃ {{ $report->program_title }}
     </div>
 
     <!-- Description -->
@@ -71,6 +70,9 @@
         </p>
 
         <table width="100%" cellpadding="6" cellspacing="0" style="border-collapse: collapse; margin-bottom: 20px;">
+            <caption style="caption-side: top; text-align: left; padding-bottom: 8px; text-decoration: underline;">
+                প্রোগ্রামের সারসংক্ষেপ:
+            </caption>
             <tbody>
                 <tr>
                     <td style="border: 1px solid #000;">
@@ -106,6 +108,14 @@
                         </td>
                     </tr>
                 @endif
+                <tr>
+                    <td style="border: 1px solid #000;">
+                        প্রোগ্রামের ধরণ
+                    </td>
+                    <td style="border: 1px solid #000;">
+                        {{ $report->programType->name }}
+                    </td>
+                </tr>
             </tbody>
         </table>
 
@@ -120,14 +130,16 @@
                     </td>
                 </tr>
 
-                <tr>
-                    <td style="border: 1px solid #000;">
-                        সংসদ সদস্য পদপ্রার্থী
-                    </td>
-                    <td style="border: 1px solid #000;">
-                        {{ $report->candidate_name }}
-                    </td>
-                </tr>
+                @if ($report->candidate_name)
+                    <tr>
+                        <td style="border: 1px solid #000;">
+                            সংসদ সদস্য পদপ্রার্থী
+                        </td>
+                        <td style="border: 1px solid #000;">
+                            {{ $report->candidate_name }}
+                        </td>
+                    </tr>
+                @endif
 
                 @if ($report->program_date)
                     <tr>
@@ -136,7 +148,7 @@
                         </td>
                         <td width="70%" style="border: 1px solid #000;">
                             {{ $numto->bnNum(\Carbon\Carbon::parse($report->program_date)->format('d')) }}-{{ $numto->bnNum(\Carbon\Carbon::parse($report->program_date)->format('m')) }}-{{ $numto->bnNum(\Carbon\Carbon::parse($report->program_date)->format('Y')) }},
-                            
+
                             @if ($report->program_time)
                                 {{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('h')) }}:{{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('i')) }}
                                 {{ \Carbon\Carbon::parse($report->program_time)->format('A') === 'AM' ? 'পূর্বাহ্ণ' : 'অপরাহ্ণ' }}
@@ -144,19 +156,6 @@
                         </td>
                     </tr>
                 @endif
-
-                {{-- @if ($report->program_time)
-                    <tr>
-                        <td style="border: 1px solid #000;">
-                            প্রোগ্রামের সময়
-                        </td>
-                        <td style="border: 1px solid #000;">
-                            {{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('h')) }}:{{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('i')) }}
-                            {{ \Carbon\Carbon::parse($report->program_time)->format('A') }}
-                        </td>
-                    </tr>
-                @endif --}}
-
 
 
                 @if ($report->program_chair)
@@ -195,7 +194,6 @@
 
             </tbody>
         </table>
-
     </div>
 
     <p>বিষয়টি আপনার সদয় অবগতির জন্য প্রেরণ করা হলো।</p>
@@ -205,7 +203,7 @@
         <p>বিনীত</p>
         <p>
             {{ $report->createdBy->name }}<br>
-            {{ $report->createdBy->designation->name }}, {{ $report->createdBy->zones->first()->name }} থানা<br>
+            {{ $report->createdBy->designation->name }}, {{ $report->createdBy->zone->name }}<br>
             ডিএসবি, পটুয়াখালী।
         </p>
     </div>

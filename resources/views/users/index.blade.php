@@ -135,6 +135,7 @@
                         <th class="w-25px">#</th>
                         <th>ইউজারের তথ্য</th>
                         <th>বিপি নম্বর</th>
+                        <th>এসাইনকৃত থানা</th>
                         <th>ইমেইল</th>
                         <th>মোবাইল</th>
                         <th>রোল</th>
@@ -166,6 +167,7 @@
                                 </div>
                             </td>
                             <td>{{ $user->bp_number ? $numto->bnNum($user->bp_number) : '-' }}</td>
+                            <td>{{ $user->zone ? $user->zone->name : '-' }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $numto->bnNum($user->mobile_no) }}</td>
 

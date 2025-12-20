@@ -52,7 +52,7 @@ var KTCreateReportForm = function () {
                               'upazila_id': {
                                     validators: {
                                           notEmpty: {
-                                                message: 'উপজেলার সিলেক্ট করুন'
+                                                message: 'উপজেলা সিলেক্ট করুন'
                                           }
                                     }
                               },
@@ -77,13 +77,13 @@ var KTCreateReportForm = function () {
                                           },
                                     }
                               },
-                              'candidate_name': {
-                                    validators: {
-                                          notEmpty: {
-                                                message: 'প্রার্থীর নাম প্রয়োজন।'
-                                          },
-                                    }
-                              },
+                              // 'candidate_name': {
+                              //       validators: {
+                              //             notEmpty: {
+                              //                   message: 'প্রার্থীর নাম প্রয়োজন।'
+                              //             },
+                              //       }
+                              // },
                               'tentative_attendee_count': {
                                     validators: {
                                           greaterThan: {
@@ -198,17 +198,42 @@ var KTCreateReportForm = function () {
             }
       }
 
-      // Initalizing flatpickr
-      $("#program_date_picker").flatpickr({
+      // ===================================
+      // Reusable flatpickr initializer with clear button
+      // ===================================
+      function initFlatpickrWithClear(selector, options = {}) {
+            const defaultOptions = {
+                  wrap: true,
+                  onChange: function (selectedDates, dateStr, instance) {
+                        const clearBtn = instance.element.querySelector('[data-clear]');
+                        if (clearBtn) {
+                              clearBtn.classList.toggle('d-none', !dateStr);
+                        }
+                  },
+                  onReady: function (selectedDates, dateStr, instance) {
+                        const clearBtn = instance.element.querySelector('[data-clear]');
+                        if (clearBtn) {
+                              clearBtn.classList.toggle('d-none', !dateStr);
+                        }
+                  }
+            };
+
+            return $(selector).flatpickr({ ...defaultOptions, ...options });
+      }
+
+      // Usage
+      initFlatpickrWithClear("#program_date_wrapper", {
             enableTime: false,
-            dateFormat: "d-m-Y",
+            dateFormat: "d-m-Y"
       });
 
-      $("#program_time_picker").flatpickr({
+      initFlatpickrWithClear("#program_time_wrapper", {
             noCalendar: true,
             enableTime: true,
-            dateFormat: "h:i K",
+            dateFormat: "h:i K"
       });
+
+
 
       // ===================================
       // Load Upazilas by Parliament Seat

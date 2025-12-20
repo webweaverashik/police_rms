@@ -1,13 +1,15 @@
 <?php
 namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
+use App\Models\Administrative\Zone;
+use App\Models\User\Designation;
 use App\Models\User\Role;
 use App\Models\User\User;
 use Illuminate\Http\Request;
-use App\Models\User\Designation;
-use App\Models\Administrative\Zone;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -20,7 +22,7 @@ class UserController extends Controller
             return redirect()->route('reports.index')->with('warning', 'এই লিংকে আপনার অনুমতি নেই');
         }
 
-        $users = User::with(['role:id,name', 'designation:id,name', 'zones:id,name', 'loginActivities'])
+        $users = User::with(['role:id,name', 'designation:id,name', 'zone:id,name', 'loginActivities'])
             ->withCount('reports')
             ->latest()
             ->get();
@@ -36,8 +38,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles       = Role::all();
-        $zones       = Zone::all();
+        if (! auth()->user()->isSuperAdmin()) {
+            return redirect()->route('dashboard')->with('warning', 'এই লিংকে আপনার অনুমতি নেই');
+        }
+        $roles        = Role::all();
+        $zones        = Zone::all();
         $designations = Designation::all();
 
         return view('users.create', compact('roles', 'zones', 'designations'));
@@ -48,7 +53,65 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // -------------------------------
+        // Validation
+        // -------------------------------
+        $validated = $request->validate(
+            [
+                'name'           => ['required', 'string', 'max:255'],
+                'bp_number'      => ['nullable', 'numeric'],
+                'designation_id' => ['required', 'exists:designations,id'],
+                'role_id'        => ['required', 'exists:roles,id'],
+                'zone_id'        => ['nullable', 'exists:zones,id'],
+                'email'          => ['required', 'email', 'max:255', 'unique:users,email'],
+                'mobile_no'      => ['required', 'regex:/^01[3-9][0-9]{8}$/'],
+            ],
+            [
+                'bp_number.numeric' => 'বিপি নাম্বার শুধুমাত্র সংখ্যা হতে হবে।',
+                'mobile_no.regex'   => 'একটি সঠিক বাংলাদেশি মোবাইল নাম্বার দিন।',
+            ],
+        );
+
+        DB::beginTransaction();
+
+        try {
+            // -------------------------------
+            // Create User
+            // -------------------------------
+            $user = User::create([
+                'name'           => $validated['name'],
+                'bp_number'      => $validated['bp_number'] ?? null,
+                'designation_id' => $validated['designation_id'],
+                'zone_id'        => $validated['zone_id'] ?? null,
+                'role_id'        => $validated['role_id'],
+                'email'          => $validated['email'],
+                'mobile_no'      => $validated['mobile_no'],
+                'password'       => Hash::make('12345678'), // default password
+                'is_active'      => true,
+            ]);
+
+            DB::commit();
+
+            return response()->json(
+                [
+                    'success'  => true,
+                    'message'  => 'ইউজার সফলভাবে তৈরি হয়েছে।',
+                    'redirect' => route('users.index'),
+                ],
+                201,
+            );
+        } catch (\Throwable $e) {
+            DB::rollBack();
+
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => 'ইউজার তৈরি করতে সমস্যা হয়েছে।',
+                    'error'   => config('app.debug') ? $e->getMessage() : null,
+                ],
+                500,
+            );
+        }
     }
 
     /**
@@ -56,7 +119,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('errors.404');
     }
 
     /**
@@ -72,17 +135,77 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        return view('users.edit');
+        if (! auth()->user()->isSuperAdmin()) {
+            return redirect()->route('dashboard')->with('warning', 'এই লিংকে আপনার অনুমতি নেই');
+        }
+        $roles        = Role::all();
+        $zones        = Zone::all();
+        $designations = Designation::all();
+
+        return view('users.edit', compact('user', 'roles', 'zones', 'designations'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        // -------------------------------
+        // Validation
+        // -------------------------------
+        $validated = $request->validate([
+            'name'           => ['required', 'string', 'max:255'],
+            'bp_number'      => ['nullable', 'numeric'],
+            'designation_id' => ['required', 'exists:designations,id'],
+            'role_id'        => ['required', 'exists:roles,id'],
+            'email'          => [
+                'required',
+                'email',
+                'max:255',
+                Rule::unique('users', 'email')->ignore($user->id),
+            ],
+            'mobile_no'      => ['required', 'regex:/^01[3-9][0-9]{8}$/'],
+            'zone_id'        => ['nullable', 'exists:zones,id'],
+        ], [
+            'bp_number.numeric' => 'বিপি নাম্বার শুধুমাত্র সংখ্যা হতে হবে।',
+            'mobile_no.regex'   => 'একটি সঠিক বাংলাদেশি মোবাইল নাম্বার দিন।',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            // -------------------------------
+            // Update User
+            // -------------------------------
+            $user->update([
+                'name'           => $validated['name'],
+                'bp_number'      => $validated['bp_number'] ?? null,
+                'designation_id' => $validated['designation_id'],
+                'zone_id'        => $validated['zone_id'] ?? null,
+                'role_id'        => $validated['role_id'],
+                'email'          => $validated['email'],
+                'mobile_no'      => $validated['mobile_no'],
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'success'  => true,
+                'message'  => 'ইউজার সফলভাবে আপডেট হয়েছে।',
+                'redirect' => route('users.index'),
+            ]);
+
+        } catch (\Throwable $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => 'ইউজার আপডেট করতে সমস্যা হয়েছে।',
+                'error'   => config('app.debug') ? $e->getMessage() : null,
+            ], 500);
+        }
     }
 
     /**

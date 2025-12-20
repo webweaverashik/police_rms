@@ -21,7 +21,7 @@ class User extends Authenticatable
     | Mass Assignment
     |--------------------------------------------------------------------------
     */
-    protected $fillable = ['name', 'bp_number', 'designation_id', 'role_id', 'mobile_no', 'email', 'password', 'is_active'];
+    protected $fillable = ['name', 'bp_number', 'designation_id', 'role_id', 'zone_id', 'mobile_no', 'email', 'password', 'is_active'];
 
     /*
     |--------------------------------------------------------------------------
@@ -60,9 +60,9 @@ class User extends Authenticatable
     }
 
     /** User → Multiple Zones */
-    public function zones()
+    public function zone()
     {
-        return $this->belongsToMany(Zone::class, 'user_zone');
+        return $this->belongsTo(Zone::class);
     }
 
     /** User → Login Activities */

@@ -75,7 +75,7 @@
                             </label>
 
                             <select name="parliament_seat_id" class="form-select form-select-solid fs-4"
-                                data-control="select2" data-placeholder="আসন বাছাই করুন" data-allow-clear="true"
+                                data-control="select2" data-placeholder="আসন বাছাই করুন"
                                 data-hide-search="true" required>
                                 <option></option>
                                 @foreach ($parliamentSeats as $seat)
@@ -97,7 +97,7 @@
                                 </span>
                             </label>
                             <select name="upazila_id" class="form-select form-select-solid fs-4" data-control="select2"
-                                data-placeholder="উপজেলা বাছাই করুন" data-allow-clear="true" data-hide-search="true"
+                                data-placeholder="উপজেলা বাছাই করুন" data-hide-search="true"
                                 required>
                                 <option></option>
                                 @foreach ($upazilas as $upazila)
@@ -119,7 +119,7 @@
                                 </span>
                             </label>
                             <select name="zone_id" class="form-select form-select-solid fs-4" data-control="select2"
-                                data-placeholder="থানা বাছাই করুন" data-allow-clear="true" data-hide-search="true" required>
+                                data-placeholder="থানা বাছাই করুন" data-hide-search="true" required>
                                 <option></option>
                                 @foreach ($zones as $zone)
                                     <option value="{{ $zone->id }}" @if ($report->zone_id == $zone->id) selected @endif>
@@ -140,7 +140,7 @@
                                 </span>
                             </label>
                             <select name="union_id" class="form-select form-select-solid fs-4" data-control="select2"
-                                data-placeholder="ইউনিয়ন বাছাই করুন" data-allow-clear="true" data-hide-search="true" required>
+                                data-placeholder="ইউনিয়ন বাছাই করুন" data-hide-search="true" required>
                                 <option></option>
                                 @foreach ($unions as $union)
                                     <option value="{{ $union->id }}" @if ($report->union_id == $union->id) selected @endif>
@@ -174,7 +174,7 @@
                                     <i class="ki-outline ki-information fs-4"></i>
                                 </span></label>
                             <select name="political_party_id" class="form-select form-select-solid fs-4"
-                                data-control="select2" data-placeholder="রাজনৈতিক দল বাছাই করুন" data-allow-clear="true"
+                                data-control="select2" data-placeholder="রাজনৈতিক দল বাছাই করুন"
                                 required>
                                 <option></option>
                                 @foreach ($politicalParties as $party)
@@ -189,14 +189,13 @@
                     <!-- Candidate Name -->
                     <div class="col-lg-4">
                         <div class="mb-8 fv-row">
-                            <label class="required form-label fs-4">প্রার্থীর নাম <span class="ms-1"
+                            <label class="form-label fs-4">প্রার্থীর নাম <span class="ms-1"
                                     data-bs-toggle="tooltip"
-                                    title="সংসদীয় আসন ও রাজনৈতিক দল উভয় সিলেক্ট করলে প্রার্থীর নাম অটো চলে আসবে বা আপনি চাইলে লিখেও দিতে পারেন।">
+                                    title="সংসদীয় আসন ও রাজনৈতিক দল উভয় সিলেক্ট করলে প্রার্থীর নাম অটো চলে আসবে বা আপনি চাইলে নাও দিতে পারেন।">
                                     <i class="ki-outline ki-information fs-4"></i>
                                 </span></label>
                             <select name="candidate_name" class="form-select form-select-solid fs-4"
-                                data-control="select2" data-placeholder="প্রার্থী বাছাই করুন" data-allow-clear="true" data-hide-search="true"
-                                required>
+                                data-control="select2" data-placeholder="প্রার্থী বাছাই করুন" data-allow-clear="true" data-hide-search="true">
                                 <option></option>
                                 <option selected value="{{ $report->candidate_name }}">{{ $report->candidate_name }}</option>
                             </select>
@@ -231,7 +230,7 @@
                             <label class="required form-label fs-4">প্রোগ্রামের ধরণ</label>
                             <select name="program_type_id" class="form-select form-select-solid fs-4"
                                 data-control="select2" data-placeholder="প্রোগ্রামের ধরণ বাছাই করুন"
-                                data-allow-clear="true" required>
+                                required>
                                 <option></option>
                                 @foreach ($programTypes as $type)
                                     <option value="{{ $type->id }}" @if ($report->program_type_id == $type->id) selected @endif>
@@ -247,23 +246,32 @@
                         <div class="mb-8 fv-row">
                             <label class="form-label fs-4">তারিখ <span class="text-muted fst-italic">(প্রযোজ্য
                                     ক্ষেত্রে)</span></label>
-                            <input name="program_date" id="program_date_picker"
-                                value="{{ optional($report->program_date)->format('d-m-Y') }}"
-                                placeholder="তারিখ সিলেক্ট করুন" class="form-control form-control-solid fs-4">
+                            <div class="flatpickr-wrapper position-relative" id="program_date_wrapper">
+                                <input name="program_date" data-input placeholder="তারিখ সিলেক্ট করুন"
+                                    class="form-control form-control-solid fs-4 pe-10">
+                                <a class="flatpickr-clear position-absolute end-0 top-50 translate-middle-y me-3 d-none"
+                                    data-clear title="মুছে ফেলুন" style="cursor: pointer;">
+                                    <i class="ki-outline ki-cross fs-2 text-gray-500 text-hover-danger"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Program Date & Time -->
+                    <!-- Program Time -->
                     <div class="col-6 col-lg-2">
                         <div class="mb-8 fv-row">
-                            <label class="form-label fs-4">সময় <span class="text-muted fst-italic">(প্রযোজ্য
+                            <label class="form-label fs-4">সময় <span class="text-muted fst-italic">(প্রযোজ্য
                                     ক্ষেত্রে)</span></label>
-                            <input name="program_time" id="program_time_picker"
-                                value="{{ optional($report->program_time)->format('h:i A') }}" placeholder="সময় সেট করুন"
-                                class="form-control form-control-solid fs-4">
+                            <div class="flatpickr-wrapper position-relative" id="program_time_wrapper">
+                                <input name="program_time" data-input placeholder="সময় সেট করুন"
+                                    class="form-control form-control-solid fs-4 pe-10">
+                                <a class="flatpickr-clear position-absolute end-0 top-50 translate-middle-y me-3 d-none"
+                                    data-clear title="মুছে ফেলুন" style="cursor: pointer;">
+                                    <i class="ki-outline ki-cross fs-2 text-gray-500 text-hover-danger"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
-
 
                     <!-- Location -->
                     <div class="col-lg-4">

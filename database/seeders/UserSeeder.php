@@ -70,25 +70,13 @@ class UserSeeder extends Seeder
                 'name'           => 'সবুজ তালুকদার',
                 'bp_number'      => null,
                 'designation_id' => $ict->id,
+                'zone_id'        => null,
                 'role_id'        => $superAdminRole->id,
                 'mobile_no'      => '01700000000',
                 'password'       => Hash::make('password123'),
                 'is_active'      => true,
             ]
         );
-
-        // SuperAdmin → Access to all zones (for monitoring)
-        $superAdmin->zones()->sync([
-            $kalapara->id,
-            $galachipa->id,
-            $dashmina->id,
-            $dumki->id,
-            $patuakhaliSadar->id,
-            $bauphal->id,
-            $mohipur->id,
-            $mirzaganj->id,
-            $rangabali->id,
-        ]);
 
         /*
         |--------------------------------------------------------------------------
@@ -101,25 +89,13 @@ class UserSeeder extends Seeder
                 'name'           => 'মোঃ আবু ইউসুফ',
                 'bp_number'      => '10001',
                 'designation_id' => $sp->id,
+                'zone_id'        => null,
                 'role_id'        => $adminRole->id,
                 'mobile_no'      => '01700000001',
                 'password'       => Hash::make('password123'),
                 'is_active'      => true,
             ]
         );
-
-        // SP → All zones
-        $spUser->zones()->sync([
-            $kalapara->id,
-            $galachipa->id,
-            $dashmina->id,
-            $dumki->id,
-            $patuakhaliSadar->id,
-            $bauphal->id,
-            $mohipur->id,
-            $mirzaganj->id,
-            $rangabali->id,
-        ]);
 
         /*
         |--------------------------------------------------------------------------
@@ -134,13 +110,13 @@ class UserSeeder extends Seeder
                 'name'           => 'মোঃ অপু সরোয়ার',
                 'bp_number'      => '20001',
                 'designation_id' => $adc->id,
+                'zone_id'        => $patuakhaliSadar->id,
                 'role_id'        => $viewerRole->id,
                 'mobile_no'      => '01700000002',
                 'password'       => Hash::make('password123'),
                 'is_active'      => true,
             ]
         );
-        $adcUser->zones()->sync([$patuakhaliSadar->id]);
 
         // OC
         $ocUser = User::updateOrCreate(
@@ -149,13 +125,13 @@ class UserSeeder extends Seeder
                 'name'           => 'মোঃ সৈয়দুজ্জামান',
                 'bp_number'      => '20002',
                 'designation_id' => $oc->id,
+                'zone_id'        => $galachipa->id,
                 'role_id'        => $viewerRole->id,
                 'mobile_no'      => '01700000004',
                 'password'       => Hash::make('password123'),
                 'is_active'      => true,
             ]
         );
-        $ocUser->zones()->sync([$galachipa->id]);
 
         /*
         |--------------------------------------------------------------------------
@@ -172,6 +148,7 @@ class UserSeeder extends Seeder
                 'name'           => 'কাউছার হামিদ',
                 'bp_number'      => null,
                 'designation_id' => $uno->id,
+                'zone_id'        => null,
                 'role_id'        => $magistrateRole->id,
                 'mobile_no'      => '01700000003',
                 'password'       => Hash::make('password123'),
@@ -192,13 +169,13 @@ class UserSeeder extends Seeder
                 'name'           => 'মোঃ মাসুদ হোসেন',
                 'bp_number'      => '30001',
                 'designation_id' => $inspector->id,
+                'zone_id'        => $dumki->id,
                 'role_id'        => $operatorRole->id,
                 'mobile_no'      => '01700000005',
                 'password'       => Hash::make('password123'),
                 'is_active'      => true,
             ]
         );
-        $inspectorUser->zones()->sync([$dumki->id]);
 
         // SI
         $siUser = User::updateOrCreate(
@@ -207,13 +184,13 @@ class UserSeeder extends Seeder
                 'name'           => 'আব্দুর রহিম মৃধা',
                 'bp_number'      => '30002',
                 'designation_id' => $si->id,
+                'zone_id'        => $bauphal->id,
                 'role_id'        => $operatorRole->id,
                 'mobile_no'      => '01700000006',
                 'password'       => Hash::make('password123'),
                 'is_active'      => true,
             ]
         );
-        $siUser->zones()->sync([$bauphal->id]);
 
         // ASI
         $asiUser = User::updateOrCreate(
@@ -222,13 +199,13 @@ class UserSeeder extends Seeder
                 'name'           => 'মোঃ হুমায়ুন কবির',
                 'bp_number'      => '30003',
                 'designation_id' => $asi->id,
+                'zone_id'        => $mohipur->id,
                 'role_id'        => $operatorRole->id,
                 'mobile_no'      => '01700000007',
                 'password'       => Hash::make('password123'),
                 'is_active'      => true,
             ]
         );
-        $asiUser->zones()->sync([$mohipur->id]);
 
         // Constable
         $constableUser = User::updateOrCreate(
@@ -237,12 +214,12 @@ class UserSeeder extends Seeder
                 'name'           => 'মোঃ নওশের আলী',
                 'bp_number'      => '30004',
                 'designation_id' => $constable->id,
+                'zone_id'        => $rangabali->id,
                 'role_id'        => $operatorRole->id,
                 'mobile_no'      => '01700000008',
                 'password'       => Hash::make('password123'),
                 'is_active'      => true,
             ]
         );
-        $constableUser->zones()->sync([$rangabali->id]);
     }
 }
