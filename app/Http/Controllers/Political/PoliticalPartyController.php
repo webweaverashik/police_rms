@@ -12,7 +12,7 @@ class PoliticalPartyController extends Controller
      */
     public function index()
     {
-        $parties = PoliticalParty::all();
+        $parties = PoliticalParty::withCount('reports')->orderBy('name')->get();
 
         return view('political_parties.index', compact('parties'));
     }
