@@ -127,9 +127,42 @@ class UserController extends Controller
      */
     public function profile()
     {
-        $user            = User::find(auth()->user()->id);
+        $user = User::find(auth()->user()->id);
+        $loginActivities = $user->loginActivities()->latest()->get();
 
-        return view('users.profile', compact('user'));
+        return view('users.profile', compact('user', 'loginActivities'));
+    }
+
+    /*
+     * Update user personal profile
+     */
+    public function updateProfile(Request $request)
+    {
+        $user = auth()->user();
+
+        $rules = [
+            'name'      => 'required|string|max:255',
+            'bp_number' => 'nullable|numeric|digits_between:1,20',
+            'email'     => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'mobile_no' => ['required', 'regex:/^01[3-9]\d{8}$/', Rule::unique('users')->ignore($user->id)],
+        ];
+
+        // Remove uniqueness rule if value didn't change (optional but nice)
+        if ($request->email === $user->email) {
+            unset($rules['email']);
+        }
+        if ($request->mobile_no === $user->mobile_no) {
+            unset($rules['mobile_no']);
+        }
+
+        $validated = $request->validate($rules);
+
+        $user->update($validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'প্রোফাইল সফলভাবে আপডেট করা হয়েছে।',
+        ]);
     }
 
     /**
@@ -155,23 +188,21 @@ class UserController extends Controller
         // -------------------------------
         // Validation
         // -------------------------------
-        $validated = $request->validate([
-            'name'           => ['required', 'string', 'max:255'],
-            'bp_number'      => ['nullable', 'numeric'],
-            'designation_id' => ['required', 'exists:designations,id'],
-            'role_id'        => ['required', 'exists:roles,id'],
-            'email'          => [
-                'required',
-                'email',
-                'max:255',
-                Rule::unique('users', 'email')->ignore($user->id),
+        $validated = $request->validate(
+            [
+                'name'           => ['required', 'string', 'max:255'],
+                'bp_number'      => ['nullable', 'numeric'],
+                'designation_id' => ['required', 'exists:designations,id'],
+                'role_id'        => ['required', 'exists:roles,id'],
+                'email'          => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user->id)],
+                'mobile_no'      => ['required', 'regex:/^01[3-9][0-9]{8}$/'],
+                'zone_id'        => ['nullable', 'exists:zones,id'],
             ],
-            'mobile_no'      => ['required', 'regex:/^01[3-9][0-9]{8}$/'],
-            'zone_id'        => ['nullable', 'exists:zones,id'],
-        ], [
-            'bp_number.numeric' => 'বিপি নাম্বার শুধুমাত্র সংখ্যা হতে হবে।',
-            'mobile_no.regex'   => 'একটি সঠিক বাংলাদেশি মোবাইল নাম্বার দিন।',
-        ]);
+            [
+                'bp_number.numeric' => 'বিপি নাম্বার শুধুমাত্র সংখ্যা হতে হবে।',
+                'mobile_no.regex'   => 'একটি সঠিক বাংলাদেশি মোবাইল নাম্বার দিন।',
+            ],
+        );
 
         DB::beginTransaction();
 
@@ -196,15 +227,17 @@ class UserController extends Controller
                 'message'  => 'ইউজার সফলভাবে আপডেট হয়েছে।',
                 'redirect' => route('users.index'),
             ]);
-
         } catch (\Throwable $e) {
             DB::rollBack();
 
-            return response()->json([
-                'success' => false,
-                'message' => 'ইউজার আপডেট করতে সমস্যা হয়েছে।',
-                'error'   => config('app.debug') ? $e->getMessage() : null,
-            ], 500);
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => 'ইউজার আপডেট করতে সমস্যা হয়েছে।',
+                    'error'   => config('app.debug') ? $e->getMessage() : null,
+                ],
+                500,
+            );
         }
     }
 

@@ -192,7 +192,7 @@
         <div class="d-flex justify-content-start">
             <button type="reset" id="kt_edit_user_form_reset" class="btn btn-secondary me-3 w-100px">রিসেট</button>
 
-            <button type="submit" id="kt_edit_user_form_submit" class="btn btn-primary w-100px">
+            <button type="submit" id="kt_edit_user_form_submit" class="btn btn-primary w-150px">
                 <span class="indicator-label">আপডেট</span>
                 <span class="indicator-progress">অপেক্ষা করুন...
                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
