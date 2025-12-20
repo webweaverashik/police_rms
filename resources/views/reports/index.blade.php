@@ -322,7 +322,7 @@
                             <td>
                                 @if ($report->program_time)
                                     {{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('h')) }}:{{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('i')) }}
-                                    {{ \Carbon\Carbon::parse($report->program_time)->format('A') }}
+                                    {{ \Carbon\Carbon::parse($report->program_time)->format('A') =='AM' ? 'পূর্বাহ্ণ' : 'অপরাহ্ণ' }}
                                 @else
                                     -
                                 @endif
@@ -331,7 +331,7 @@
 
 
                             <td>
-                                {{ $report->tentative_attendee_count ? $numto->bnNum($report->tentative_attendee_count) : '-' }}
+                                {{ $report->tentative_attendee_count ? $numto->bnNum($report->tentative_attendee_count) . ' জন' : '-' }}
                             </td>
 
                             {{-- Status --}}

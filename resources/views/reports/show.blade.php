@@ -206,9 +206,8 @@
                                     {{ $numto->bnNum($report->created_at->format('d')) }}-
                                     {{ $numto->bnNum($report->created_at->format('m')) }}-
                                     {{ $numto->bnNum($report->created_at->format('Y')) }},
-                                    {{ $numto->bnNum($report->created_at->format('h')) }}:
-                                    {{ $numto->bnNum($report->created_at->format('i')) }}
-                                    {{ $report->created_at->format('A') }}
+                                    {{ $numto->bnNum($report->created_at->format('h')) }}:{{ $numto->bnNum($report->created_at->format('i')) }}
+                                    {{ $report->created_at->format('A') =='AM' ? 'পূর্বাহ্ণ' : 'অপরাহ্ণ' }}
                                 </td>
                             </tr>
                             <!--end::Row-->
@@ -220,9 +219,8 @@
                                     {{ $numto->bnNum($report->updated_at->format('d')) }}-
                                     {{ $numto->bnNum($report->updated_at->format('m')) }}-
                                     {{ $numto->bnNum($report->updated_at->format('Y')) }},
-                                    {{ $numto->bnNum($report->updated_at->format('h')) }}:
-                                    {{ $numto->bnNum($report->updated_at->format('i')) }}
-                                    {{ $report->updated_at->format('A') }}
+                                    {{ $numto->bnNum($report->updated_at->format('h')) }}:{{ $numto->bnNum($report->updated_at->format('i')) }}
+                                    {{ $report->updated_at->format('A') =='AM' ? 'পূর্বাহ্ণ' : 'অপরাহ্ণ' }}
                                 </td>
                             </tr>
                             <!--end::Row-->
@@ -327,7 +325,7 @@
                         <div class="col-6 col-lg-10">
                             <span class="fw-semibold fs-4 text-gray-800">
                                 @if ($report->program_time)
-                                    {{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('h')) }}:{{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('i')) }} {{ \Carbon\Carbon::parse($report->program_time)->format('A') }}
+                                    {{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('h')) }}:{{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('i')) }} {{ \Carbon\Carbon::parse($report->program_time)->format('A') =='AM' ? 'পূর্বাহ্ণ' : 'অপরাহ্ণ' }}
                                 @else
                                     -
                                 @endif

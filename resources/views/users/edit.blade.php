@@ -51,7 +51,7 @@
 
 @section('content')
     <!--begin::Form-->
-    <form action="#" class="form d-flex flex-column" id="kt_edit_user_form" novalidate="novalidate">
+    <form action="#" class="form d-flex flex-column" id="kt_edit_user_form" novalidate="novalidate" data-user-id="{{ $user->id }}">
         <!-- ===================== Personal Info ===================== -->
         <div class="card card-flush py-4 mb-7">
             <div class="card-header">

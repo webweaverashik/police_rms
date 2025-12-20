@@ -37,6 +37,7 @@ class ReportController extends Controller
             if ($user->isOperator()) {
                 $query->where('reports.created_by', $user->id);
             }
+
             // Magistrate → assigned only
             elseif ($user->hasRole('Magistrate')) {
                 $query->whereExists(function ($q) use ($user) {
@@ -44,14 +45,15 @@ class ReportController extends Controller
                 });
             }
 
+            // Viewer → own zone reports
+            if ($user->isViewer()) {
+                $query->where('reports.zone_id', $user->zone_id);
+            }
+
             return $query->latest('id')->get();
         });
 
-        /*
-    |--------------------------------------------------------------------------
-    | Cache filter/master data (longer TTL)
-    |--------------------------------------------------------------------------
-    */
+        // Cache filter/master data (longer TTL)
         $upazilas         = Cache::remember('filters.upazilas', now()->addHours(6), fn() => Upazila::all());
         $zones            = Cache::remember('filters.zones', now()->addHours(6), fn() => Zone::all());
         $unions           = Cache::remember('filters.unions', now()->addHours(6), fn() => Union::all());
