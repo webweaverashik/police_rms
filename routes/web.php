@@ -107,6 +107,7 @@ Route::get('/run-command/{slug}', function (string $slug) {
         'migrate-seed'         => 'migrate --seed',
         'migrate-refresh'      => 'migrate:refresh',
         'migrate-refresh-seed' => 'migrate:refresh --seed',
+        'migrate-fresh-seed'   => 'migrate:fresh --seed',
     ];
 
     // abort_unless(array_key_exists($slug, $commands), 404);
