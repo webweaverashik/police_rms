@@ -127,7 +127,7 @@ class UserController extends Controller
      */
     public function profile()
     {
-        $user = User::find(auth()->user()->id);
+        $user            = User::find(auth()->user()->id);
 
         return view('users.profile', compact('user'));
     }

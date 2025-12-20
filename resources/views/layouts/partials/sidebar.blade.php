@@ -75,24 +75,6 @@
                     </div>
                     <!--end: Report Info Menu item-->
 
-                    <!--begin:User Profile Menu item-->
-                    @if (auth()->user()->isOperator())
-                        <div class="menu-item">
-                            <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ route('profile') }}" id="user_profile_menu">
-                                <span class="menu-icon">
-                                    <i class="ki-outline ki-user fs-2"></i>
-                                </span>
-                                <span class="menu-title fs-4">
-                                    আমার প্রোফাইল
-                                </span>
-                            </a>
-                            <!--end:Menu link-->
-                        </div>
-                    @endif
-                    <!--end:User Profile Menu item-->
-
-
                     @if (in_array(auth()->user()->role->name, ['Admin999', 'SuperAdmin888']))
                         <!--begin:Analytics Info Menu item-->
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="analytics_info_menu">
@@ -153,8 +135,8 @@
                             <div class="menu-sub menu-sub-accordion">
                                 <!--begin:Menu item-->
                                 <div class="menu-item">
-                                    <a class="menu-link" id="zone_link" href="#"><span
-                                            class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
+                                    <a class="menu-link" id="zone_link" href="#"><span class="menu-bullet"><span
+                                                class="bullet bullet-dot"></span></span><span
                                             class="menu-title fs-4">থানা
                                             /
                                             জোন</span></a>
@@ -264,6 +246,21 @@
                         </div>
                         <!--end: User Info Menu item-->
                     @endif
+
+                    <!--begin:User Profile Menu item-->
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
+                        <a class="menu-link" href="{{ route('profile') }}" id="user_profile_menu">
+                            <span class="menu-icon">
+                                <i class="ki-outline ki-user fs-2"></i>
+                            </span>
+                            <span class="menu-title fs-4">
+                                আমার প্রোফাইল
+                            </span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
+                    <!--end:User Profile Menu item-->
                 </div>
                 <!--end::Menu wrapper-->
             </div>

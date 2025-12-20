@@ -36,6 +36,12 @@
         .signature {
             margin-top: 0
         }
+        .first-child-td {
+            border: 1px solid #000; background: #f0f0f0;
+        }
+        .second-child-td {
+            border: 1px solid #000;;
+        }
     </style>
 </head>
 
@@ -69,131 +75,183 @@
             <u>বিস্তারিত বিবরণ:</u> {{ $report->program_description }}
         </p>
 
-        <table width="100%" cellpadding="6" cellspacing="0" style="border-collapse: collapse; margin-bottom: 20px;">
-            <caption style="caption-side: top; text-align: left; padding-bottom: 8px; text-decoration: underline;">
+        <!-- ========================================================= -->
+        <!-- Table 01: Program Summary (Caption REQUIRED)              -->
+        <!-- First column width FIXED to 30%                            -->
+        <!-- ========================================================= -->
+
+        <table width="100%" cellpadding="6" cellspacing="0"
+            style="
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        table-layout: fixed;
+    ">
+
+            <!-- Table Caption -->
+            <caption
+                style="
+            caption-side: top;
+            text-align: left;
+            padding-bottom: 8px;
+            text-decoration: underline; ">
                 প্রোগ্রামের সারসংক্ষেপ:
             </caption>
+
             <tbody>
+
+                <!-- Parliament Seat -->
                 <tr>
-                    <td style="border: 1px solid #000;">
+                    <td width="30%" class="first-child-td">
                         সংসদীয় আসন
                     </td>
-                    <td style="border: 1px solid #000;">
+                    <td width="70%" class="second-child-td">
                         {{ $report->parliamentSeat->name }}
                     </td>
                 </tr>
+
+                <!-- Upazila -->
                 <tr>
-                    <td style="border: 1px solid #000;">
+                    <td width="30%" class="first-child-td">
                         উপজেলা
                     </td>
-                    <td style="border: 1px solid #000;">
+                    <td width="70%" class="second-child-td">
                         {{ $report->upazila->name }}
                     </td>
                 </tr>
+
+                <!-- Union / Municipality -->
                 <tr>
-                    <td style="border: 1px solid #000;">
+                    <td width="30%" class="first-child-td">
                         ইউনিয়ন / পৌরসভা
                     </td>
-                    <td style="border: 1px solid #000;">
+                    <td width="70%" class="second-child-td">
                         {{ $report->union->name }}
                     </td>
                 </tr>
+
+                <!-- Program Location (Optional) -->
                 @if ($report->location_name)
                     <tr>
-                        <td style="border: 1px solid #000;">
+                        <td width="30%" class="first-child-td">
                             প্রোগ্রামের স্থান
                         </td>
-                        <td style="border: 1px solid #000;">
+                        <td width="70%" class="second-child-td">
                             {{ $report->location_name }}
                         </td>
                     </tr>
                 @endif
+
+                <!-- Program Type -->
                 <tr>
-                    <td style="border: 1px solid #000;">
+                    <td width="30%" class="first-child-td">
                         প্রোগ্রামের ধরণ
                     </td>
-                    <td style="border: 1px solid #000;">
+                    <td width="70%" class="second-child-td">
                         {{ $report->programType->name }}
                     </td>
                 </tr>
+
             </tbody>
         </table>
 
-        <table width="100%" cellpadding="6" cellspacing="0" style="border-collapse: collapse; margin-bottom: 20px;">
+
+        <!-- ========================================================= -->
+        <!-- Table 02: Political & Program Details                      -->
+        <!-- SAME column width (30% / 70%)                              -->
+        <!-- ========================================================= -->
+
+        <table width="100%" cellpadding="6" cellspacing="0"
+            style="
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        table-layout: fixed;
+    ">
+
             <tbody>
+
+                <!-- Political Party -->
                 <tr>
-                    <td style="border: 1px solid #000;">
+                    <td width="30%" class="first-child-td">
                         রাজনৈতিক দল
                     </td>
-                    <td style="border: 1px solid #000;">
+                    <td width="70%" class="second-child-td">
                         {{ $report->politicalParty->name }}
                     </td>
                 </tr>
 
+                <!-- Candidate Name (Optional) -->
                 @if ($report->candidate_name)
                     <tr>
-                        <td style="border: 1px solid #000;">
+                        <td width="30%" class="first-child-td">
                             সংসদ সদস্য পদপ্রার্থী
                         </td>
-                        <td style="border: 1px solid #000;">
+                        <td width="70%" class="second-child-td">
                             {{ $report->candidate_name }}
                         </td>
                     </tr>
                 @endif
 
+                <!-- Program Date & Time (Optional) -->
                 @if ($report->program_date)
                     <tr>
-                        <td width="30%" style="border: 1px solid #000;">
+                        <td width="30%" class="first-child-td">
                             প্রোগ্রামের তারিখ ও সময়
                         </td>
-                        <td width="70%" style="border: 1px solid #000;">
-                            {{ $numto->bnNum(\Carbon\Carbon::parse($report->program_date)->format('d')) }}-{{ $numto->bnNum(\Carbon\Carbon::parse($report->program_date)->format('m')) }}-{{ $numto->bnNum(\Carbon\Carbon::parse($report->program_date)->format('Y')) }},
+                        <td width="70%" class="second-child-td">
+                            {{ $numto->bnNum(\Carbon\Carbon::parse($report->program_date)->format('d')) }}-
+                            {{ $numto->bnNum(\Carbon\Carbon::parse($report->program_date)->format('m')) }}-
+                            {{ $numto->bnNum(\Carbon\Carbon::parse($report->program_date)->format('Y')) }}
 
                             @if ($report->program_time)
-                                {{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('h')) }}:{{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('i')) }}
+                                ,
+                                {{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('h')) }}:
+                                {{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('i')) }}
                                 {{ \Carbon\Carbon::parse($report->program_time)->format('A') === 'AM' ? 'পূর্বাহ্ণ' : 'অপরাহ্ণ' }}
                             @endif
                         </td>
                     </tr>
                 @endif
 
-
+                <!-- Program Chair (Optional) -->
                 @if ($report->program_chair)
                     <tr>
-                        <td style="border: 1px solid #000;">
+                        <td width="30%" class="first-child-td">
                             সভাপতি
                         </td>
-                        <td style="border: 1px solid #000;">
+                        <td width="70%" class="second-child-td">
                             {{ $report->program_chair }}
                         </td>
                     </tr>
                 @endif
 
+                <!-- Special Guest (Optional) -->
                 @if ($report->program_special_guest)
                     <tr>
-                        <td style="border: 1px solid #000;">
+                        <td width="30%" class="first-child-td">
                             প্রধান অতিথি
                         </td>
-                        <td style="border: 1px solid #000;">
+                        <td width="70%" class="second-child-td">
                             {{ $report->program_special_guest }}
                         </td>
                     </tr>
                 @endif
 
+                <!-- Tentative Attendee Count (Optional) -->
                 @if ($report->tentative_attendee_count)
                     <tr>
-                        <td style="border: 1px solid #000;">
+                        <td width="30%" class="first-child-td">
                             উপস্থিতির সংখ্যা (আনুমানিক)
                         </td>
-                        <td style="border: 1px solid #000;">
-                            {{ $numto->bnNum($report->tentative_attendee_count) }}
-                            জন
+                        <td width="70%" class="second-child-td">
+                            {{ $numto->bnNum($report->tentative_attendee_count) }} জন
                         </td>
                     </tr>
                 @endif
 
             </tbody>
         </table>
+
+
     </div>
 
     <p>বিষয়টি আপনার সদয় অবগতির জন্য প্রেরণ করা হলো।</p>

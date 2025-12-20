@@ -1,5 +1,4 @@
 @push('page-css')
-    <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 
@@ -43,101 +42,58 @@
 
 
 @section('content')
-    <!--begin::Card-->
-    <div class="card">
-        <!--begin::Card header-->
-        <div class="card-header border-0 pt-6">
-            <!--begin::Card title-->
-            <div class="card-title">
-            </div>
-            <!--begin::Card title-->
-            <!--begin::Card toolbar-->
-            <div class="card-toolbar">
-                <!--begin::Toolbar-->
-                <div class="d-flex justify-content-end" data-all-user-table-filter="base">
-                    <!--begin::Add user-->
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_add_designation" class="btn btn-primary">
-                        <i class="ki-outline ki-plus fs-2"></i>নতুন পদবী</a>
-                    <!--end::Add user-->
-                </div>
-                <!--end::Toolbar-->
-            </div>
-            <!--end::Card toolbar-->
-        </div>
-        <!--end::Card header-->
-        <!--begin::Card body-->
-        <div class="card-body py-4">
-            <!--begin::Table-->
-            <table class="table table-hover align-middle table-row-dashed fs-6 gy-5 prms-table" id="kt_table_users">
-                <thead>
-                    <tr class="fw-bold fs-5 gs-0">
-                        <th class="w-25px">#</th>
-                        <th>ইউজারের তথ্য</th>
-                        <th>কার্যক্রম</th>
-                    </tr>
-                </thead>
-                <tbody class="text-gray-600 fw-semibold fs-5">
-                    @php
-                        use Rakibhstu\Banglanumber\NumberToBangla;
+    <div class="row">
+        <div class="col-md-12">
+            <!--begin::Row-->
+            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-5 g-xl-9">
+                @php
+                    use Rakibhstu\Banglanumber\NumberToBangla;
 
-                        $numto = new NumberToBangla();
-                    @endphp
+                    $numto = new NumberToBangla();
+                @endphp
 
-                    @foreach ($designations as $user)
-                        <tr>
-                            <td>{{ $numto->bnNum($loop->index + 1) }}</td>
-                            <td>
-                                <!--begin::user details-->
-                                <div class="d-flex flex-column">
-                                    <span class="text-gray-800 mb-1">{{ $user->name }}</span>
-                                    <span class="fw-semibold">
-                                        {{ $user->name }}
-                                        {{ $user->zones && $user->zones->isNotEmpty() && $user->isOperator() ? ', ' . $user->zones->first()->name : '' }}
-                                    </span>
-
+                @foreach ($designations as $designation)
+                    <!--begin::Col-->
+                    <div class="col">
+                        <!--begin::Card-->
+                        <div class="card card-flush h-md-100 border-hover-primary">
+                            <!--begin::Card header-->
+                            <div class="card-header">
+                                <!--begin::Card title-->
+                                <div class="card-title">
+                                    <h2>{{ $designation->name }} &nbsp;</h2>
                                 </div>
-                            </td>
-                            <td>
-                                @if ($user->id == auth()->user()->id)
-                                    <a href="{{ route('profile') }}" title="আমার প্রোফাইল" data-bs-toggle="tooltip"
-                                        class="btn btn-icon text-hover-success w-30px h-30px me-3">
-                                        <i class="ki-outline ki-eye fs-2"></i>
-                                    </a>
-                                @elseif ($user->id != auth()->user()->id)
-                                    <a href="{{ route('users.edit', $user->id) }}" title="সংশোধন"
-                                        class="btn btn-icon text-hover-primary w-30px h-30px">
-                                        <i class="ki-outline ki-pencil fs-2"></i>
-                                    </a>
+                                <!--end::Card title-->
+                            </div>
+                            <!--end::Card header-->
+                            <!--begin::Card body-->
+                            <div class="card-body pt-1">
+                                <table class="table fs-6 fw-semibold gs-0 gy-1 gx-0">
+                                    <!--begin::Row-->
+                                    <tr class="">
+                                        <td class="text-gray-600">এই পদে মোট ইউজার:</td>
+                                        <td class="text-gray-800 text-center">
+                                            {{ $numto->bnNum(count($designation->users)) }} জন
+                                        </td>
+                                    </tr>
+                                    <!--end::Row-->
+                                </table>
+                            </div>
+                            <!--end::Card body-->
+                        </div>
+                        <!--end::Card-->
+                    </div>
+                    <!--end::Col-->
+                @endforeach
 
-                                    <a href="#" title="পাসওয়ার্ড পরিবর্তন" data-bs-toggle="modal"
-                                        data-bs-target="#kt_modal_edit_password" data-user-id="{{ $user->id }}"
-                                        data-user-name="{{ $user->name }}"
-                                        class="btn btn-icon text-hover-primary w-30px h-30px change-password-btn">
-                                        <i class="ki-outline ki-key fs-2"></i>
-                                    </a>
-
-                                    <a href="#" title="ডিলিট" data-bs-toggle="tooltip"
-                                        class="btn btn-icon text-hover-danger w-30px h-30px delete-user"
-                                        data-user-id="{{ $user->id }}">
-                                        <i class="ki-outline ki-trash fs-2"></i>
-                                    </a>
-                                @endif
-
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            <!--end::Table-->
+            </div>
+            <!--end::Row-->
         </div>
-        <!--end::Card body-->
     </div>
-    <!--end::Card-->
 @endsection
 
 
 @push('vendor-js')
-    <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 @endpush
 
 @push('page-js')

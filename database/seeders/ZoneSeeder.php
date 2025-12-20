@@ -1,9 +1,9 @@
 <?php
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use App\Models\Administrative\Zone;
 use App\Models\Administrative\Upazila;
+use App\Models\Administrative\Zone;
+use Illuminate\Database\Seeder;
 
 class ZoneSeeder extends Seeder
 {

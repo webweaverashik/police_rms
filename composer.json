@@ -11,6 +11,7 @@
         "carlos-meneses/laravel-mpdf": "^2.1",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
+        "phpoffice/phpspreadsheet": "^5.3",
         "rakibhstu/number-to-bangla": "^1.5",
         "tusharkhan/banglafaker": "^2.1"
     },
