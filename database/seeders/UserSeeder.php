@@ -52,12 +52,12 @@ class UserSeeder extends Seeder
                 ['email' => trim($data['email'])],
                 [
                     'name'           => trim($data['name']),
-                    'bp_number'      => $data['bp_number'] ?: null,
+                    'bp_number'      => $data['bp_number'],
                     'designation_id' => $designation->id,
                     'zone_id'        => $zoneId,
                     'role_id'        => $role->id,
                     'mobile_no'      => trim($data['phone']),
-                    'password'       => Hash::make('password123'),
+                    'password'       => Hash::make('1234@#'),
                     'is_active'      => true,
                 ]
             );

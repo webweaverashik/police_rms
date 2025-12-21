@@ -12,23 +12,23 @@ var KTLoginSetup = function () {
       const initValidation = () => {
             validator = FormValidation.formValidation(form, {
                   fields: {
-                        email: {
-                              validators: {
-                                    notEmpty: {
-                                          message: 'অনুগ্রহ করে ইমেইল দিন'
-                                    },
-                                    emailAddress: {
-                                          message: 'সঠিক ইমেইল এড্রেস দিন'
+                        fields: {
+                              login: {
+                                    validators: {
+                                          notEmpty: {
+                                                message: 'অনুগ্রহ করে ইমেইল অথবা BP নম্বর দিন'
+                                          }
                                     }
-                              }
-                        },
-                        password: {
-                              validators: {
-                                    notEmpty: {
-                                          message: 'অনুগ্রহ করে পাসওয়ার্ড দিন'
+                              },
+                              password: {
+                                    validators: {
+                                          notEmpty: {
+                                                message: 'অনুগ্রহ করে পাসওয়ার্ড দিন'
+                                          }
                                     }
                               }
                         }
+
                   },
                   plugins: {
                         trigger: new FormValidation.plugins.Trigger(),

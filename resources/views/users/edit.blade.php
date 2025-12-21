@@ -74,10 +74,9 @@
                     <!-- BP Number -->
                     <div class="col-lg-4">
                         <div class="mb-8 fv-row">
-                            <label class="form-label fs-4">বিপি নাম্বার<span
-                                    class="text-muted fst-italic">(ঐচ্ছিক)</span></label>
+                            <label class="form-label fs-4 required">বিপি / আইডি নং</label>
                             <input type="number" name="bp_number" class="form-control form-control-solid fs-4"
-                                placeholder="ইউজারের বিপি নাম্বার লিখুন" value="{{ $user->bp_number }}">
+                                placeholder="ইউজারের বিপি বা আইডি নাম্বার লিখুন" value="{{ $user->bp_number }}">
                         </div>
                     </div>
 

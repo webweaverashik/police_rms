@@ -20,8 +20,9 @@
         <!--begin::Input group=-->
         <div class="fv-row mb-5">
             <!--begin::Email-->
-            <input type="text" placeholder="আপনার ইমেইল এড্রেস দিন" name="email" autocomplete="off"
+            <input type="text" placeholder="ইমেইল অথবা BP নম্বর দিন" name="login" autocomplete="off"
                 class="form-control bg-transparent" required />
+
             <!--end::Email-->
         </div>
         <!--end::Input group=-->

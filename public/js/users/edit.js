@@ -57,6 +57,9 @@ var KTEditUserForm = function () {
                         name: { validators: { notEmpty: { message: 'ইউজারের নাম লিখুন' } } },
                         bp_number: {
                               validators: {
+                                    notEmpty: {
+                                          message: 'বিপি বা আইডি নাম্বার লিখুন'
+                                    },
                                     regexp: {
                                           regexp: /^[0-9]+$/,
                                           message: 'বিপি নাম্বার শুধুমাত্র সংখ্যা হতে হবে।'

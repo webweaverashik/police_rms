@@ -22,47 +22,99 @@ class AuthController extends Controller
     // Handle login
     public function login(Request $request)
     {
-        // ✅ AJAX-friendly validation
+        /**
+         * ------------------------------------
+         * 1. Basic validation (AJAX friendly)
+         * ------------------------------------
+         */
         $validator = Validator::make($request->all(), [
-            'email'    => 'required|email',
-            'password' => 'required',
+            'login'    => 'required|string',
+            'password' => 'required|string',
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'message' => $validator->errors()->first(),
-            ], 422);
+            return response()->json(
+                [
+                    'message' => $validator->errors()->first(),
+                ],
+                422,
+            );
         }
 
-        // Check user (including soft deleted)
-        $user = User::withTrashed()->where('email', $request->email)->first();
+        /**
+         * ------------------------------------
+         * 2. Detect login field
+         * ------------------------------------
+         * If valid email → use email
+         * Otherwise → treat as BP number
+         */
+        $loginValue = trim($request->login);
+
+        $loginField = filter_var($loginValue, FILTER_VALIDATE_EMAIL) ? 'email' : 'bp_number';
+
+        /**
+         * ------------------------------------
+         * 3. Fetch user (including soft deleted)
+         * ------------------------------------
+         */
+        $user = User::withTrashed()->where($loginField, $loginValue)->first();
 
         if (! $user) {
-            return response()->json([
-                'message' => 'এই ইমেইলে কোনো ইউজার নেই।',
-            ], 401);
+            return response()->json(
+                [
+                    'message' => 'এই ইমেইল বা BP নম্বরে কোনো ইউজার নেই।',
+                ],
+                401,
+            );
         }
 
+        /**
+         * ------------------------------------
+         * 4. Account state checks
+         * ------------------------------------
+         */
         if ($user->trashed()) {
-            return response()->json([
-                'message' => 'আপনার আইডি বন্ধ রয়েছে।',
-            ], 403);
+            return response()->json(
+                [
+                    'message' => 'আপনার আইডি বন্ধ রয়েছে।',
+                ],
+                403,
+            );
         }
 
-        if ($user->is_active == 0) {
-            return response()->json([
-                'message' => 'আপনার আইডি সাময়িকভাবে বন্ধ রয়েছে। অনুগ্রহ করে এডমিনের সাথে যোগাযোগ করুন।',
-            ], 403);
+        if (! $user->is_active) {
+            return response()->json(
+                [
+                    'message' => 'আপনার আইডি সাময়িকভাবে বন্ধ রয়েছে। অনুগ্রহ করে এডমিনের সাথে যোগাযোগ করুন।',
+                ],
+                403,
+            );
         }
 
-        // Attempt login
-        if (! Auth::attempt($request->only('email', 'password'))) {
-            return response()->json([
-                'message' => 'ইউজার বা পাসওয়ার্ড ভুল হয়েছে।',
-            ], 401);
+        /**
+         * ------------------------------------
+         * 5. Attempt authentication
+         * ------------------------------------
+         */
+        if (
+            ! Auth::attempt([
+                $loginField => $loginValue,
+                'password'  => $request->password,
+            ])
+        ) {
+            return response()->json(
+                [
+                    'message' => 'ইউজার বা পাসওয়ার্ড ভুল হয়েছে।',
+                ],
+                401,
+            );
         }
 
-        // ✅ Login success
+        /**
+         * ------------------------------------
+         * 6. Login success → store activity
+         * ------------------------------------
+         */
         $user = Auth::user();
 
         LoginActivity::create([
@@ -72,9 +124,14 @@ class AuthController extends Controller
             'device'     => $this->detectDevice($request->header('User-Agent')),
         ]);
 
+        /**
+         * ------------------------------------
+         * 7. Success response
+         * ------------------------------------
+         */
         return response()->json([
             'message'  => 'সাইন ইন সফল হয়েছে।',
-            'redirect' => auth()->user()->role->name === 'Operator' ? route('dashboard') : route('reports.index'),
+            'redirect' => $user->role->name === 'Operator' ? route('dashboard') : route('reports.index'),
         ]);
     }
 

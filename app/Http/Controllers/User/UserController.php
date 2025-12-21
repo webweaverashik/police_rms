@@ -59,7 +59,7 @@ class UserController extends Controller
         $validated = $request->validate(
             [
                 'name'           => ['required', 'string', 'max:255'],
-                'bp_number'      => ['nullable', 'numeric'],
+                'bp_number'      => ['required', 'numeric', 'unique:users,bp_number'],
                 'designation_id' => ['required', 'exists:designations,id'],
                 'role_id'        => ['required', 'exists:roles,id'],
                 'zone_id'        => ['nullable', 'exists:zones,id'],
@@ -80,13 +80,13 @@ class UserController extends Controller
             // -------------------------------
             $user = User::create([
                 'name'           => $validated['name'],
-                'bp_number'      => $validated['bp_number'] ?? null,
+                'bp_number'      => $validated['bp_number'],
                 'designation_id' => $validated['designation_id'],
                 'zone_id'        => $validated['zone_id'] ?? null,
                 'role_id'        => $validated['role_id'],
                 'email'          => $validated['email'],
                 'mobile_no'      => $validated['mobile_no'],
-                'password'       => Hash::make('12345678'), // default password
+                'password'       => Hash::make('1234@#'), // default password
                 'is_active'      => true,
             ]);
 
@@ -127,7 +127,7 @@ class UserController extends Controller
      */
     public function profile()
     {
-        $user = User::find(auth()->user()->id);
+        $user            = User::find(auth()->user()->id);
         $loginActivities = $user->loginActivities()->latest()->get();
 
         return view('users.profile', compact('user', 'loginActivities'));
@@ -142,7 +142,7 @@ class UserController extends Controller
 
         $rules = [
             'name'      => 'required|string|max:255',
-            'bp_number' => 'nullable|numeric|digits_between:1,20',
+            'bp_number' => ['required', 'numeric', Rule::unique('users')->ignore($user->id)],
             'email'     => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'mobile_no' => ['required', 'regex:/^01[3-9]\d{8}$/', Rule::unique('users')->ignore($user->id)],
         ];
