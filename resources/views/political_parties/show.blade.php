@@ -129,7 +129,7 @@
                         <!--begin::Details-->
                         <table class="table fs-6 fw-semibold gs-0 gy-2 gx-2">
                             <tr>
-                                <td class="text-gray-600 fs-4">প্রতিবেদন তৈরিকারি:</td>
+                                <td class="text-gray-600 fs-4">তৈরিকারি:</td>
                                 <td class="text-gray-800 fs-4">{{ $party->createdBy->name }},
                                     {{ $party->createdBy->designation->name }}</td>
                             </tr>

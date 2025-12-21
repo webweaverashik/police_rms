@@ -34,41 +34,37 @@ class ProgramTypeController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(
+        // ✅ AJAX-friendly validation
+        $validated = $request->validate(
             [
-                'type_name'        => 'required|string|max:50|unique:program_types,name',
-                'type_description' => 'nullable|string|max:200',
+                'name' => 'required|string|max:50|unique:program_types,name',
             ],
             [
-                'type_name.required' => 'ধরণের নাম প্রয়োজন',
-                'type_name.unique'   => 'এই ধরণটি ইতিমধ্যে আছে',
-                'type_name.max'      => 'নামটি ৫০ অক্ষরের বেশি হতে পারবে না',
+                'name.required' => 'ধরণের নাম প্রয়োজন',
+                'name.unique'   => 'এই ধরণটি ইতিমধ্যে আছে',
+                'name.max'      => 'নামটি ৫০ অক্ষরের বেশি হতে পারবে না',
             ],
         );
 
+        // ✅ Create program type
         $programType = ProgramType::create([
-            'name'        => $request->type_name,
-            'description' => $request->type_description ?? null,
+            'name'        => $validated['name'],
+            'description' => null,
             'created_by'  => auth()->id(),
         ]);
 
-        // Return JSON for AJAX requests
-        if ($request->ajax() || $request->wantsJson()) {
-            return response()->json(
-                [
-                    'success'      => true,
-                    'message'      => 'প্রোগ্রামের ধরণ সফলভাবে যোগ হয়েছে',
-                    'program_type' => [
-                        'id'   => $programType->id,
-                        'name' => $programType->name,
-                    ],
+        // ✅ Always return JSON (because this endpoint is used via AJAX)
+        return response()->json(
+            [
+                'success'      => true,
+                'message'      => 'প্রোগ্রামের ধরণ সফলভাবে যোগ হয়েছে',
+                'program_type' => [
+                    'id'   => $programType->id,
+                    'name' => $programType->name,
                 ],
-                201,
-            );
-        }
-
-        // Normal redirect for non-AJAX requests
-        return redirect()->route('program-types.index')->with('success', 'প্রোগ্রামের ধরণ সফলভাবে যোগ হয়েছে');
+            ],
+            201,
+        );
     }
 
     /**

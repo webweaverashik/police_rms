@@ -73,24 +73,27 @@
                     <!--end::Card title-->
                     <!--begin::Card toolbar-->
                     <div class="card-toolbar">
-                        <!--begin::More options-->
-                        <a href="#" class="btn btn-sm btn-light btn-icon" data-kt-menu-trigger="click"
-                            data-kt-menu-placement="bottom-end">
-                            <i class="ki-outline ki-dots-horizontal fs-3">
-                            </i>
-                        </a>
-                        <!--begin::Menu-->
-                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-6 w-175px py-4"
-                            data-kt-menu="true">
-                            <!--begin::Menu item-->
-                            <div class="menu-item px-3">
-                                <a href="{{ route('reports.edit', $report->id) }}"
-                                    class="menu-link text-hover-primary px-3"><i class="ki-outline ki-pencil fs-3 me-2"></i> প্রতিবেদন সংশোধন</a>
+                        @if (auth()->user()->isSuperAdmin())
+                            <!--begin::More options-->
+                            <a href="#" class="btn btn-sm btn-light btn-icon" data-kt-menu-trigger="click"
+                                data-kt-menu-placement="bottom-end">
+                                <i class="ki-outline ki-dots-horizontal fs-3">
+                                </i>
+                            </a>
+                            <!--begin::Menu-->
+                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-6 w-175px py-4"
+                                data-kt-menu="true">
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3">
+                                    <a href="{{ route('reports.edit', $report->id) }}"
+                                        class="menu-link text-hover-primary px-3"><i
+                                            class="ki-outline ki-pencil fs-3 me-2"></i> প্রতিবেদন সংশোধন</a>
+                                </div>
+                                <!--end::Menu item-->
                             </div>
-                            <!--end::Menu item-->
-                        </div>
-                        <!--end::Menu-->
-                        <!--end::More options-->
+                            <!--end::Menu-->
+                            <!--end::More options-->
+                        @endif
                     </div>
                     <!--end::Card toolbar-->
                 </div>
