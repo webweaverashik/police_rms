@@ -477,7 +477,6 @@
 @endsection
 
 @push('vendor-js')
-    <script src="{{ asset('assets/plugins/custom/apexcharts/apexcharts.bundle.js') }}"></script>
 @endpush
 
 @php
