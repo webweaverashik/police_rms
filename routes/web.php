@@ -3,6 +3,7 @@
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Political\PoliticalPartyController;
 use App\Http\Controllers\Report\ProgramTypeController;
 use App\Http\Controllers\Report\ReportController;
@@ -18,13 +19,8 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware(['auth', 'isLoggedIn'])->group(function () {
-    Route::get('/dashboard', function () {
-        if (auth()->user()->role->name === 'Operator') {
-            return view('dashboard.operator');
-        } else {
-            return view('dashboard.admin');
-        }
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/monthly-reports', [DashboardController::class, 'getMonthlyReports'])->name('dashboard.monthly-reports');
 
     // Only allow POST method for actual logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

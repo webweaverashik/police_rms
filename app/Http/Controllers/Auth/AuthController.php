@@ -131,7 +131,8 @@ class AuthController extends Controller
          */
         return response()->json([
             'message'  => 'সাইন ইন সফল হয়েছে।',
-            'redirect' => $user->role->name === 'Operator' ? route('dashboard') : route('reports.index'),
+            // 'redirect' => $user->role->name === 'Operator' ? route('dashboard') : route('reports.index'),
+            'redirect' => route('dashboard'),
         ]);
     }
 

@@ -172,7 +172,7 @@
 
                     <div class="card-footer d-flex justify-content-end gap-3">
                         <button type="submit" class="btn btn-primary w-150px">
-                            <span class="indicator-label">সাবমিট</span>
+                            <span class="indicator-label">আপডেট করুন</span>
                             <span class="indicator-progress">
                                 অপেক্ষা করুন...
                                 <span class="spinner-border spinner-border-sm ms-2"></span>

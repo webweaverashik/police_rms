@@ -77,7 +77,7 @@
 
                                 @yield('content')
 
-                                @if (auth()->user()->isOperator() || auth()->user()->isMagistrate() || auth()->user()->isViewer())
+                                @if (auth()->user()->isOperator() || auth()->user()->isMagistrate())
                                     <div class="fixed-bottom operator-bottom-bar bg-white shadow-lg border-top py-3 px-4"
                                         style="z-index: 1000;">
                                         <div class="d-flex justify-content-around align-items-center">

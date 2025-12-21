@@ -109,13 +109,11 @@ class User extends Authenticatable
 
     public function isViewer(): bool
     {
-        // return in_array($this->role->name, ['Viewer', 'Magistrate']);
         return $this->hasRole('Viewer');
     }
 
     public function isOperator(): bool
     {
-        // return $this->role->name === 'Operator';
         return $this->hasRole('Operator');
     }
 

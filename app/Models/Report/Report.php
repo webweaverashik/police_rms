@@ -107,8 +107,8 @@ class Report extends Model
     }
 
     // Report assignment to UNO
-    public function assignment()
+    public function assignments()
     {
-        return $this->hasOne(ReportAssignment::class);
+        return $this->hasMany(ReportAssignment::class);
     }
 }

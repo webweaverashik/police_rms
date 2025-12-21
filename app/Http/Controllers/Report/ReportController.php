@@ -31,7 +31,7 @@ class ReportController extends Controller
         $cacheKey = 'reports.index.' . $user->role->name . '.' . $user->id;
 
         $reports = Cache::remember($cacheKey, now()->addHours(2), function () use ($user) {
-            $query = Report::query()->with(['upazila', 'zone', 'union', 'politicalParty', 'parliamentSeat', 'programType', 'createdBy:id,name,designation_id', 'createdBy.designation:id,name', 'assignment']);
+            $query = Report::query()->with(['upazila', 'zone', 'union', 'politicalParty', 'parliamentSeat', 'programType', 'createdBy:id,name,designation_id', 'createdBy.designation:id,name', 'assignments']);
 
             // Operator → own reports
             if ($user->isOperator()) {
@@ -154,6 +154,30 @@ class ReportController extends Controller
     public function show(string $id)
     {
         $report = Report::findOrFail($id);
+        $user   = auth()->user();
+
+        // Operator → only own created reports
+        if ($user->isOperator()) {
+            if ($report->created_by !== $user->id) {
+                return back()->with('warning', 'এই প্রতিবেদনটি আপনার দেখার অনুমতি নেই');
+            }
+        }
+
+        // Viewer → same zone only
+        if ($user->isViewer()) {
+            if ($report->zone_id !== $user->zone_id) {
+                return back()->with('warning', 'এই প্রতিবেদনটি আপনার দেখার অনুমতি নেই');
+            }
+        }
+
+        // Magistrate → only assigned reports
+        if ($user->isMagistrate()) {
+            $isAssigned = $report->assignments()->where('user_id', $user->id)->exists();
+
+            if (! $isAssigned) {
+                return back()->with('warning', 'এই প্রতিবেদনটি আপনার দেখার অনুমতি নেই');
+            }
+        }
 
         return view('reports.show', compact('report'));
     }
