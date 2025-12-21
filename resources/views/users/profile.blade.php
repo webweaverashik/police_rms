@@ -2,28 +2,49 @@
 
 @push('page-css')
     <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
-
     <style>
+        /* ================= READONLY SECTION (LIGHT MODE) ================= */
         .readonly-section {
             border: 1px dashed #cfd3e1;
             border-radius: 8px;
             padding: 16px;
-            background: #f9fafb;
+            background-color: #f9fafb;
             transition: all .2s ease;
             cursor: help;
         }
 
         .readonly-section:hover {
-            background: #f1f4f8;
+            background-color: #f1f4f8;
             border-color: #b5b9cc;
         }
 
         .readonly-value {
             font-size: 1.25rem;
             color: #3f4254;
+            font-weight: 500;
+        }
+
+        /* ================= DARK MODE SUPPORT ================= */
+        [data-bs-theme="dark"] .readonly-section {
+            background-color: #1e1e2d;
+            border-color: #323248;
+        }
+
+        [data-bs-theme="dark"] .readonly-section:hover {
+            background-color: #2b2b40;
+            border-color: #474761;
+        }
+
+        [data-bs-theme="dark"] .readonly-value {
+            color: #e1e1ef;
+        }
+
+        [data-bs-theme="dark"] .readonly-section .form-label {
+            color: #a1a5b7 !important;
         }
     </style>
 @endpush
+
 
 @section('title', 'আমার প্রোফাইল')
 
