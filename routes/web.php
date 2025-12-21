@@ -40,6 +40,7 @@ Route::middleware(['auth', 'isLoggedIn'])->group(function () {
     Route::get('/ajax/union/{upazila_id}', [AjaxController::class, 'getUnion'])->name('ajax.union');
     Route::get('/ajax/seat-parties', [AjaxController::class, 'getSeatParties'])->name('ajax.seat.parties');
     Route::get('/ajax/seat-party-candidate', [AjaxController::class, 'getSeatPartyCandidate'])->name('ajax.seat.party.candidate');
+    Route::get('/ajax/political-party/{id}', [AjaxController::class, 'getPoliticalParty'])->name('ajax.political.party');
     // ------- AJAX routes end -------
 
     // ------- Custom routes start -------

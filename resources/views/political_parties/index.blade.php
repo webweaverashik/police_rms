@@ -68,7 +68,7 @@
                 <div class="d-flex justify-content-end" data-political-parties-table-filter="base">
                     <!--begin::Add Teacher-->
                     <a href="#" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#kt_modal_add_program_type">
+                        data-bs-target="#kt_modal_add_political_party">
                         <i class="ki-outline ki-plus fs-2"></i>নতুন দল</a>
                     <!--end::Add Teacher-->
                     <!--end::Filter-->
@@ -102,12 +102,18 @@
                     @foreach ($parties as $party)
                         <tr>
                             <td>{{ $numto->bnNum($loop->index + 1) }}</td>
-                            <td class="text-gray-800">{{ $party->name }}</td>
-                            <td>{{ $party->party_head }}</td>
+                            <td>
+                                <a href="{{ route('political-parties.show', $party->id) }}"
+                                    class="text-gray-800 text-hover-primary">
+                                    {{ $party->name }}
+                                </a>
+                            </td>
+
+                            <td>{{ $party->party_head ?? '-' }}</td>
                             <td>{{ $numto->bnNum($party->reports_count) }}</td>
                             <td>
                                 <a href="#" title="দলের তথ্য সংশোধন" data-bs-toggle="modal"
-                                    data-bs-target="#kt_modal_edit_program_type"
+                                    data-bs-target="#kt_modal_edit_political_party"
                                     class="btn btn-icon text-hover-primary w-30px h-30px me-2"
                                     data-party-id={{ $party->id }}>
                                     <i class="ki-outline ki-pencil fs-2"></i>
@@ -122,6 +128,152 @@
         <!--end::Card body-->
     </div>
     <!--end::Card-->
+
+    <!--begin::Modal - Add Political Party-->
+    <div class="modal fade" id="kt_modal_add_political_party" tabindex="-1" aria-hidden="true" data-bs-backdrop="static"
+        data-bs-keyboard="false">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-750px">
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <!--begin::Modal header-->
+                <div class="modal-header" id="kt_modal_add_political_party_header">
+                    <!--begin::Modal title-->
+                    <h2 class="fw-bold">নতুন রাজনৈতিক দল যুক্ত করুন</h2>
+                    <!--end::Modal title-->
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary"
+                        data-kt-add-political-party-modal-action="close">
+                        <i class="ki-outline ki-cross fs-1">
+                        </i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <!--end::Modal header-->
+                <!--begin::Modal body-->
+                <div class="modal-body px-5 my-7">
+                    <!--begin::Form-->
+                    <form id="kt_modal_add_political_party_form" class="form" action="#" novalidate="novalidate">
+                        <!--begin::Scroll-->
+                        <div class="d-flex flex-column scroll-y px-5 px-lg-10" id="kt_modal_add_political_party_scroll"
+                            data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto"
+                            data-kt-scroll-dependencies="#kt_modal_teacher_header"
+                            data-kt-scroll-wrappers="#kt_modal_add_political_party_scroll" data-kt-scroll-offset="300px">
+                            <!--begin::Name Input group-->
+                            <div class="fv-row mb-7">
+                                <label class="required fw-semibold fs-4 mb-2">রাজনৈতিক দলের নাম</label>
+                                <input type="text" name="party_name"
+                                    class="form-control form-control-solid mb-3 mb-lg-0 fs-4" placeholder="দলের নাম লিখুন"
+                                    required />
+                            </div>
+                            <!--end::Name Input group-->
+
+                            <!--begin::Name Input group-->
+                            <div class="fv-row mb-7">
+                                <label class="fw-semibold fs-4 mb-2">দলীয় প্রধান <span
+                                        class="text-muted fst-italic">(ঐচ্ছিক)</span></label>
+                                <input type="text" name="party_head"
+                                    class="form-control form-control-solid mb-3 mb-lg-0 fs-4"
+                                    placeholder="দলের প্রধানের নাম লিখুন" />
+                            </div>
+                            <!--end::Name Input group-->
+                        </div>
+                        <!--end::Scroll-->
+
+                        <!--begin::Actions-->
+                        <div class="text-center pt-10">
+                            <button type="reset" class="btn btn-light me-3"
+                                data-kt-add-political-party-modal-action="cancel">ক্যান্সেল</button>
+                            <button type="submit" class="btn btn-primary"
+                                data-kt-add-political-party-modal-action="submit">
+                                <span class="indicator-label">সাবমিট</span>
+                                <span class="indicator-progress">অপেক্ষা করুন...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                        </div>
+                        <!--end::Actions-->
+                    </form>
+                    <!--end::Form-->
+                </div>
+                <!--end::Modal body-->
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - Add Political Party-->
+
+    <!--begin::Modal - Edit Political Party-->
+    <div class="modal fade" id="kt_modal_edit_political_party" tabindex="-1" aria-hidden="true" data-bs-backdrop="static"
+        data-bs-keyboard="false">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-750px">
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <!--begin::Modal header-->
+                <div class="modal-header">
+                    <!--begin::Modal title-->
+                    <h2 class="fw-bold" id="kt_modal_edit_political_party_title">Update Political Party</h2>
+                    <!--end::Modal title-->
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" kt_modal_edit_political_party="close">
+                        <i class="ki-outline ki-cross fs-1">
+                        </i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <!--end::Modal header-->
+                <!--begin::Modal body-->
+                <div class="modal-body px-5 my-7">
+                    <!--begin::Form-->
+                    <form id="kt_modal_edit_political_party_form" class="form" action="#" novalidate="novalidate">
+                        <!--begin::Scroll-->
+                        <div class="d-flex flex-column scroll-y px-5 px-lg-10" id="kt_modal_edit_political_party_scroll"
+                            data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto"
+                            data-kt-scroll-dependencies="#kt_modal_edit_political_party_header"
+                            data-kt-scroll-wrappers="#kt_modal_edit_political_party_scroll" data-kt-scroll-offset="300px">
+                            <!--begin::Name Input group-->
+                            <div class="fv-row mb-7">
+                                <label class="required fw-semibold fs-4 mb-2">রাজনৈতিক দলের নাম</label>
+                                <input type="text" name="party_name_edit"
+                                    class="form-control form-control-solid mb-3 mb-lg-0 fs-4"
+                                    placeholder="দলের নাম লিখুন" required />
+                            </div>
+                            <!--end::Name Input group-->
+
+                            <!--begin::Name Input group-->
+                            <div class="fv-row mb-7">
+                                <label class="fw-semibold fs-4 mb-2">দলীয় প্রধান  <span
+                                        class="text-muted fst-italic">(ঐচ্ছিক)</span></label>
+                                <input type="text" name="party_head_edit"
+                                    class="form-control form-control-solid mb-3 mb-lg-0 fs-4"
+                                    placeholder="দলের প্রধানের নাম লিখুন" />
+                            </div>
+                            <!--end::Name Input group-->
+                        </div>
+                        <!--end::Scroll-->
+
+                        <!--begin::Actions-->
+                        <div class="text-center pt-10">
+                            <button type="reset" class="btn btn-light me-3"
+                                kt_modal_edit_political_party="cancel">ক্যান্সেল</button>
+                            <button type="submit" class="btn btn-primary" kt_modal_edit_political_party="submit">
+                                <span class="indicator-label">আপডেট</span>
+                                <span class="indicator-progress">Please wait...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                        </div>
+                        <!--end::Actions-->
+                    </form>
+                    <!--end::Form-->
+                </div>
+                <!--end::Modal body-->
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - Edit Political Party-->
 @endsection
 
 

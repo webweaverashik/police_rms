@@ -1,10 +1,10 @@
 <?php
 namespace App\Http\Controllers\Report;
 
+use App\Http\Controllers\Controller;
+use App\Models\Report\ProgramType;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\Models\Report\ProgramType;
-use App\Http\Controllers\Controller;
 
 class ProgramTypeController extends Controller
 {
@@ -26,7 +26,7 @@ class ProgramTypeController extends Controller
      */
     public function create()
     {
-        //
+        return redirect()->route('program-types.index');
     }
 
     /**
@@ -36,30 +36,30 @@ class ProgramTypeController extends Controller
     {
         $request->validate(
             [
-                'type_name' => 'required|string|max:50|unique:program_types,name',
+                'type_name'        => 'required|string|max:50|unique:program_types,name',
                 'type_description' => 'nullable|string|max:200',
             ],
             [
                 'type_name.required' => 'ধরণের নাম প্রয়োজন',
-                'type_name.unique' => 'এই ধরণটি ইতিমধ্যে আছে',
-                'name.max' => 'নামটি ৫০ অক্ষরের বেশি হতে পারবে না',
+                'type_name.unique'   => 'এই ধরণটি ইতিমধ্যে আছে',
+                'type_name.max'      => 'নামটি ৫০ অক্ষরের বেশি হতে পারবে না',
             ],
         );
 
         $programType = ProgramType::create([
-            'name' => $request->type_name,
+            'name'        => $request->type_name,
             'description' => $request->type_description ?? null,
-            'created_by' => auth()->id(),
+            'created_by'  => auth()->id(),
         ]);
 
         // Return JSON for AJAX requests
         if ($request->ajax() || $request->wantsJson()) {
             return response()->json(
                 [
-                    'success' => true,
-                    'message' => 'প্রোগ্রামের ধরণ সফলভাবে যোগ হয়েছে',
+                    'success'      => true,
+                    'message'      => 'প্রোগ্রামের ধরণ সফলভাবে যোগ হয়েছে',
                     'program_type' => [
-                        'id' => $programType->id,
+                        'id'   => $programType->id,
                         'name' => $programType->name,
                     ],
                 ],
@@ -80,9 +80,9 @@ class ProgramTypeController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => [
-                'id' => $program_type->id,
-                'name' => $program_type->name,
+            'data'    => [
+                'id'          => $program_type->id,
+                'name'        => $program_type->name,
                 'description' => $program_type->description,
             ],
         ]);
@@ -93,7 +93,7 @@ class ProgramTypeController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return redirect()->route('program-types.index');
     }
 
     /**
@@ -103,20 +103,20 @@ class ProgramTypeController extends Controller
     {
         $request->validate(
             [
-                'type_name_edit' => ['required', 'string', 'max:50', Rule::unique('program_types', 'name')->ignore($id)],
+                'type_name_edit'        => ['required', 'string', 'max:50', Rule::unique('program_types', 'name')->ignore($id)],
                 'type_description_edit' => 'nullable|string|max:200',
             ],
             [
                 'type_name_edit.required' => 'ধরণের নাম প্রয়োজন',
-                'type_name_edit.unique' => 'এই ধরণটি ইতিমধ্যে আছে',
-                'type_name_edit.max' => 'নামটি ৫০ অক্ষরের বেশি হতে পারবে না',
+                'type_name_edit.unique'   => 'এই ধরণটি ইতিমধ্যে আছে',
+                'type_name_edit.max'      => 'নামটি ৫০ অক্ষরের বেশি হতে পারবে না',
             ],
         );
 
         $program_type = ProgramType::findOrFail($id);
 
         $program_type->update([
-            'name' => $request->type_name_edit,
+            'name'        => $request->type_name_edit,
             'description' => $request->type_description_edit,
         ]);
 

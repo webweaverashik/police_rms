@@ -93,4 +93,21 @@ class AjaxController extends Controller
             'candidates' => $candidates,
         ]);
     }
+
+    /*
+    * Get political party ajax data
+    */
+    public function getPoliticalParty(string $id)
+    {
+        $political_party = PoliticalParty::findOrFail($id);
+
+        return response()->json([
+            'success' => true,
+            'data'    => [
+                'id'         => $political_party->id,
+                'name'       => $political_party->name,
+                'party_head' => $political_party->party_head,
+            ],
+        ]);
+    }
 }

@@ -215,7 +215,7 @@ var KTAddProgramType = function () {
                                           });
 
                               } else {
-                                    toastr.warning('Please fill all fields correctly');
+                                    toastr.warning('অনুগ্রহ করে প্রয়োজনীয় সকল তথ্য দিন');
                               }
                         });
                   });
