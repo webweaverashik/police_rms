@@ -225,7 +225,7 @@
                         </div>
                         <div>
                             <div class="stat-value" id="totalAttendees">0</div>
-                            <div class="stat-label">মোট অংশগ্রহণকারী</div>
+                            <div class="stat-label">মোট উপস্থিতি</div>
                         </div>
                     </div>
                 </div>

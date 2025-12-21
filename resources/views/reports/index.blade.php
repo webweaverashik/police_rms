@@ -371,7 +371,7 @@
 
                                         <div class="menu-item px-3">
                                             <a href="{{ route('reports.show', $report->id) }}"
-                                                class="menu-link text-hover-primary px-3" target="_blank"><i
+                                                class="menu-link text-hover-primary px-3"><i
                                                     class="ki-outline ki-eye fs-3 me-2"></i> প্রতিবেদন দেখুন</a>
                                         </div>
 
@@ -396,12 +396,12 @@
                                                     প্রতিবেদন সংশোধন</a>
                                             </div>
 
-                                            <div class="menu-item px-3">
+                                            {{-- <div class="menu-item px-3">
                                                 <a href="#" class="menu-link px-3 text-hover-danger delete-report"
                                                     data-report-id="{{ $report->id }}"><i
                                                         class="ki-outline ki-trash fs-3 me-2"></i>
                                                     প্রতিবেদন মুছুন</a>
-                                            </div>
+                                            </div> --}}
                                         @endif
                                     </div>
                                     <!--end::Menu-->

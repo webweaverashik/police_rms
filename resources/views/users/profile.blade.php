@@ -117,10 +117,9 @@
 
                             <!-- BP Number (optional) -->
                             <div class="col-md-6 fv-row">
-                                <label class="form-label fs-4">বিপি নাম্বার <span
-                                        class="text-muted fst-italic">(ঐচ্ছিক)</span></label>
+                                <label class="form-label fs-4 required">বিপি নাম্বার</label>
                                 <input type="text" name="bp_number" value="{{ auth()->user()->bp_number }}"
-                                    class="form-control form-control-solid fs-4">
+                                    class="form-control form-control-solid fs-4" required>
                                 <div class="invalid-feedback"></div>
                             </div>
 
@@ -158,7 +157,11 @@
                                         <div class="col-md-4">
                                             <label class="form-label fs-4 text-muted">থানা</label>
                                             <div class="readonly-value">
-                                                {{ auth()->user()->zone->name ?? '-' }}
+                                                @if (auth()->user()->isOperator() || auth()->user()->isViewer() || auth()->user()->isMagistrate())
+                                                    {{ auth()->user()->zone->name ?? '-' }}
+                                                @else
+                                                    সকল থানা
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

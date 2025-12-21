@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Political;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use App\Models\Political\ParliamentSeat;
 use App\Models\Political\PoliticalParty;
 
 class PoliticalPartyController extends Controller
@@ -38,24 +39,25 @@ class PoliticalPartyController extends Controller
             ],
             [
                 'party_name.required' => 'ধরণের নাম প্রয়োজন',
-                'party_name.unique'   => 'এই ধরণটি ইতিমধ্যে আছে',
-                'party_name.max'      => 'নামটি ৫০ অক্ষরের বেশি হতে পারবে না',
+                'party_name.unique' => 'এই ধরণটি ইতিমধ্যে আছে',
+                'party_name.max' => 'নামটি ৫০ অক্ষরের বেশি হতে পারবে না',
             ],
         );
 
         $party = PoliticalParty::create([
-            'name'       => $request->party_name,
+            'name' => $request->party_name,
             'party_head' => $request->party_head ?? null,
+            'created_by' => auth()->user()->id,
         ]);
 
         // Return JSON for AJAX requests
         if ($request->ajax() || $request->wantsJson()) {
             return response()->json(
                 [
-                    'success'         => true,
-                    'message'         => 'রাজনৈতিক দল সফলভাবে যোগ হয়েছে',
+                    'success' => true,
+                    'message' => 'রাজনৈতিক দল সফলভাবে যোগ হয়েছে',
                     'polytical_party' => [
-                        'id'   => $party->id,
+                        'id' => $party->id,
                         'name' => $party->name,
                     ],
                 ],
@@ -72,9 +74,16 @@ class PoliticalPartyController extends Controller
      */
     public function show(string $id)
     {
-        $party = PoliticalParty::findOrFail($id);
+        $party = PoliticalParty::with([
+            'seatPartyCandidates' => function ($q) {
+                $q->join('parliament_seats', 'parliament_seats.id', '=', 'seat_party_candidates.parliament_seat_id')->orderBy('parliament_seats.name')->select('seat_party_candidates.*'); // VERY IMPORTANT
+            },
+            'seatPartyCandidates.seat',
+        ])->findOrFail($id);
 
-        return view('political_parties.show', compact('party'));
+        $seats = ParliamentSeat::all();
+        
+        return view('political_parties.show', compact('party', 'seats'));
     }
 
     /**
@@ -97,15 +106,15 @@ class PoliticalPartyController extends Controller
             ],
             [
                 'party_name_edit.required' => 'ধরণের নাম প্রয়োজন',
-                'party_name_edit.unique'   => 'এই ধরণটি ইতিমধ্যে আছে',
-                'party_name_edit.max'      => 'নামটি ৫০ অক্ষরের বেশি হতে পারবে না',
+                'party_name_edit.unique' => 'এই ধরণটি ইতিমধ্যে আছে',
+                'party_name_edit.max' => 'নামটি ৫০ অক্ষরের বেশি হতে পারবে না',
             ],
         );
 
         $political_party = PoliticalParty::findOrFail($id);
 
         $political_party->update([
-            'name'       => $request->party_name_edit,
+            'name' => $request->party_name_edit,
             'party_head' => $request->party_head_edit,
         ]);
 

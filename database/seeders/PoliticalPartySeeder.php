@@ -1,8 +1,8 @@
 <?php
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Political\PoliticalParty;
+use Illuminate\Database\Seeder;
 
 class PoliticalPartySeeder extends Seeder
 {
@@ -64,13 +64,16 @@ class PoliticalPartySeeder extends Seeder
             ['name' => 'বাংলাদেশ রিপাবলিকান পার্টি (বিআরপি)', 'party_head' => 'অধ্যাপক বাজলুর রহমান আমিনী'],
             ['name' => 'জাতীয় নাগরিক পার্টি - এনসিপি', 'party_head' => 'নাহিদ ইসলাম'],                               // আপনার প্রদত্ত ইনপুট অনুযায়ী রাখা হলো
             ['name' => 'বাংলাদেশের সমাজতান্ত্রিক দল (মার্কসবাদী)', 'party_head' => 'মাসুদ রানা'], // সমন্বয়ক
-            ['name' => 'বাংলাদেশ আমজনগণ পার্টি', 'party_head' => 'ড. মোহাম্মদ রফিকুল আমীন'], // সমন্বয়ক
+            ['name' => 'বাংলাদেশ আমজনগণ পার্টি', 'party_head' => 'ড. মোহাম্মদ রফিকুল আমীন'],                // সমন্বয়ক
         ];
 
         foreach ($parties as $party) {
             PoliticalParty::updateOrCreate(
                 ['name' => $party['name']],
-                ['party_head' => $party['party_head']]
+                [
+                    'party_head' => $party['party_head'],
+                    'created_by' => 1, // ✅ MUST be here
+                ]
             );
         }
     }

@@ -1,17 +1,19 @@
 <?php
 
-use App\Http\Controllers\AjaxController;
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Auth\PasswordController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Political\PoliticalPartyController;
-use App\Http\Controllers\Report\ProgramTypeController;
-use App\Http\Controllers\Report\ReportController;
-use App\Http\Controllers\User\DesignationController;
-use App\Http\Controllers\User\UserController;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\AjaxController;
+use App\Models\Political\SeatPartyCandidate;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\Report\ReportController;
+use App\Http\Controllers\User\DesignationController;
+use App\Http\Controllers\Report\ProgramTypeController;
+use App\Http\Controllers\Political\PoliticalPartyController;
+use App\Http\Controllers\Political\SeatPartyCandidateController;
 
 Route::get('/', [AuthController::class, 'showLogin'])->name('home');
 
@@ -55,6 +57,7 @@ Route::middleware(['auth', 'isLoggedIn'])->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('designations', DesignationController::class);
     Route::resource('political-parties', PoliticalPartyController::class);
+    Route::resource('party-candidates', SeatPartyCandidateController::class);
     Route::resource('program-types', ProgramTypeController::class);
     Route::resource('reports', ReportController::class);
     // ------- Custom routes end -------

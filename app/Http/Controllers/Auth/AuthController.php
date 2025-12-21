@@ -14,7 +14,7 @@ class AuthController extends Controller
     public function showLogin()
     {
         if (Auth::check()) {
-            return redirect()->route('dashboard')->with('warning', 'আপনি এখনও লগিন অবস্থায় আছেন।');
+            return redirect()->route('dashboard');
         }
         return view('auth.login')->with('warning', 'অনুগ্রহ পূর্বক পুনরায় লগিন করুন।');
     }

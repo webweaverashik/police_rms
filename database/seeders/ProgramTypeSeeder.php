@@ -215,7 +215,7 @@ class ProgramTypeSeeder extends Seeder
                 ['name' => $type['name']],
                 [
                     'description' => $type['description'],
-                    'created_by'  => 1, // system seeded
+                    'created_by'  => 1, // superadmin
                 ]
             );
         }

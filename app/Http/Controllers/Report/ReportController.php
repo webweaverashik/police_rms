@@ -323,7 +323,7 @@ class ReportController extends Controller
         // Final output
         $reportDateTime = $bnDate . ', ' . $bnHour . ':' . $bnMinute . ' ' . $bnMeridiem;
 
-        return PDF::loadView('reports.pdf', compact('report', 'reportDateTime'))->stream($report->program_title . ' - ' . $report->candidate_name . '.pdf');
+        return PDF::loadView('reports.pdf', compact('report', 'reportDateTime'))->download($report->program_title . ' - ' . $report->candidate_name . '.pdf');
     }
 
     /**

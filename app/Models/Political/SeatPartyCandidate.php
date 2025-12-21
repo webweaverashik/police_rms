@@ -7,13 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class SeatPartyCandidate extends Model
 {
     protected $fillable = [
-        'parliament_seat_id',
-        'political_party_id',
         'candidate_name',
-        'candidate_age',
-        'candidate_address',
-        'political_background',
-        'election_symbol'
+        'election_symbol',
+        'political_party_id',
+        'parliament_seat_id'
     ];
 
     public function seat()

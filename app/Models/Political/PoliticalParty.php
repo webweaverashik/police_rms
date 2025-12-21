@@ -1,13 +1,14 @@
 <?php
 namespace App\Models\Political;
 
-use App\Models\Report\Report;
-use Illuminate\Database\Eloquent\Model;
 use App\Models\Political\SeatPartyCandidate;
+use App\Models\Report\Report;
+use App\Models\User\User;
+use Illuminate\Database\Eloquent\Model;
 
 class PoliticalParty extends Model
 {
-    protected $fillable = ['name', 'party_head'];
+    protected $fillable = ['name', 'party_head', 'created_by'];
 
     public function reports()
     {
@@ -17,5 +18,10 @@ class PoliticalParty extends Model
     public function seatPartyCandidates()
     {
         return $this->hasMany(SeatPartyCandidate::class);
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by')->withTrashed();
     }
 }
