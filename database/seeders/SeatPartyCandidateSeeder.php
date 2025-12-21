@@ -100,8 +100,6 @@ class SeatPartyCandidateSeeder extends Seeder
                         'candidate_name'     => $row['name'],
                     ],
                     [
-                        'candidate_address'    => null,
-                        'political_background' => null,
                         'election_symbol'      => null,
                     ]
                 );
