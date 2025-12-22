@@ -118,6 +118,14 @@
                                     data-party-id={{ $party->id }}>
                                     <i class="ki-outline ki-pencil fs-2"></i>
                                 </a>
+
+                                @if ($party->reports_count == 0)
+                                    <a href="#"
+                                        class="btn btn-icon w-30px h-30px text-hover-danger delete-political-party"
+                                        title="দলটি মুছে ফেলুন" data-party-id="{{ $party->id }}"><i
+                                            class="ki-outline ki-trash fs-2"></i>
+                                    </a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -204,8 +212,8 @@
     <!--end::Modal - Add Political Party-->
 
     <!--begin::Modal - Edit Political Party-->
-    <div class="modal fade" id="kt_modal_edit_political_party" tabindex="-1" aria-hidden="true" data-bs-backdrop="static"
-        data-bs-keyboard="false">
+    <div class="modal fade" id="kt_modal_edit_political_party" tabindex="-1" aria-hidden="true"
+        data-bs-backdrop="static" data-bs-keyboard="false">
         <!--begin::Modal dialog-->
         <div class="modal-dialog modal-dialog-centered mw-750px">
             <!--begin::Modal content-->
@@ -236,14 +244,14 @@
                             <div class="fv-row mb-7">
                                 <label class="required fw-semibold fs-4 mb-2">রাজনৈতিক দলের নাম</label>
                                 <input type="text" name="party_name_edit"
-                                    class="form-control form-control-solid mb-3 mb-lg-0 fs-4"
-                                    placeholder="দলের নাম লিখুন" required />
+                                    class="form-control form-control-solid mb-3 mb-lg-0 fs-4" placeholder="দলের নাম লিখুন"
+                                    required />
                             </div>
                             <!--end::Name Input group-->
 
                             <!--begin::Name Input group-->
                             <div class="fv-row mb-7">
-                                <label class="fw-semibold fs-4 mb-2">দলীয় প্রধান  <span
+                                <label class="fw-semibold fs-4 mb-2">দলীয় প্রধান <span
                                         class="text-muted fst-italic">(ঐচ্ছিক)</span></label>
                                 <input type="text" name="party_head_edit"
                                     class="form-control form-control-solid mb-3 mb-lg-0 fs-4"
@@ -284,6 +292,7 @@
 @push('page-js')
     <script>
         const storePoliticalPartyRoute = "{{ route('political-parties.store') }}";
+        const partyDeleteRoute = "{{ route('political-parties.destroy', ':id') }}";
     </script>
 
     <script src="{{ asset('js/political_parties/index.js') }}"></script>

@@ -1,7 +1,7 @@
 <?php
-
 namespace App\Models\Political;
 
+use App\Models\Report\Report;
 use Illuminate\Database\Eloquent\Model;
 
 class SeatPartyCandidate extends Model
@@ -10,7 +10,7 @@ class SeatPartyCandidate extends Model
         'candidate_name',
         'election_symbol',
         'political_party_id',
-        'parliament_seat_id'
+        'parliament_seat_id',
     ];
 
     public function seat()
@@ -22,5 +22,9 @@ class SeatPartyCandidate extends Model
     {
         return $this->belongsTo(PoliticalParty::class, 'political_party_id');
     }
-}
 
+    public function reports()
+    {
+        return $this->hasMany(Report::class, 'candidate_name', 'candidate_name');
+    }
+}

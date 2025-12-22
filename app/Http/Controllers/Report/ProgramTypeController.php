@@ -127,6 +127,17 @@ class ProgramTypeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $type = ProgramType::findOrFail($id);
+
+        if ($type->reports()->count() > 0) {
+            return response()->json([
+                'success' => false,
+                'message' => 'এই ধরণটি ডিলিট করা যাবে না।',
+            ]);
+        }
+
+        $type->delete();
+
+        return response()->json(['success' => true]);
     }
 }

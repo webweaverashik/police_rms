@@ -123,6 +123,14 @@
                                         data-program-type-id={{ $type->id }}>
                                         <i class="ki-outline ki-pencil fs-2"></i>
                                     </a>
+
+                                    @if ($type->reports_count == 0)
+                                        <a href="#"
+                                            class="btn btn-icon w-30px h-30px text-hover-danger delete-program-type"
+                                            title="ধরণ মুছে ফেলুন" data-program-type-id="{{ $type->id }}"><i
+                                                class="ki-outline ki-trash fs-2"></i>
+                                        </a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -167,7 +175,7 @@
                             <!--begin::Name Input group-->
                             <div class="fv-row mb-7">
                                 <label class="required fw-semibold fs-4 mb-2">ধরণের নাম</label>
-                                <input type="text" name="type_name"
+                                <input type="text" name="name"
                                     class="form-control form-control-solid mb-3 mb-lg-0 fs-4" placeholder="ধরণের নাম লিখুন"
                                     required />
                             </div>
@@ -177,7 +185,7 @@
                             <div class="fv-row mb-7">
                                 <label class="fw-semibold fs-4 mb-2">বিবরণ লিখুন <span
                                         class="text-muted fst-italic">(ঐচ্ছিক)</span></label>
-                                <input type="text" name="type_description"
+                                <input type="text" name="description"
                                     class="form-control form-control-solid mb-3 mb-lg-0 fs-4"
                                     placeholder="ধরণের নাম লিখুন" />
                             </div>
@@ -189,7 +197,8 @@
                         <div class="text-center pt-10">
                             <button type="reset" class="btn btn-light me-3"
                                 data-kt-add-program-type-modal-action="cancel">ক্যান্সেল</button>
-                            <button type="submit" class="btn btn-primary" data-kt-add-program-type-modal-action="submit">
+                            <button type="submit" class="btn btn-primary"
+                                data-kt-add-program-type-modal-action="submit">
                                 <span class="indicator-label">সাবমিট</span>
                                 <span class="indicator-progress">অপেক্ষা করুন...
                                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -289,6 +298,7 @@
 @push('page-js')
     <script>
         const storeProgramTypeRoute = "{{ route('program-types.store') }}";
+        const programTypeDeleteRoute = "{{ route('program-types.destroy', ':id') }}";
     </script>
 
     <script src="{{ asset('js/program_types/index.js') }}"></script>

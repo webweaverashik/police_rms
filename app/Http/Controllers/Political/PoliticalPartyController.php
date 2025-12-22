@@ -129,6 +129,17 @@ class PoliticalPartyController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $party = PoliticalParty::findOrFail($id);
+        
+        if ($party->reports()->count() > 0) {
+            return response()->json([
+                'success' => false,
+                'message' => 'এই দলটি ডিলিট করা যাবে না',
+            ]);
+        }
+
+        $party->delete();
+
+        return response()->json(['success' => true]);
     }
 }

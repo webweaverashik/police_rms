@@ -35,6 +35,61 @@ var AllPoliticalPartyList = function () {
             });
       }
 
+            // Delete Report
+      const handleDeletion = function () {
+            document.addEventListener('click', function (e) {
+                  const deleteBtn = e.target.closest('.delete-political-party');
+                  if (!deleteBtn) return;
+
+                  e.preventDefault();
+
+                  let politicalPartyId = deleteBtn.getAttribute('data-party-id');
+                  console.log('Program ID:', politicalPartyId);
+
+                  let url = partyDeleteRoute.replace(':id', politicalPartyId);
+
+                  Swal.fire({
+                        title: 'আপনি কি নিশ্চিত?',
+                        text: 'এই দলটি মুছে ফেলা হবে।',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'মুছে ফেলুন',
+                        cancelButtonText: 'বাতিল',
+                  }).then((result) => {
+                        if (result.isConfirmed) {
+                              fetch(url, {
+                                    method: "DELETE",
+                                    headers: {
+                                          "Content-Type": "application/json",
+                                          "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+                                    },
+                              })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                          if (data.success) {
+                                                Swal.fire({
+                                                      title: 'ধন্যবাদ!',
+                                                      text: 'দলটি সফলভাবে মুছে ফেলা হয়েছে।',
+                                                      icon: 'success',
+                                                      confirmButtonText: 'ঠিক আছে',
+                                                }).then(() => {
+                                                      location.reload();
+                                                });
+                                          } else {
+                                                Swal.fire('Failed!', 'দলটি মুছে ফেলা যায়নি।', 'error');
+                                          }
+                                    })
+                                    .catch(error => {
+                                          console.error("Fetch Error:", error);
+                                          Swal.fire('Failed!', 'An error occurred. Please contact support.', 'error');
+                                    });
+                        }
+                  });
+            });
+      };
+
       return {
             // Public functions
             init: function () {
@@ -46,6 +101,7 @@ var AllPoliticalPartyList = function () {
 
                   initDatatable();
                   handleSearch();
+                  handleDeletion();
             }
       }
 }();

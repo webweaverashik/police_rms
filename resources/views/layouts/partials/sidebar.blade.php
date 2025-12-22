@@ -78,49 +78,6 @@
                     <!--end: Report Info Menu item-->
 
                     @if (in_array(auth()->user()->role->name, ['Admin999', 'SuperAdmin888']))
-                        <!--begin:Analytics Info Menu item-->
-                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="analytics_info_menu">
-                            <!--begin:Menu link-->
-                            <span class="menu-link">
-                                <span class="menu-icon">
-                                    <i class="ki-outline ki-chart-simple-3 fs-1"></i>
-                                </span>
-                                <span class="menu-title fs-4">বিশ্লেষণ ও পরিসংখ্যান</span>
-                                <span class="menu-arrow"></span>
-                            </span>
-                            <!--end:Menu link-->
-
-                            <!--begin:Menu sub-->
-                            <div class="menu-sub menu-sub-accordion">
-                                <!--begin:Menu item-->
-                                <div class="menu-item">
-                                    <a class="menu-link" id="status_report_link" href="#"><span
-                                            class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                            class="menu-title fs-4">অবস্থা অনুযায়ী রিপোর্ট</span></a>
-                                </div>
-                                <!--end:Menu item-->
-
-                                <!--begin:Menu item-->
-                                <div class="menu-item">
-                                    <a class="menu-link" id="zone_report_link" href="#"><span
-                                            class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                            class="menu-title fs-4">জোনভিত্তিক সারসংক্ষেপ</span></a>
-                                </div>
-                                <!--end:Menu item-->
-
-                                <!--begin:Menu item-->
-                                <div class="menu-item">
-                                    <a class="menu-link" id="program_type_report_link" href="#"><span
-                                            class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
-                                            class="menu-title fs-4">কর্মসূচি
-                                            অনুযায়ী বিশ্লেষণ</span></a>
-                                </div>
-                                <!--end:Menu item-->
-                            </div>
-                            <!--end:Menu sub-->
-                        </div>
-                        <!--end: Analytics Info Menu item-->
-
                         <!--begin:Location Info Menu item-->
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion" id="location_info_menu">
                             <!--begin:Menu link-->
@@ -197,7 +154,7 @@
                                     <a class="menu-link" id="program_type_link"
                                         href="{{ route('program-types.index') }}"><span class="menu-bullet"><span
                                                 class="bullet bullet-dot"></span></span><span
-                                            class="menu-title fs-4">কর্মসূচির
+                                            class="menu-title fs-4">প্রোগ্রামের
                                             ধরণ</span></a>
                                 </div>
                                 <!--end:Menu item-->

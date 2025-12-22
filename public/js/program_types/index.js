@@ -35,6 +35,61 @@ var AllProgramTypesList = function () {
             });
       }
 
+      // Delete Report
+      const handleDeletion = function () {
+            document.addEventListener('click', function (e) {
+                  const deleteBtn = e.target.closest('.delete-program-type');
+                  if (!deleteBtn) return;
+
+                  e.preventDefault();
+
+                  let programTypeId = deleteBtn.getAttribute('data-program-type-id');
+                  console.log('Program ID:', programTypeId);
+
+                  let url = programTypeDeleteRoute.replace(':id', programTypeId);
+
+                  Swal.fire({
+                        title: 'আপনি কি নিশ্চিত?',
+                        text: 'এই ধরণটি মুছে ফেলা হবে।',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'মুছে ফেলুন',
+                        cancelButtonText: 'বাতিল',
+                  }).then((result) => {
+                        if (result.isConfirmed) {
+                              fetch(url, {
+                                    method: "DELETE",
+                                    headers: {
+                                          "Content-Type": "application/json",
+                                          "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+                                    },
+                              })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                          if (data.success) {
+                                                Swal.fire({
+                                                      title: 'ধন্যবাদ!',
+                                                      text: 'ধরণটি সফলভাবে মুছে ফেলা হয়েছে।',
+                                                      icon: 'success',
+                                                      confirmButtonText: 'ঠিক আছে',
+                                                }).then(() => {
+                                                      location.reload();
+                                                });
+                                          } else {
+                                                Swal.fire('Failed!', 'ধরণটি মুছে ফেলা যায়নি।', 'error');
+                                          }
+                                    })
+                                    .catch(error => {
+                                          console.error("Fetch Error:", error);
+                                          Swal.fire('Failed!', 'An error occurred. Please contact support.', 'error');
+                                    });
+                        }
+                  });
+            });
+      };
+
       return {
             // Public functions
             init: function () {
@@ -46,6 +101,7 @@ var AllProgramTypesList = function () {
 
                   initDatatable();
                   handleSearch();
+                  handleDeletion();
             }
       }
 }();
@@ -118,7 +174,7 @@ var KTAddProgramType = function () {
                   form,
                   {
                         fields: {
-                              'type_name': {
+                              'name': {
                                     validators: {
                                           notEmpty: {
                                                 message: 'প্রোগ্রামের ধরণের নাম প্রয়োজন'
@@ -129,7 +185,7 @@ var KTAddProgramType = function () {
                                           }
                                     }
                               },
-                              'type_description': {
+                              'description': {
                                     validators: {
                                           stringLength: {
                                                 max: 100,

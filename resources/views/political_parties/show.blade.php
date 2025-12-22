@@ -200,6 +200,7 @@
                                 <th>প্রার্থীর নাম</th>
                                 <th>নির্বাচনী প্রতীক</th>
                                 <th>সংসদীয় আসন</th>
+                                <th>রিপোর্ট সংখ্যা (টি)</th>
                                 <th class="not-export">##</th>
                             </tr>
                         </thead>
@@ -212,18 +213,19 @@
                                     <td>
                                         @php
                                             $seatName = $candidate->seat->name;
-
+                                            
                                             if (!isset($seatColorMap[$seatName])) {
                                                 $seatColorMap[$seatName] =
-                                                    $badgeColors[$colorIndex % count($badgeColors)];
+                                                $badgeColors[$colorIndex % count($badgeColors)];
                                                 $colorIndex++;
                                             }
-                                        @endphp
+                                            @endphp
                                         <span class="badge badge-{{ $seatColorMap[$seatName] }}" data-bs-toggle="tooltip"
-                                            title="{{ $candidate->seat->description }}">
-                                            {{ $seatName }}
-                                        </span>
-                                    </td>
+                                        title="{{ $candidate->seat->description }}">
+                                        {{ $seatName }}
+                                    </span>
+                                </td>
+                                <td>{{ $numto->bnNum($candidate->reports()->count()) }}</td>
                                     <td>
                                         <a href="#" title="প্রার্থীর তথ্য সংশোধন" data-bs-toggle="modal"
                                             data-bs-target="#kt_modal_edit_party_candidate"
@@ -231,6 +233,12 @@
                                             data-candidate-id={{ $candidate->id }}>
                                             <i class="ki-outline ki-pencil fs-2"></i>
                                         </a>
+
+                                            {{-- <a href="#"
+                                                class="btn btn-icon w-30px h-30px text-hover-danger delete-political-party"
+                                                title="দলটি মুছে ফেলুন" data-party-id="{{ $candidate->id }}"><i
+                                                    class="ki-outline ki-trash fs-2"></i>
+                                            </a> --}}
                                     </td>
                                 </tr>
                             @endforeach
@@ -447,6 +455,7 @@
 @push('page-js')
     <script>
         const storePartyCandidateRoute = "{{ route('party-candidates.store') }}";
+        const partyCandidateDeleteRoute = "{{ route('party-candidates.destroy', ':id') }}";
     </script>
 
     <script src="{{ asset('js/political_parties/show.js') }}"></script>
