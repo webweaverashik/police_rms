@@ -50,7 +50,7 @@ class ReportController extends Controller
                 $query->where('reports.zone_id', $user->zone_id);
             }
 
-            return $query->latest('id')->get();
+            return $query->latest('updated_at')->get();
         });
 
         // Cache filter/master data (longer TTL)
@@ -88,42 +88,119 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {
+        // Validate the request
+        $validated = $request->validate(
+            [
+                // Administrative Jurisdiction
+                'parliament_seat_id'       => 'required|exists:parliament_seats,id',
+                'upazila_id'               => 'required|exists:upazilas,id',
+                'zone_id'                  => 'required|exists:zones,id',
+                'union_id'                 => 'required|exists:unions,id',
+                'location_name'            => 'nullable|string|max:255',
+
+                // Political Information
+                'political_party_id'       => 'required|exists:political_parties,id',
+                'candidate_name'           => 'nullable|string|max:255',
+
+                // Program Information
+                'program_special_guest'    => 'nullable|string|max:255',
+                'program_chair'            => 'nullable|string|max:255',
+                'program_type_id'          => 'required|exists:program_types,id',
+                'program_date'             => 'nullable|date_format:d-m-Y',
+                'program_time'             => 'nullable|date_format:h:i A',
+                'program_status'           => 'required|in:upcoming,ongoing,done',
+                'tentative_risks'          => 'required|in:yes,no',
+
+                // Conditional fields based on program_status
+                'tentative_attendee_count' => 'nullable|integer|min:10',
+                'actual_attendee_count'    => 'nullable|string|max:255',
+                'dead_injured_count'       => 'nullable|string|max:255',
+
+                // Program Details
+                'program_title'            => 'required|string|max:1000',
+                'program_description'      => 'nullable|string',
+            ],
+            [
+                // Custom validation messages in Bengali
+                'parliament_seat_id.required'  => 'সংসদীয় আসন সিলেক্ট করুন',
+                'parliament_seat_id.exists'    => 'নির্বাচিত সংসদীয় আসন সঠিক নয়',
+                'upazila_id.required'          => 'উপজেলা সিলেক্ট করুন',
+                'upazila_id.exists'            => 'নির্বাচিত উপজেলা সঠিক নয়',
+                'zone_id.required'             => 'থানা সিলেক্ট করুন',
+                'zone_id.exists'               => 'নির্বাচিত থানা সঠিক নয়',
+                'union_id.required'            => 'ইউনিয়ন সিলেক্ট করুন',
+                'union_id.exists'              => 'নির্বাচিত ইউনিয়ন সঠিক নয়',
+                'political_party_id.required'  => 'রাজনৈতিক দল সিলেক্ট করুন',
+                'political_party_id.exists'    => 'নির্বাচিত রাজনৈতিক দল সঠিক নয়',
+                'program_type_id.required'     => 'প্রোগ্রামের ধরণ সিলেক্ট করুন',
+                'program_type_id.exists'       => 'নির্বাচিত প্রোগ্রামের ধরণ সঠিক নয়',
+                'program_status.required'      => 'প্রোগ্রামের অবস্থা সিলেক্ট করুন',
+                'program_status.in'            => 'প্রোগ্রামের অবস্থা সঠিক নয়',
+                'tentative_risks.required'     => 'ঝুঁকির অবস্থা সিলেক্ট করুন',
+                'tentative_risks.in'           => 'ঝুঁকির অবস্থা সঠিক নয়',
+                'program_title.required'       => 'প্রোগ্রামের বিষয় লিখুন',
+                'program_date.date_format'     => 'তারিখের ফরম্যাট সঠিক নয় (দিন-মাস-বছর)',
+                'program_time.date_format'     => 'সময়ের ফরম্যাট সঠিক নয়',
+                'tentative_attendee_count.min' => 'ন্যূনতম ১০ জন সংখ্যা দেওয়া যাবে',
+            ],
+        );
+
         DB::beginTransaction();
 
         try {
+            // Parse date if provided
+            $programDate = null;
             if ($request->filled('program_date')) {
                 $programDate = Carbon::createFromFormat('d-m-Y', $request->program_date)->format('Y-m-d');
             }
 
+            // Parse time if provided
+            $programTime = null;
             if ($request->filled('program_time')) {
                 $programTime = Carbon::createFromFormat('h:i A', $request->program_time)->format('H:i');
             }
 
-            Report::create([
-                'parliament_seat_id'       => $request->parliament_seat_id,
-                'upazila_id'               => $request->upazila_id,
-                'union_id'                 => $request->union_id,
-                'zone_id'                  => $request->zone_id,
+            // Prepare data based on program_status
+            $reportData = [
+                'parliament_seat_id'    => $validated['parliament_seat_id'],
+                'upazila_id'            => $validated['upazila_id'],
+                'union_id'              => $validated['union_id'],
+                'zone_id'               => $validated['zone_id'],
 
-                'political_party_id'       => $request->political_party_id,
-                'candidate_name'           => $request->candidate_name ?? null,
+                'political_party_id'    => $validated['political_party_id'],
+                'candidate_name'        => $validated['candidate_name'] ?? null,
 
-                'program_special_guest'    => $request->filled('program_special_guest') ? $request->program_special_guest : null,
-                'program_chair'            => $request->filled('program_chair') ? $request->program_chair : null,
-                'location_name'            => $request->filled('location_name') ? $request->location_name : null,
+                'program_special_guest' => $validated['program_special_guest'] ?? null,
+                'program_chair'         => $validated['program_chair'] ?? null,
+                'location_name'         => $validated['location_name'] ?? null,
 
-                'program_date'             => $programDate ?? null,
-                'program_time'             => $programTime ?? null,
+                'program_date'          => $programDate,
+                'program_time'          => $programTime,
 
-                'tentative_attendee_count' => $request->filled('tentative_attendee_count') ? $request->tentative_attendee_count : null,
+                'program_type_id'       => $validated['program_type_id'],
+                'program_status'        => $validated['program_status'],
+                'tentative_risks'       => $validated['tentative_risks'],
 
-                'program_type_id'          => $request->program_type_id,
-                'program_status'           => $request->program_status,
-                'program_title'            => $request->program_title ?? null,
-                'program_description'      => $request->program_description ?? null,
+                'program_title'         => $validated['program_title'],
+                'program_description'   => $validated['program_description'] ?? null,
 
-                'created_by'               => auth()->id(),
-            ]);
+                'created_by'            => auth()->id(),
+            ];
+
+            // Set conditional fields based on program_status
+            if ($validated['program_status'] === 'done') {
+                // For completed programs: store actual counts, clear tentative
+                $reportData['actual_attendee_count']    = $validated['actual_attendee_count'] ?? null;
+                $reportData['dead_injured_count']       = $validated['dead_injured_count'] ?? null;
+                $reportData['tentative_attendee_count'] = null;
+            } else {
+                // For ongoing/upcoming programs: store tentative, clear actual counts
+                $reportData['tentative_attendee_count'] = $validated['tentative_attendee_count'] ?? null;
+                $reportData['actual_attendee_count']    = null;
+                $reportData['dead_injured_count']       = null;
+            }
+
+            Report::create($reportData);
 
             DB::commit();
 
@@ -131,17 +208,23 @@ class ReportController extends Controller
 
             return response()->json([
                 'success'  => true,
-                'message'  => 'প্রতিবেদন সফলভাবে সংরক্ষণ করা হয়েছে',
+                'message'  => 'প্রতিবেদন সফলভাবে সংরক্ষণ করা হয়েছে',
                 'redirect' => route('reports.index'),
             ]);
         } catch (\Throwable $e) {
             DB::rollBack();
 
-            // ✅ production-safe error message
+            // Log the error for debugging
+            Log::error('Report creation failed: ' . $e->getMessage(), [
+                'trace'   => $e->getTraceAsString(),
+                'request' => $request->except(['_token']),
+            ]);
+
+            // Production-safe error message
             return response()->json(
                 [
                     'success' => false,
-                    'message' => config('app.debug') ? $e->getMessage() : 'প্রতিবেদন সংরক্ষণ করা যায়নি',
+                    'message' => config('app.debug') ? $e->getMessage() : 'প্রতিবেদন সংরক্ষণ করা যায়নি',
                 ],
                 500,
             );
@@ -187,32 +270,31 @@ class ReportController extends Controller
      */
     public function edit(string $id)
     {
-        if (! auth()->user()->isSuperAdmin()) {
+        $report = Report::findOrFail($id);
+        $user   = auth()->user();
+
+        // 🔐 Authorization
+        if (! $user->isSuperAdmin() && ! $user->isOperator() && $report->created_by !== $user->id) {
             return redirect()->route('reports.index')->with('warning', 'আপনার প্রতিবেদন সংশোধনের অনুমতি নেই');
         }
 
-        $report = Report::findOrFail($id);
-
-        // ✅ Only upazilas under this parliament seat
+        // 📍 Dependent dropdown data
         $upazilas = Upazila::where('parliament_seat_id', $report->parliament_seat_id)->orderBy('name')->get();
 
-        // ✅ Only zones under this upazila
         $zones = Zone::where('upazila_id', $report->upazila_id)->orderBy('name')->get();
 
-        // ✅ Only unions under this upazila
         $unions = Union::where('upazila_id', $report->upazila_id)->orderBy('name')->get();
 
-        // ✅ Political parties limited to this parliament seat
-        $politicalParties = PoliticalParty::whereHas('seatPartyCandidates', function ($q) use ($report) {
-            $q->where('parliament_seat_id', $report->parliament_seat_id);
-        })
-            ->orderBy('name')
-            ->get();
+        $politicalParties = PoliticalParty::whereHas('seatPartyCandidates', fn($q) => $q->where('parliament_seat_id', $report->parliament_seat_id))->orderBy('name')->get();
 
+        // 📚 Static lists
         $parliamentSeats = ParliamentSeat::orderBy('name')->get();
         $programTypes    = ProgramType::orderBy('name')->get();
 
-        return view('reports.edit', compact('report', 'upazilas', 'zones', 'unions', 'politicalParties', 'parliamentSeats', 'programTypes'));
+        // 🧭 Decide view once
+        $view = $report->program_status === 'done' ? 'reports.edit' : 'reports.pending-edit';
+
+        return view($view, compact('report', 'upazilas', 'zones', 'unions', 'politicalParties', 'parliamentSeats', 'programTypes'));
     }
 
     /**
@@ -272,6 +354,69 @@ class ReportController extends Controller
 
             DB::commit();
 
+            Cache::flush();
+
+            return response()->json([
+                'success'  => true,
+                'message'  => 'প্রতিবেদন সফলভাবে আপডেট হয়েছে',
+                'redirect' => route('reports.index'),
+            ]);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => config('app.debug') ? $e->getMessage() : 'প্রতিবেদন আপডেট করা যায়নি',
+                ],
+                500,
+            );
+        }
+    }
+
+    /**
+     * Update pending report status
+     */
+    public function updatePending(Request $request, string $id)
+    {
+        // ✅ Validation (AJAX-friendly)
+        $validated = $request->validate(
+            [
+                'program_status'        => 'required|in:done',
+                'actual_attendee_count' => 'required|integer|min:10',
+                'dead_injured_count'    => 'nullable|string',
+                'program_description'   => 'nullable|string',
+            ],
+            [
+                'program_status.required'        => 'প্রোগ্রামের অবস্থা নির্বাচন করুন।',
+                'program_status.in'              => 'প্রোগ্রামের অবস্থা সঠিক নয়।',
+                'actual_attendee_count.required' => 'মোট উপস্থিতির সংখ্যা লিখুন।',
+                'actual_attendee_count.integer'  => 'উপস্থিতির সংখ্যা অবশ্যই সংখ্যা হতে হবে।',
+                'actual_attendee_count.min'      => 'ন্যূনতম ১০ জন উপস্থিতি হতে হবে।',
+            ],
+        );
+
+        DB::beginTransaction();
+
+        try {
+            $report = Report::findOrFail($id);
+
+            $data = [
+                'program_status'        => $validated['program_status'],
+                'actual_attendee_count' => $validated['actual_attendee_count'],
+
+                // ✅ Empty → NULL
+                'dead_injured_count'    => $request->filled('dead_injured_count') ? $validated['dead_injured_count'] : null,
+            ];
+
+            // ✅ Update only if provided (otherwise keep old value)
+            if ($request->filled('program_description')) {
+                $data['program_description'] = $validated['program_description'];
+            }
+
+            $report->update($data);
+
+            DB::commit();
             Cache::flush();
 
             return response()->json([

@@ -99,11 +99,7 @@
                                                     class="ki-outline ki-document fs-2 mb-1 {{ $isReports ? 'text-primary' : 'text-gray-500' }}"></i>
                                                 <span
                                                     class="fs-6 fw-bold {{ $isReports ? 'text-primary' : 'text-gray-500' }}">
-                                                    @if (auth()->user()->isOperator())
-                                                        আমার প্রতিবেদন
-                                                    @else
-                                                        সকল প্রতিবেদন
-                                                    @endif
+                                                    সকল প্রতিবেদন
                                                 </span>
                                             </a>
 

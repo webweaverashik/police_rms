@@ -113,9 +113,9 @@
                     <div class="col-lg-3">
                         <div class="mb-8 fv-row">
                             <label class="required form-label fs-4">
-                                সংসদীয় আসন
+                                সংসদীয় আসন
                                 <span class="ms-1" data-bs-toggle="tooltip"
-                                    title="প্রোগ্রামটি যে সংসদীয় আসনের তা সিলেক্ট করুন">
+                                    title="প্রোগ্রামটি যে সংসদীয় আসনের তা সিলেক্ট করুন">
                                     <i class="ki-outline ki-information fs-4"></i>
                                 </span>
                             </label>
@@ -137,7 +137,7 @@
                         <div class="mb-8 fv-row">
                             <label class="required form-label fs-4">উপজেলা
                                 <span class="ms-1" data-bs-toggle="tooltip"
-                                    title="প্রথমে সংসদীয় আসন সিলেক্ট করুন। এরপর সেই আসনের উপজেলার লিস্ট দেখাবে।">
+                                    title="প্রথমে সংসদীয় আসন সিলেক্ট করুন। এরপর সেই আসনের উপজেলার লিস্ট দেখাবে।">
                                     <i class="ki-outline ki-information fs-4"></i>
                                 </span>
                             </label>
@@ -167,20 +167,18 @@
                     <!-- Union -->
                     <div class="col-lg-3">
                         <div class="mb-8 fv-row">
-                            <label class="required form-label fs-4">ইউনিয়ন / পৌরসভা
+                            <label class="required form-label fs-4">ইউনিয়ন / পৌরসভা
                                 <span class="ms-1" data-bs-toggle="tooltip"
-                                    title="প্রথমে উপজেলা সিলেক্ট করুন। এরপর সেই উপজেলার ইউনিয়ন লিস্ট দেখাবে।">
+                                    title="প্রথমে উপজেলা সিলেক্ট করুন। এরপর সেই উপজেলার ইউনিয়ন লিস্ট দেখাবে।">
                                     <i class="ki-outline ki-information fs-4"></i>
                                 </span>
                             </label>
                             <select name="union_id" class="form-select form-select-solid fs-4" data-control="select2"
-                                data-placeholder="ইউনিয়ন বাছাই করুন" data-hide-search="true" disabled required>
+                                data-placeholder="ইউনিয়ন বাছাই করুন" data-hide-search="true" disabled required>
                                 <option></option>
                             </select>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -189,7 +187,7 @@
         <div class="card card-flush py-4 mb-7">
             <div class="card-header">
                 <div class="card-title">
-                    <h2>প্রোগ্রামের প্রয়োজনীয় তথ্য</h2>
+                    <h2>প্রোগ্রামের প্রয়োজনীয় তথ্য</h2>
                 </div>
             </div>
 
@@ -201,7 +199,7 @@
                         <div class="mb-8 fv-row">
                             <label class="required form-label fs-4">রাজনৈতিক দলের নাম <span class="ms-1"
                                     data-bs-toggle="tooltip"
-                                    title="প্রথমে সংসদীয় আসন সিলেক্ট করুন তাহলে সেই আসনের রাজনৈতিক দলের লিস্ট দেখাবে">
+                                    title="প্রথমে সংসদীয় আসন সিলেক্ট করুন তাহলে সেই আসনের রাজনৈতিক দলের লিস্ট দেখাবে">
                                     <i class="ki-outline ki-information fs-4"></i>
                                 </span></label>
                             <select name="political_party_id" class="form-select form-select-solid fs-4"
@@ -215,7 +213,7 @@
                     <div class="col-lg-4">
                         <div class="mb-8 fv-row">
                             <label class="form-label fs-4">প্রার্থীর নাম <span class="ms-1" data-bs-toggle="tooltip"
-                                    title="সংসদীয় আসন ও রাজনৈতিক দল উভয় সিলেক্ট করলে প্রার্থীর নাম অটো চলে আসবে বা আপনি চাইলে নাও দিতে পারেন।">
+                                    title="সংসদীয় আসন ও রাজনৈতিক দল উভয় সিলেক্ট করলে প্রার্থীর নাম অটো চলে আসবে বা আপনি চাইলে নাও দিতে পারেন।">
                                     <i class="ki-outline ki-information fs-4"></i>
                                 </span></label>
                             <select name="candidate_name" class="form-select form-select-solid fs-4" data-control="select2"
@@ -327,7 +325,6 @@
                         </div>
                     </div>
 
-
                     <!-- Location -->
                     <div class="col-lg-4">
                         <div class="mb-8 fv-row">
@@ -338,33 +335,9 @@
                         </div>
                     </div>
 
-
-                </div>
-            </div>
-        </div>
-
-        <!-- ===================== Program Details ===================== -->
-        <div class="card card-flush py-4 mb-7">
-            <div class="card-header">
-                <div class="card-title">
-                    <h2>প্রোগ্রামের বিস্তারিত বিবরণ</h2>
-                </div>
-            </div>
-
-            <div class="card-body pt-0">
-                <div class="row">
-                    <!-- Location -->
-                    <div class="col-lg-12">
-                        <div class="mb-8 fv-row">
-                            <label class="form-label fs-4 required">প্রোগ্রামের বিষয়</label>
-                            <input type="text" name="program_title" class="form-control form-control-solid fs-4"
-                                placeholder="প্রোগ্রামের বিষয় লিখুন" required>
-                        </div>
-                    </div>
-
                     <!-- Program Status -->
-                    <div class="col-lg-4">
-                        <div class="mb-8 fv-row">
+                    <div class="col-lg-4 fv-row">
+                        <div class="mb-8">
                             <label class="required form-label fs-4">প্রোগ্রামের অবস্থা</label>
 
                             @php
@@ -393,13 +366,86 @@
                         </div>
                     </div>
 
-                    <!-- Tentative Attendee Count -->
-                    <div class="col-lg-4">
+                    <!-- Tentative Risks -->
+                    <div class="col-lg-2 fv-row">
+                        <div class="mb-8">
+                            <label class="required form-label fs-4">কোনো ঝুঁকি রয়েছে কি?</label>
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <input type="radio" class="btn-check" name="tentative_risks"
+                                        id="tentative_risks_no" value="no" required>
+
+                                    <label for="tentative_risks_no"
+                                        class="btn btn-outline btn-outline-dashed border-hover-success btn-active-success btn-radio-lg w-100 d-flex align-items-center fs-4">
+                                        <i class="las la-check-circle fs-2x me-3"></i>
+                                        <span class="fw-bold">না</span>
+                                    </label>
+                                </div>
+
+                                <div class="col-6">
+                                    <input type="radio" class="btn-check" name="tentative_risks"
+                                        id="tentative_risks_yes" value="yes" required>
+
+                                    <label for="tentative_risks_yes"
+                                        class="btn btn-outline btn-outline-dashed border-hover-success border-hover-danger btn-active-danger btn-radio-lg w-100 d-flex align-items-center fs-4">
+                                        <i class="las la-exclamation-triangle fs-2x me-3"></i>
+                                        <span class="fw-bold">হ্যাঁ</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tentative Attendee Count (shown for ongoing/upcoming) -->
+                    <div class="col-lg-2" id="tentative_attendee_count_wrapper" style="display: none;">
                         <div class="mb-8 fv-row">
                             <label class="form-label fs-4">সম্ভাব্য উপস্থিতি (জন) <span
                                     class="text-muted fst-italic">(প্রযোজ্য ক্ষেত্রে)</span></label>
                             <input type="number" name="tentative_attendee_count"
                                 class="form-control form-control-solid fs-4" placeholder="সম্ভাব্য উপস্থিতি সংখ্যা">
+                        </div>
+                    </div>
+
+                    <!-- Actual Attendee Count (shown for done) -->
+                    <div class="col-lg-2" id="actual_attendee_count_wrapper" style="display: none;">
+                        <div class="mb-8 fv-row">
+                            <label class="form-label fs-4">মোট উপস্থিতি (জন) <span
+                                    class="text-muted fst-italic">(প্রযোজ্য ক্ষেত্রে)</span></label>
+                            <input type="number" name="actual_attendee_count"
+                                class="form-control form-control-solid fs-4" placeholder="মোট উপস্থিতি সংখ্যা">
+                        </div>
+                    </div>
+
+                    <!-- Dead/Injured Count (shown for done) -->
+                    <div class="col-lg-2" id="dead_injured_count_wrapper" style="display: none;">
+                        <div class="mb-8 fv-row">
+                            <label class="form-label fs-4">হতাহতের সংখ্যা কত<span
+                                    class="text-muted fst-italic">(প্রযোজ্য ক্ষেত্রে)</span></label>
+                            <input type="text" name="dead_injured_count"
+                                class="form-control form-control-solid fs-4" placeholder="প্রোগ্রামে যদি হতাহত থাকে লিখুন">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================== Program Details ===================== -->
+        <div class="card card-flush py-4 mb-7">
+            <div class="card-header">
+                <div class="card-title">
+                    <h2>প্রোগ্রামের বিবরণ</h2>
+                </div>
+            </div>
+
+            <div class="card-body pt-0">
+                <div class="row">
+                    <!-- Location -->
+                    <div class="col-lg-12">
+                        <div class="mb-8 fv-row">
+                            <label class="form-label fs-4 required">প্রোগ্রামের বিষয়</label>
+                            <input type="text" name="program_title" class="form-control form-control-solid fs-4"
+                                placeholder="প্রোগ্রামের বিষয় লিখুন" required>
                         </div>
                     </div>
 

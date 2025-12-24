@@ -28,8 +28,7 @@ class DatabaseSeeder extends Seeder
             SeatPartyCandidateSeeder::class,
             ProgramTypeSeeder::class,
 
-            // ReportSeeder::class,
-            // ReportAssignmentSeeder::class,
+            ReportSeeder::class,
         ]);
     }
 }

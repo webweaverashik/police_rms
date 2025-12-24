@@ -54,7 +54,8 @@
                 <!--begin::Search-->
                 <div class="d-flex align-items-center position-relative my-1">
                     <i class="ki-outline ki-magnifier fs-3 position-absolute ms-5"></i> <input type="text"
-                        data-all-reports-table-filter="search" class="form-control form-control-solid w-250px w-lg-450px ps-12"
+                        data-all-reports-table-filter="search"
+                        class="form-control form-control-solid w-250px w-lg-450px ps-12"
                         placeholder="প্রতিবেদনে খুঁজুন যেমন: প্রার্থীর নাম">
                 </div>
                 <!--end::Search-->
@@ -75,7 +76,7 @@
                         data-kt-menu-placement="bottom-end">
                         <i class="ki-outline ki-filter fs-2"></i>ফিল্টার</button>
                     <!--begin::Menu 1-->
-                    <div class="menu menu-sub menu-sub-dropdown w-300px w-md-450px" data-kt-menu="true">
+                    <div class="menu menu-sub menu-sub-dropdown w-350px w-md-650px" data-kt-menu="true">
                         <!--begin::Header-->
                         <div class="px-7 py-5">
                             <div class="fs-5 text-gray-900 fw-bold">ফিল্টার অপশন</div>
@@ -139,7 +140,7 @@
                                     </select>
                                 </div>
 
-                                <div class="col-6 mb-5">
+                                <div class="col-12 col-md-6 mb-5">
                                     <label class="form-label fs-6 fw-semibold">রাজনৈতিক দল:</label>
                                     <select class="form-select form-select-solid fw-bold" data-kt-select2="true"
                                         data-placeholder="সিলেক্ট করুন" data-allow-clear="true"
@@ -165,8 +166,20 @@
                                     </select>
                                 </div>
 
+                                <div class="col-6 mb-5">
+                                    <label class="form-label fs-6 fw-semibold">প্রোগ্রামের অবস্থা:</label>
+                                    <select class="form-select form-select-solid fw-bold" data-kt-select2="true"
+                                        data-placeholder="সিলেক্ট করুন" data-allow-clear="true"
+                                        data-all-reports-table-filter="status" data-hide-search="true">
+                                        <option></option>
+                                        <option value="prms_upcoming">আসন্ন</option>
+                                        <option value="prms_ongoing">চলমান</option>
+                                        <option value="prms_done">সম্পন্ন</option>
+                                    </select>
+                                </div>
+
                                 @if (!auth()->user()->isOperator())
-                                    <div class="col-12 mb-5">
+                                    <div class="col-6 mb-5">
                                         <label class="form-label fs-6 fw-semibold">প্রতিবেদন তৈরিকারি:</label>
                                         <select class="form-select form-select-solid fw-bold" data-kt-select2="true"
                                             data-placeholder="সিলেক্ট করুন" data-allow-clear="true"
@@ -268,6 +281,7 @@
                         <th>সময়</th>
                         <th>সম্ভাব্য উপস্থিতি</th>
                         <th>প্রোগ্রামের অবস্থা</th>
+                        <th class="d-none">প্রোগ্রামের অবস্থা (filter)</th>
                         <th class="@if (auth()->user()->role->name == 'Operator') d-none @endif">প্রতিবেদক</th>
                         <th class="d-none">প্রতিবেদক (filter)</th>
                         <th class="not-export w-100px">##</th>
@@ -322,7 +336,7 @@
                             <td>
                                 @if ($report->program_time)
                                     {{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('h')) }}:{{ $numto->bnNum(\Carbon\Carbon::parse($report->program_time)->format('i')) }}
-                                    {{ \Carbon\Carbon::parse($report->program_time)->format('A') =='AM' ? 'পূর্বাহ্ণ' : 'অপরাহ্ণ' }}
+                                    {{ \Carbon\Carbon::parse($report->program_time)->format('A') == 'AM' ? 'পূর্বাহ্ণ' : 'অপরাহ্ণ' }}
                                 @else
                                     -
                                 @endif
@@ -340,11 +354,15 @@
                                     $statusMap = [
                                         'done' => ['label' => 'সম্পন্ন', 'class' => 'badge-success'],
                                         'ongoing' => ['label' => 'চলমান', 'class' => 'badge-danger'],
-                                        'upcoming' => ['label' => 'আসন্ন', 'class' => 'badge-info'],
+                                        'upcoming' => ['label' => 'আসন্ন', 'class' => 'badge-warning'],
                                     ];
                                     $status = $statusMap[$report->program_status];
                                 @endphp
                                 <span class="badge {{ $status['class'] }}">{{ $status['label'] }}</span>
+                            </td>
+
+                            <td class="d-none">
+                                prms_{{ $report->program_status }}
                             </td>
 
                             {{-- Reporter (hidden for Operator) --}}
@@ -406,14 +424,30 @@
                                     </div>
                                     <!--end::Menu-->
                                 @else
-                                    <a href="{{ route('reports.show', $report->id) }}" target="_blank"
-                                        class="btn btn-icon text-hover-primary">
-                                        <i class="ki-outline ki-eye fs-2"></i>
-                                    </a>
+                                    <div class="d-flex align-items-center gap-1">
+                                        {{-- View Button - Info/Cyan --}}
+                                        <a href="{{ route('reports.show', $report->id) }}" target="_blank"
+                                            class="btn btn-icon btn-sm btn-light-info" data-bs-toggle="tooltip"
+                                            title="বিস্তারিত দেখুন">
+                                            <i class="bi bi-eye fs-5"></i>
+                                        </a>
 
-                                    <a href="{{ route('reports.download', $report->id) }}"
-                                        class="btn btn-icon text-hover-primary px-3" target="_blank"><i
-                                            class="bi bi-download fs-2 me-2"></i></a>
+                                        @if ($report->program_status == 'done')
+                                            {{-- Download Button - Success/Green --}}
+                                            <a href="{{ route('reports.download', $report->id) }}" target="_blank"
+                                                class="btn btn-icon btn-sm btn-light-success" data-bs-toggle="tooltip"
+                                                title="ডাউনলোড করুন">
+                                                <i class="bi bi-download fs-5"></i>
+                                            </a>
+                                        @else
+                                            {{-- Edit Button - Primary/Blue --}}
+                                            <a href="{{ route('reports.edit', $report->id) }}"
+                                                class="btn btn-icon btn-sm btn-light-primary" data-bs-toggle="tooltip"
+                                                title="সম্পাদনা করুন">
+                                                <i class="bi bi-pencil fs-5"></i>
+                                            </a>
+                                        @endif
+                                    </div>
                                 @endif
                             </td>
                         </tr>

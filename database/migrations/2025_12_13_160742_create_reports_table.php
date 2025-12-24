@@ -30,6 +30,10 @@ return new class extends Migration
             $table->string('program_chair')->nullable();
             $table->integer('tentative_attendee_count')->nullable();
 
+            $table->enum('tentative_risks', ['yes', 'no'])->default('no');
+            $table->string('actual_attendee_count')->nullable();
+            $table->string('dead_injured_count')->nullable();
+
             $table->enum('program_status', ['upcoming', 'ongoing', 'done']);
 
             $table->text('program_title');

@@ -23,6 +23,9 @@ var KTCreateReportForm = function () {
                   // Optionally remove "enabled" class:
                   $(this).removeClass('fv-plugins-message-container--enabled');
             });
+
+            // 4) Reset program status visibility
+            resetProgramStatusFields();
       }
 
       const resetButton = document.getElementById('kt_create_report_form_reset');
@@ -33,6 +36,58 @@ var KTCreateReportForm = function () {
             });
       }
       // --------------------
+
+      // ===================================
+      // Program Status Toggle Fields
+      // ===================================
+      function resetProgramStatusFields() {
+            // Show all fields initially
+            $('#tentative_attendee_count_wrapper').show();
+            $('#actual_attendee_count_wrapper').show();
+            $('#dead_injured_count_wrapper').show();
+
+            // Clear any values
+            $('input[name="tentative_attendee_count"]').val('');
+            $('input[name="actual_attendee_count"]').val('');
+            $('input[name="dead_injured_count"]').val('');
+      }
+
+      function initProgramStatusToggle() {
+            const statusRadios = $('input[name="program_status"]');
+            const tentativeWrapper = $('#tentative_attendee_count_wrapper');
+            const actualWrapper = $('#actual_attendee_count_wrapper');
+            const deadInjuredWrapper = $('#dead_injured_count_wrapper');
+
+            if (!statusRadios.length) return;
+
+            statusRadios.on('change', function () {
+                  const selectedStatus = $(this).val();
+
+                  if (selectedStatus === 'done') {
+                        // Hide tentative_attendee_count, show actual & dead_injured
+                        tentativeWrapper.slideUp(200);
+                        actualWrapper.slideDown(200);
+                        deadInjuredWrapper.slideDown(200);
+
+                        // Clear hidden field value
+                        $('input[name="tentative_attendee_count"]').val('');
+                  } else {
+                        // ongoing or upcoming: Hide actual & dead_injured, show tentative
+                        tentativeWrapper.slideDown(200);
+                        actualWrapper.slideUp(200);
+                        deadInjuredWrapper.slideUp(200);
+
+                        // Clear hidden field values
+                        $('input[name="actual_attendee_count"]').val('');
+                        $('input[name="dead_injured_count"]').val('');
+                  }
+            });
+
+            // Initial state: hide all conditional fields until status is selected
+            tentativeWrapper.hide();
+            actualWrapper.hide();
+            deadInjuredWrapper.hide();
+      }
 
       // Form validation
       var initValidation = function () {
@@ -77,13 +132,6 @@ var KTCreateReportForm = function () {
                                           },
                                     }
                               },
-                              // 'candidate_name': {
-                              //       validators: {
-                              //             notEmpty: {
-                              //                   message: 'প্রার্থীর নাম প্রয়োজন।'
-                              //             },
-                              //       }
-                              // },
                               'tentative_attendee_count': {
                                     validators: {
                                           greaterThan: {
@@ -102,7 +150,14 @@ var KTCreateReportForm = function () {
                               'program_status': {
                                     validators: {
                                           notEmpty: {
-                                                message: 'প্রোগ্রামের অবস্থা জানানো প্রয়োজন।'
+                                                message: 'প্রোগ্রামের অবস্থা সিলেক্ট করুন'
+                                          },
+                                    }
+                              },
+                              'tentative_risks': {
+                                    validators: {
+                                          notEmpty: {
+                                                message: 'ঝুঁকির অবস্থা সিলেক্ট করুন'
                                           },
                                     }
                               },
@@ -630,6 +685,7 @@ var KTCreateReportForm = function () {
             // public functions
             init: function () {
                   initValidation();
+                  initProgramStatusToggle();
                   initUpazilasBySeat();
                   initZonesByUpazila();
                   initUnionByUpazila();

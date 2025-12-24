@@ -194,13 +194,22 @@
                             <td class="d-none">{{ $user->role_id }}_{{ $user->role->name }}</td>
 
                             <td>
-                                {{ $numto->bnNum($user->created_at->format('d')) }}-
-                                {{ $numto->bnNum($user->created_at->format('m')) }}-
-                                {{ $numto->bnNum($user->created_at->format('Y')) }},
-                                {{ $numto->bnNum($user->created_at->format('h')) }}:
-                                {{ $numto->bnNum($user->created_at->format('i')) }}
-                                {{ $user->created_at->format('A') }}
+                                @php
+                                    $lastLogin = $user->loginActivities?->first()?->created_at;
+                                @endphp
+
+                                @if ($lastLogin)
+                                    {{ $numto->bnNum($lastLogin->format('d')) }}-
+                                    {{ $numto->bnNum($lastLogin->format('m')) }}-
+                                    {{ $numto->bnNum($lastLogin->format('Y')) }},
+                                    {{ $numto->bnNum($lastLogin->format('h')) }}:
+                                    {{ $numto->bnNum($lastLogin->format('i')) }}
+                                    {{ $lastLogin->format('A') }}
+                                @else
+                                    -
+                                @endif
                             </td>
+
                             <td>
                                 @if ($user->id != auth()->user()->id)
                                     @if ($user->is_active == 0)

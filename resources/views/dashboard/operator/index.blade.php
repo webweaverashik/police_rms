@@ -40,7 +40,7 @@
             <a href="{{ route('reports.index') }}" class="card bg-success hover-elevate-up shadow-sm h-100">
                 <div class="card-body d-flex flex-column align-items-center justify-content-center text-center">
                     <i class="ki-outline ki-file-added fs-3x text-white mb-4"></i>
-                    <span class="text-white fs-2x d-block">আমার প্রতিবেদন</span>
+                    <span class="text-white fs-2x d-block">সকল প্রতিবেদন</span>
                 </div>
             </a>
         </div>

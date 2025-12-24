@@ -1,19 +1,18 @@
 <?php
 
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\AjaxController;
-use App\Models\Political\SeatPartyCandidate;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Auth\PasswordController;
-use App\Http\Controllers\Report\ReportController;
-use App\Http\Controllers\User\DesignationController;
-use App\Http\Controllers\Report\ProgramTypeController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Political\PoliticalPartyController;
 use App\Http\Controllers\Political\SeatPartyCandidateController;
+use App\Http\Controllers\Report\ProgramTypeController;
+use App\Http\Controllers\Report\ReportController;
+use App\Http\Controllers\User\DesignationController;
+use App\Http\Controllers\User\UserController;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', [AuthController::class, 'showLogin'])->name('home');
 
@@ -46,12 +45,13 @@ Route::middleware(['auth', 'isLoggedIn'])->group(function () {
     Route::post('users/toggle-active', [UserController::class, 'toggleActive'])->name('users.toggleActive');
     Route::put('users/{user}/password', [UserController::class, 'userPasswordReset'])->name('users.password.reset');
     Route::get('profile', [UserController::class, 'profile'])->name('profile');
-    Route::put('/profile/update', [UserController::class, 'updateProfile'])->name('profile.update');
+    Route::put('profile/update', [UserController::class, 'updateProfile'])->name('profile.update');
 
     // Report
     Route::get('reports/{report}/download', [ReportController::class, 'download'])->name('reports.download');
-    Route::get('/reports/{report}/magistrates', [ReportController::class, 'getMagistrates'])->name('reports.magistrates');
-    Route::post('/reports/{report}/assign-magistrates', [ReportController::class, 'assignMagistrates'])->name('reports.assignMagistrates');
+    Route::get('reports/{report}/magistrates', [ReportController::class, 'getMagistrates'])->name('reports.magistrates');
+    Route::post('reports/{report}/assign-magistrates', [ReportController::class, 'assignMagistrates'])->name('reports.assignMagistrates');
+    Route::put('reports/pending/{id}', [ReportController::class, 'updatePending'])->name('reports.pending.update');
 
     // Resource routes
     Route::resource('users', UserController::class);

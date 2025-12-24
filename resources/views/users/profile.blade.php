@@ -73,7 +73,6 @@
 
 @section('content')
     <div class="row g-7">
-
         <!-- ================= LEFT: PROFILE INFO ================= -->
         <div class="col-lg-8">
             <form id="kt_create_user_form" class="form" novalidate data-update-url="{{ route('profile.update') }}">
@@ -303,7 +302,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 @endsection
 
