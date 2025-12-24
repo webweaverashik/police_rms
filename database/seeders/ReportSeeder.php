@@ -21,6 +21,6 @@ class ReportSeeder extends Seeder
         }
 
         // Seed realistic reports
-        Report::factory()->count(50)->create();
+        Report::factory()->count(500)->create();
     }
 }
