@@ -10,10 +10,10 @@ return [
     // 🔑 MUST be SolaimanLipi
     'default_font'            => 'solaimanlipi',
 
-    'margin_left'             => 20,
-    'margin_right'            => 20,
-    'margin_top'              => 20,
-    'margin_bottom'           => 20,
+    'margin_left'             => 15,
+    'margin_right'            => 15,
+    'margin_top'              => 15,
+    'margin_bottom'           => 15,
 
     'orientation'             => 'P',
 

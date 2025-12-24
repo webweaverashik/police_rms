@@ -27,8 +27,8 @@
     }
 
     .stat-label {
-        color: var(--bs-gray-500);
-        font-size: 0.925rem;
+        color: var(--bs-gray-700);
+        font-size: 1rem;
         font-weight: 500;
     }
 
@@ -130,7 +130,7 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="stat-icon bg-light-primary text-primary me-4">
-                            <i class="ki-outline ki-file-added fs-1">
+                            <i class="bi bi-file-earmark-text fs-1">
                                 
                                 
                             </i>
@@ -150,7 +150,7 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="stat-icon bg-light-success text-success me-4">
-                            <i class="ki-outline ki-check-circle fs-1">
+                            <i class="bi bi-check2-circle fs-1">
                                 
                                 
                             </i>
@@ -170,32 +170,32 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="stat-icon bg-light-warning text-warning me-4">
-                            <i class="ki-outline ki-time fs-1">
+                            <i class="bi bi-hourglass-split fs-1">
                                 
                                 
                             </i>
                         </div>
                         <div>
                             <div class="stat-value" id="pendingPrograms">0</div>
-                            <div class="stat-label">চলমান কার্যক্রম</div>
+                            <div class="stat-label">চলমান/আসন্ন কার্যক্রম</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Total Attendees -->
+        <!-- Total Risky Programs -->
         <div class="col-sm-6 col-xl-3">
             <div class="card stat-card h-100">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
-                        <div class="stat-icon bg-light-info text-info me-4">
-                            <i class="ki-outline ki-people fs-1">
+                        <div class="stat-icon bg-light-danger text-danger me-4">
+                            <i class="bi bi-shield-exclamation fs-1">
                             </i>
                         </div>
                         <div>
-                            <div class="stat-value" id="totalAttendees">0</div>
-                            <div class="stat-label">মোট উপস্থিতি</div>
+                            <div class="stat-value" id="totalRiskyPrograms">0</div>
+                            <div class="stat-label">ঝুঁকিপূর্ণ প্রোগ্রাম</div>
                         </div>
                     </div>
                 </div>
@@ -497,7 +497,7 @@
                 totalReports: {{ $stats['totalReports'] ?? 0 }},
                 completedPrograms: {{ $stats['completedPrograms'] ?? 0 }},
                 pendingPrograms: {{ $stats['pendingPrograms'] ?? 0 }},
-                totalAttendees: {{ $stats['totalAttendees'] ?? 0 }}
+                totalRiskyPrograms: {{ $stats['totalRiskyPrograms'] ?? 0 }}
             },
             zones: @json($zones ?? []),
             unions: @json($unions ?? []),

@@ -2,6 +2,27 @@
 
 @push('page-css')
     <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+        /* Blinking badge for risk = YES */
+        .badge-blink {
+            animation: pulse .5s infinite;
+            box-shadow: 0 0 0 rgba(220, 53, 69, 0.7);
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+            }
+
+            50% {
+                box-shadow: 0 0 0 10px rgba(220, 53, 69, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+            }
+        }
+    </style>
 @endpush
 
 @section('title', 'সকল প্রতিবেদন')
@@ -76,7 +97,7 @@
                         data-kt-menu-placement="bottom-end">
                         <i class="ki-outline ki-filter fs-2"></i>ফিল্টার</button>
                     <!--begin::Menu 1-->
-                    <div class="menu menu-sub menu-sub-dropdown w-350px w-md-650px" data-kt-menu="true">
+                    <div class="menu menu-sub menu-sub-dropdown w-350px w-md-550px" data-kt-menu="true">
                         <!--begin::Header-->
                         <div class="px-7 py-5">
                             <div class="fs-5 text-gray-900 fw-bold">ফিল্টার অপশন</div>
@@ -178,8 +199,19 @@
                                     </select>
                                 </div>
 
+                                <div class="col-6 mb-5">
+                                    <label class="form-label fs-6 fw-semibold">ঝুঁকির সম্ভাবনা:</label>
+                                    <select class="form-select form-select-solid fw-bold" data-kt-select2="true"
+                                        data-placeholder="সিলেক্ট করুন" data-allow-clear="true"
+                                        data-all-reports-table-filter="status" data-hide-search="true">
+                                        <option></option>
+                                        <option value="tentative_risks_no">না</option>
+                                        <option value="tentative_risks_yes">হ্যাঁ</option>
+                                    </select>
+                                </div>
+
                                 @if (!auth()->user()->isOperator())
-                                    <div class="col-6 mb-5">
+                                    <div class="col-12 mb-5">
                                         <label class="form-label fs-6 fw-semibold">প্রতিবেদন তৈরিকারি:</label>
                                         <select class="form-select form-select-solid fw-bold" data-kt-select2="true"
                                             data-placeholder="সিলেক্ট করুন" data-allow-clear="true"
@@ -279,7 +311,8 @@
                         <th>স্থান</th>
                         <th>তারিখ</th>
                         <th>সময়</th>
-                        <th>সম্ভাব্য উপস্থিতি</th>
+                        <th>সম্ভাব্য ঝুঁকি</th>
+                        <th class="d-none">সম্ভাব্য ঝুঁকি (filter)</th>
                         <th>প্রোগ্রামের অবস্থা</th>
                         <th class="d-none">প্রোগ্রামের অবস্থা (filter)</th>
                         <th class="@if (auth()->user()->role->name == 'Operator') d-none @endif">প্রতিবেদক</th>
@@ -345,16 +378,31 @@
 
 
                             <td>
-                                {{ $report->tentative_attendee_count ? $numto->bnNum($report->tentative_attendee_count) . ' জন' : '-' }}
+                                @php
+                                    $isRisk = $report->tentative_risks === 'yes';
+                                    $shouldBlink = $isRisk && $report->program_status !== 'done';
+                                @endphp
+
+                                <span
+                                    class="badge 
+        {{ $isRisk ? 'badge-danger' : 'badge-light-success' }}
+        {{ $shouldBlink ? 'badge-blink' : '' }}">
+                                    {{ $isRisk ? 'হ্যাঁ' : 'না' }}
+                                </span>
                             </td>
+
+                            <td class="d-none">
+                                tentative_risks_{{ $report->tentative_risks }}
+                            </td>
+
 
                             {{-- Status --}}
                             <td>
                                 @php
                                     $statusMap = [
-                                        'done' => ['label' => 'সম্পন্ন', 'class' => 'badge-success'],
-                                        'ongoing' => ['label' => 'চলমান', 'class' => 'badge-danger'],
-                                        'upcoming' => ['label' => 'আসন্ন', 'class' => 'badge-warning'],
+                                        'done' => ['label' => 'সম্পন্ন', 'class' => 'badge-light-success'],
+                                        'ongoing' => ['label' => 'চলমান', 'class' => 'badge-light-danger'],
+                                        'upcoming' => ['label' => 'আসন্ন', 'class' => 'badge-light-warning'],
                                     ];
                                     $status = $statusMap[$report->program_status];
                                 @endphp

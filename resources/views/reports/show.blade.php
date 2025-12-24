@@ -48,6 +48,21 @@
         $numto = new NumberToBangla();
     @endphp
 
+    @if ($report->tentative_risks === 'yes' && $report->program_status !== 'done')
+        <div class="alert alert-danger d-flex align-items-center mb-8" role="alert">
+            <i class="ki-outline ki-warning-2 fs-2hx text-danger me-4"></i>
+
+            <div class="d-flex flex-column">
+                <h4 class="mb-1 text-danger">⚠️ সম্ভাব্য ঝুঁকির সতর্কতা</h4>
+                <span class="fs-4">
+                    এই প্রোগ্রামটিতে <strong>সম্ভাব্য নিরাপত্তা ঝুঁকি</strong> চিহ্নিত করা হয়েছে।
+                    প্রোগ্রামটি এখনও সম্পন্ন হয়নি—প্রয়োজনীয় সতর্কতামূলক ব্যবস্থা গ্রহণ করুন।
+                </span>
+            </div>
+        </div>
+    @endif
+
+
     <!--begin::Layout-->
     <div class="d-flex flex-column flex-xl-row">
         <!--begin::Sidebar-->
@@ -61,7 +76,7 @@
                 };
             @endphp
 
-            <div class="card card-flush mb-0 {{ $statusBorder }}" data-kt-sticky="true"
+            <div class="card card-flush mb-0 {{ $statusBorder }}" data-kt-sticky="false"
                 data-kt-sticky-name="student-summary" data-kt-sticky-offset="{default: false, lg: 0}"
                 data-kt-sticky-width="{lg: '350px', xl: '450px'}" data-kt-sticky-left="auto" data-kt-sticky-top="100px"
                 data-kt-sticky-animation="false" data-kt-sticky-zindex="95">
@@ -306,9 +321,9 @@
                         <div class="col-6 col-lg-10">
                             @php
                                 $statusMap = [
-                                    'done' => ['label' => 'সম্পন্ন', 'class' => 'badge-success'],
-                                    'ongoing' => ['label' => 'চলমান', 'class' => 'badge-danger'],
-                                    'upcoming' => ['label' => 'আসন্ন', 'class' => 'badge-info'],
+                                    'done' => ['label' => 'সম্পন্ন', 'class' => 'badge-light-success'],
+                                    'ongoing' => ['label' => 'চলমান', 'class' => 'badge-light-danger'],
+                                    'upcoming' => ['label' => 'আসন্ন', 'class' => 'badge-light-warning'],
                                 ];
                                 $status = $statusMap[$report->program_status] ?? null;
                             @endphp
@@ -371,19 +386,49 @@
                     </div>
                     <!--end::Input group-->
 
-                    <!--begin::Input group-->
-                    <div class="row mb-5">
-                        <!--begin::Label-->
-                        <label class="col-6 col-lg-2 fw-semibold text-muted fs-4">সম্ভাব্য উপস্থিতি:</label>
-                        <!--end::Label-->
-                        <!--begin::Col-->
-                        <div class="col-6 col-lg-10">
-                            <span
-                                class="fw-semibold fs-4 text-gray-800">{{ $report->tentative_attendee_count ? $numto->bnNum($report->tentative_attendee_count) . ' জন' : '-' }}</span>
+                    @if ($report->program_status !== 'done')
+                        <!--begin::Input group-->
+                        <div class="row mb-5">
+                            <!--begin::Label-->
+                            <label class="col-6 col-lg-2 fw-semibold text-muted fs-4">সম্ভাব্য উপস্থিতি:</label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <div class="col-6 col-lg-10">
+                                <span
+                                    class="fw-semibold fs-4 text-gray-800">{{ $report->tentative_attendee_count ? $numto->bnNum($report->tentative_attendee_count) . ' জন' : '-' }}</span>
+                            </div>
+                            <!--end::Col-->
                         </div>
-                        <!--end::Col-->
-                    </div>
-                    <!--end::Input group-->
+                        <!--end::Input group-->
+                    @else
+                        <!--begin::Input group-->
+                        <div class="row mb-5">
+                            <!--begin::Label-->
+                            <label class="col-6 col-lg-2 fw-semibold text-muted fs-4">মোট উপস্থিতি:</label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <div class="col-6 col-lg-10">
+                                <span
+                                    class="fw-semibold fs-4 text-gray-800">{{ $report->actual_attendee_count ? $numto->bnNum($report->actual_attendee_count) . ' জন' : '-' }}</span>
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <!--end::Input group-->
+
+                        <!--begin::Input group-->
+                        <div class="row mb-5">
+                            <!--begin::Label-->
+                            <label class="col-6 col-lg-2 fw-semibold text-muted fs-4">হতাহতের সংখ্যা:</label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <div class="col-6 col-lg-10">
+                                <span
+                                    class="fw-semibold fs-4 text-gray-800">{{ $report->dead_injured_count ?? '-' }}</span>
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <!--end::Input group-->
+                    @endif
                 </div>
                 <!--end::Card body-->
             </div>

@@ -104,8 +104,8 @@ class DashboardController extends Controller
         return [
             'totalReports'      => (clone $query)->count(),
             'completedPrograms' => (clone $query)->where('program_status', 'done')->count(),
-            'pendingPrograms'   => (clone $query)->where('program_status', 'ongoing')->count(),
-            'totalAttendees'    => (int) (clone $query)->sum('tentative_attendee_count'),
+            'pendingPrograms'   => (clone $query)->whereNot('program_status', 'done')->count(),
+            'totalRiskyPrograms'   => (clone $query)->where('tentative_risks', 'yes')->count(),
         ];
     }
 

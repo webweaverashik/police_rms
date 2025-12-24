@@ -16,7 +16,7 @@ var AllReportsList = function () {
                   "lengthChange": true,
                   "autoWidth": false, // Disable auto width
                   'columnDefs': [
-                        { orderable: false, targets: 24 }, // Disable ordering on column Actions
+                        { orderable: false, targets: 25 }, // Disable ordering on column Actions
                   ]
             });
 

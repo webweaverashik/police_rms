@@ -34,7 +34,7 @@ var DashboardViewer = (function () {
                   totalReports: 0,
                   completedPrograms: 0,
                   pendingPrograms: 0,
-                  totalAttendees: 0
+                  totalRiskyPrograms: 0
             },
             unions: [],
             users: [],
@@ -126,7 +126,7 @@ var DashboardViewer = (function () {
             animateCounter('totalReports', dashboardData.stats.totalReports);
             animateCounter('completedPrograms', dashboardData.stats.completedPrograms);
             animateCounter('pendingPrograms', dashboardData.stats.pendingPrograms);
-            animateCounter('totalAttendees', dashboardData.stats.totalAttendees);
+            animateCounter('totalRiskyPrograms', dashboardData.stats.totalRiskyPrograms);
       };
 
       /**
@@ -686,7 +686,7 @@ var DashboardViewer = (function () {
                   html += '<div class="d-flex align-items-center border-bottom border-gray-200 py-4 px-5">';
                   html += '<div class="symbol symbol-45px me-4">';
                   html += '<span class="symbol-label" style="background-color: ' + color + '20; color: ' + color + '">';
-                  html += '<i class="ki-outline ki-file-added fs-2"></i>';
+                  html += '<i class="bi bi-file-earmark-text fs-2"></i>';
                   html += '</span>';
                   html += '</div>';
                   html += '<div class="flex-grow-1">';

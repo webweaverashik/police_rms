@@ -455,20 +455,34 @@ class ReportController extends Controller
     {
         $numto = new NumberToBangla();
 
+        // ================= Report Created Date (Bangla) =================
         $date = Carbon::parse($report->created_at);
 
-        // Date part
         $bnDate = $numto->bnNum($date->format('d')) . '/' . $numto->bnNum($date->format('m')) . '/' . $numto->bnNum($date->format('Y'));
 
-        // Time part (12-hour)
         $bnHour     = $numto->bnNum($date->format('h'));
         $bnMinute   = $numto->bnNum($date->format('i'));
         $bnMeridiem = $date->format('A') === 'AM' ? 'পূর্বাহ্ণ' : 'অপরাহ্ণ';
 
-        // Final output
         $reportDateTime = $bnDate . ', ' . $bnHour . ':' . $bnMinute . ' ' . $bnMeridiem;
+        // ===============================================================
 
-        return PDF::loadView('reports.pdf', compact('report', 'reportDateTime'))->download($report->program_title . ' - ' . $report->candidate_name . '.pdf');
+        // ================= Download Date (NOW, ENGLISH) =================
+        $downloadDateTime = now()->format('d-m-Y h:i A');
+        // ===============================================================
+
+        $pdf = PDF::loadView('reports.pdf', compact('report', 'reportDateTime'));
+
+        // ✅ mPDF footer (beyond margin_bottom)
+        $pdf->getMpdf()->SetFooter(
+            '<span style="font-size:12px; font-weight: normal;">
+            Downloaded at: ' .
+            $downloadDateTime .
+            '
+        </span>',
+        );
+
+        return $pdf->stream($report->program_title . ' - ' . $report->candidate_name . '.pdf');
     }
 
     /**

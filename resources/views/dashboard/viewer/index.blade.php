@@ -27,7 +27,7 @@
         }
 
         .stat-label {
-            color: var(--bs-gray-500);
+            color: var(--bs-gray-700);
             font-size: 0.925rem;
             font-weight: 500;
         }
@@ -152,10 +152,10 @@
                 </div>
                 <div class="flex-grow-1">
                     <h4 class="fw-bold text-gray-800 mb-1">{{ $zoneName ?? 'আমার জোন' }}</h4>
-                    <span class="text-muted fs-7">আপনার জোনের সকল রিপোর্ট ও কার্যক্রমের সারসংক্ষেপ</span>
+                    <span class="text-gray-700 fs-7">আপনার জোনের সকল রিপোর্ট ও কার্যক্রমের সারসংক্ষেপ</span>
                 </div>
                 <div class="zone-header-badge d-none d-md-block">
-                    <i class="ki-outline ki-eye fs-4 me-2"></i>
+                    <i class="ki-outline ki-eye text-white fs-4 me-2"></i>
                     ভিউয়ার ড্যাশবোর্ড
                 </div>
             </div>
@@ -170,7 +170,7 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="stat-icon bg-light-primary text-primary me-4">
-                            <i class="ki-outline ki-file-added fs-1"></i>
+                            <i class="bi bi-file-earmark-text fs-1"></i>
                         </div>
                         <div>
                             <div class="stat-value" id="totalReports">0</div>
@@ -187,7 +187,7 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="stat-icon bg-light-success text-success me-4">
-                            <i class="ki-outline ki-check-circle fs-1"></i>
+                            <i class="bi bi-check2-circle fs-1"></i>
                         </div>
                         <div>
                             <div class="stat-value" id="completedPrograms">0</div>
@@ -204,28 +204,28 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="stat-icon bg-light-warning text-warning me-4">
-                            <i class="ki-outline ki-time fs-1"></i>
+                            <i class="bi bi-hourglass-split fs-1"></i>
                         </div>
                         <div>
                             <div class="stat-value" id="pendingPrograms">0</div>
-                            <div class="stat-label">অপেক্ষমাণ কার্যক্রম</div>
+                            <div class="stat-label">চলমান/আসন্ন কার্যক্রম</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Total Attendees -->
+        <!-- Total Risky Programs -->
         <div class="col-sm-6 col-xl-3">
             <div class="card stat-card h-100">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
-                        <div class="stat-icon bg-light-info text-info me-4">
-                            <i class="ki-outline ki-people fs-1"></i>
+                        <div class="stat-icon bg-light-danger me-4">
+                            <i class="bi bi-shield-exclamation fs-1"></i>
                         </div>
                         <div>
-                            <div class="stat-value" id="totalAttendees">0</div>
-                            <div class="stat-label">মোট উপস্থিতি</div>
+                            <div class="stat-value" id="totalRiskyPrograms">0</div>
+                            <div class="stat-label">ঝুঁকিপূর্ণ প্রোগ্রাম<</div>
                         </div>
                     </div>
                 </div>
@@ -473,7 +473,7 @@
                 totalReports: {{ $stats['totalReports'] ?? 0 }},
                 completedPrograms: {{ $stats['completedPrograms'] ?? 0 }},
                 pendingPrograms: {{ $stats['pendingPrograms'] ?? 0 }},
-                totalAttendees: {{ $stats['totalAttendees'] ?? 0 }}
+                totalRiskyPrograms: {{ $stats['totalRiskyPrograms'] ?? 0 }}
             },
             unions: @json($unions ?? []),
             users: @json($topUsers ?? []),
