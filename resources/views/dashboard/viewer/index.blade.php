@@ -225,7 +225,7 @@
                         </div>
                         <div>
                             <div class="stat-value" id="totalRiskyPrograms">0</div>
-                            <div class="stat-label">ঝুঁকিপূর্ণ প্রোগ্রাম<</div>
+                            <div class="stat-label">ঝুঁকিপূর্ণ প্রোগ্রাম</div>
                         </div>
                     </div>
                 </div>
