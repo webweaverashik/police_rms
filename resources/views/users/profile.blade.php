@@ -253,7 +253,7 @@
         </div>
 
         <!-- ================= BOTTOM: LOGIN HISTORY ================= -->
-        <div class="col-lg-8">
+        <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex align-items-center justify-content-between w-100">
