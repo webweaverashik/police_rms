@@ -278,7 +278,7 @@ class DashboardController extends Controller
      */
     private function getCandidateReports(int $limit = 10, ?int $zoneId = null): array
     {
-        $query = Report::select('candidate_name', 'political_party_id')->selectRaw('COUNT(*) as programs')->selectRaw('COALESCE(SUM(tentative_attendee_count), 0) as attendees')->with('politicalParty:id,name')->whereNotNull('candidate_name')->where('candidate_name', '!=', '');
+        $query = Report::select('candidate_name', 'political_party_id')->selectRaw('COUNT(*) as programs')->selectRaw('COALESCE(SUM(actual_attendee_count), 0) as attendees')->with('politicalParty:id,name')->whereNotNull('candidate_name')->where('candidate_name', '!=', '');
 
         if ($zoneId) {
             $query->where('zone_id', $zoneId);

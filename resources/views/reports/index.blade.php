@@ -441,11 +441,13 @@
                                                     class="ki-outline ki-eye fs-3 me-2"></i> প্রতিবেদন দেখুন</a>
                                         </div>
 
-                                        <div class="menu-item px-3">
-                                            <a href="{{ route('reports.download', $report->id) }}"
-                                                class="menu-link text-hover-primary px-3" target="_blank"><i
-                                                    class="bi bi-download fs-3 me-2"></i> ডাউনলোড করুন</a>
-                                        </div>
+                                        @if ($report->program_status === 'done')
+                                            <div class="menu-item px-3">
+                                                <a href="{{ route('reports.download', $report->id) }}"
+                                                    class="menu-link text-hover-primary px-3" target="_blank"><i
+                                                        class="bi bi-download fs-3 me-2"></i> ডাউনলোড করুন</a>
+                                            </div>
+                                        @endif
 
                                         <div class="menu-item px-3">
                                             <a href="#" class="menu-link px-3 text-hover-warning assign-report"

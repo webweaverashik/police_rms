@@ -40,8 +40,8 @@ class ReportFactory extends Factory
         if ($status === 'done') {
             $actualAttendeeCount = (string) $this->faker->numberBetween(50, 3000);
 
-            // 30% chance of casualties
-            $deadInjuredCount = $this->faker->boolean(30) ? (string) $this->faker->numberBetween(1, 20) : null;
+            // 30% chance of casualties (string: text + number)
+            $deadInjuredCount = $this->faker->boolean(30) ? collect(['আহত ' . $this->faker->numberBetween(1, 15) . ' জন', 'মৃত ' . $this->faker->numberBetween(1, 5) . ' জন', 'আহত ' . $this->faker->numberBetween(1, 10) . ' জন, মৃত ' . $this->faker->numberBetween(1, 3) . ' জন', 'কয়েকজন আহত', 'সামান্য আহত ' . $this->faker->numberBetween(1, 5) . ' জন'])->random() : null;
         }
 
         return [
