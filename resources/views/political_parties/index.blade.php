@@ -51,7 +51,7 @@
                 <div class="d-flex align-items-center position-relative my-1">
                     <i class="ki-outline ki-magnifier fs-3 position-absolute ms-5"></i> <input type="text"
                         data-political-parties-table-filter="search" class="form-control form-control-solid w-md-350px ps-12"
-                        placeholder="রাজনৈতিক দলের যে কোনো তথ্য খুঁজুন">
+                        placeholder="রাজনৈতিক দলের তথ্য খুঁজুন">
                 </div>
                 <!--end::Search-->
 
