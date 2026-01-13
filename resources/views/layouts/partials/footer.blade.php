@@ -4,7 +4,7 @@
         <!--begin::Copyright-->
         <div class="text-gray-900">
             <span class="text-muted fw-semibold me-1">{{ date('Y') }} &copy;</span>
-            <a href="https://ashikur-rahman.com" target="_blank" class="text-gray-800 text-hover-primary">আশিকুর রহমান</a>
+            <a href="https://facebook.com/webweaverashik" target="_blank" class="text-gray-800 text-hover-primary">আশিকুর রহমান</a>
         </div>
         <!--end::Copyright-->
         <!--begin::Menu-->
