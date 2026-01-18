@@ -117,7 +117,8 @@
                     <!--end::Menu 1-->
 
                     <!--begin::Add user-->
-                    <a href="{{ route('users.create') }}" class="btn btn-primary">
+                    {{-- <a href="{{ route('users.create') }}" class="btn btn-primary"> --}}
+                    <a href="#" class="btn btn-primary">
                         <i class="ki-outline ki-plus fs-2"></i>নতুন ইউজার</a>
                     <!--end::Add user-->
                 </div>
@@ -252,7 +253,6 @@
                                         <i class="ki-outline ki-trash fs-2"></i>
                                     </a>
                                 @endif
-
                             </td>
                         </tr>
                     @endforeach
@@ -265,7 +265,7 @@
     <!--end::Card-->
 
     <!--begin::Modal - Edit User Password-->
-    <div class="modal fade" id="kt_modal_edit_password" tabindex="-1" aria-hidden="true" data-bs-backdrop="static"
+    <div class="modal fade" id="kt_modal_edit_password_naksjfd" tabindex="-1" aria-hidden="true" data-bs-backdrop="static"
         data-bs-keyboard="false">
         <!--begin::Modal dialog-->
         <div class="modal-dialog modal-dialog-centered mw-450px">
