@@ -37,7 +37,7 @@
         <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
             <div></div>
             <!--begin::Link-->
-            <a href="{{ route('password.request') }}" class="link-primary">পাসওয়ার্ড ভুলে গিয়েছেন ?</a>
+            {{-- <a href="{{ route('password.request') }}" class="link-primary">পাসওয়ার্ড ভুলে গিয়েছেন ?</a> --}}
             <!--end::Link-->
         </div>
         <!--end::Wrapper-->

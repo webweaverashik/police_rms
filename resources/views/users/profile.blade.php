@@ -2,7 +2,7 @@
 
 @push('page-css')
     <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
-    <style>
+    {{-- <style>
         /* ================= READONLY SECTION (LIGHT MODE) ================= */
         .readonly-section {
             border: 1px dashed #cfd3e1;
@@ -42,7 +42,7 @@
         [data-bs-theme="dark"] .readonly-section .form-label {
             color: #a1a5b7 !important;
         }
-    </style>
+    </style> --}}
 @endpush
 
 
