@@ -24,8 +24,28 @@ var KTCreateReportForm = function () {
                   $(this).removeClass('fv-plugins-message-container--enabled');
             });
 
-            // 4) Reset program status visibility
+            // 4) Reset flatpickr instances
+            resetFlatpickrInstances();
+
+            // 5) Reset program status visibility
             resetProgramStatusFields();
+      }
+
+      // ===================================
+      // Reset Flatpickr Instances
+      // ===================================
+      function resetFlatpickrInstances() {
+            // Clear date picker
+            const dateWrapper = document.getElementById('program_date_wrapper');
+            if (dateWrapper && dateWrapper._flatpickr) {
+                  dateWrapper._flatpickr.clear();
+            }
+
+            // Clear time picker
+            const timeWrapper = document.getElementById('program_time_wrapper');
+            if (timeWrapper && timeWrapper._flatpickr) {
+                  timeWrapper._flatpickr.clear();
+            }
       }
 
       const resetButton = document.getElementById('kt_create_report_form_reset');
@@ -257,8 +277,14 @@ var KTCreateReportForm = function () {
       // Reusable flatpickr initializer with clear button
       // ===================================
       function initFlatpickrWithClear(selector, options = {}) {
+            const element = document.querySelector(selector);
+            if (!element) return null;
+
             const defaultOptions = {
                   wrap: true,
+                  disableMobile: true, // Force Flatpickr UI on mobile devices (prevents native picker)
+                  allowInput: false,   // Prevent manual input to ensure consistent format
+                  clickOpens: true,    // Open picker on input click
                   onChange: function (selectedDates, dateStr, instance) {
                         const clearBtn = instance.element.querySelector('[data-clear]');
                         if (clearBtn) {
@@ -273,22 +299,39 @@ var KTCreateReportForm = function () {
                   }
             };
 
-            return $(selector).flatpickr({ ...defaultOptions, ...options });
+            // Merge options
+            const mergedOptions = { ...defaultOptions, ...options };
+
+            // Initialize flatpickr and store instance on element
+            const instance = flatpickr(element, mergedOptions);
+            element._flatpickr = instance;
+
+            return instance;
       }
 
-      // Usage
-      initFlatpickrWithClear("#program_date_wrapper", {
-            enableTime: false,
-            dateFormat: "d-m-Y"
-      });
+      // ===================================
+      // Initialize Date & Time Pickers
+      // ===================================
+      function initDateTimePickers() {
+            // Date picker - Format: dd-mm-yyyy (e.g., 18-01-2026)
+            initFlatpickrWithClear("#program_date_wrapper", {
+                  enableTime: false,
+                  dateFormat: "d-m-Y",
+                  altInput: false,
+                  locale: {
+                        firstDayOfWeek: 6 // Start week on Saturday
+                  }
+            });
 
-      initFlatpickrWithClear("#program_time_wrapper", {
-            noCalendar: true,
-            enableTime: true,
-            dateFormat: "h:i K"
-      });
-
-
+            // Time picker - Format: hh:mm AM/PM (e.g., 03:12 PM)
+            initFlatpickrWithClear("#program_time_wrapper", {
+                  noCalendar: true,
+                  enableTime: true,
+                  dateFormat: "h:i K", // 12-hour format with AM/PM
+                  time_24hr: false,    // Ensure 12-hour format
+                  minuteIncrement: 1   // Allow minute-by-minute selection
+            });
+      }
 
       // ===================================
       // Load Upazilas by Parliament Seat
@@ -686,6 +729,7 @@ var KTCreateReportForm = function () {
             init: function () {
                   initValidation();
                   initProgramStatusToggle();
+                  initDateTimePickers(); // Initialize date/time pickers with mobile support
                   initUpazilasBySeat();
                   initZonesByUpazila();
                   initUnionByUpazila();
