@@ -202,7 +202,7 @@
                                     title="প্রথমে সংসদীয় আসন সিলেক্ট করুন তাহলে সেই আসনের রাজনৈতিক দলের লিস্ট দেখাবে">
                                     <i class="ki-outline ki-information fs-4"></i>
                                 </span></label>
-                            <select name="political_party_id" class="form-select form-select-solid fs-4"
+                            <select name="political_party_id" class="form-select form-select-solid fs-4" data-hide-search="true"
                                 data-control="select2" data-placeholder="রাজনৈতিক দল বাছাই করুন" required disabled>
                                 <option></option>
                             </select>
