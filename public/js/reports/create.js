@@ -5,6 +5,37 @@ var KTCreateReportForm = function () {
       // Elements
       const form = document.getElementById('kt_create_report_form');
 
+      // ===================================
+      // Normalize Date/Time Formats
+      // ===================================
+      function normalizeTimeFormat(timeStr) {
+            if (!timeStr) return timeStr;
+
+            // Match pattern like "4:20 PM" or "04:20 PM" and ensure leading zeros
+            const match = timeStr.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+            if (match) {
+                  const hours = match[1].padStart(2, '0');
+                  const minutes = match[2];
+                  const meridiem = match[3].toUpperCase();
+                  return `${hours}:${minutes} ${meridiem}`;
+            }
+            return timeStr;
+      }
+
+      function normalizeDateFormat(dateStr) {
+            if (!dateStr) return dateStr;
+
+            // Match pattern like "4-1-2025" or "04-01-2025" and ensure leading zeros
+            const match = dateStr.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/);
+            if (match) {
+                  const day = match[1].padStart(2, '0');
+                  const month = match[2].padStart(2, '0');
+                  const year = match[3];
+                  return `${day}-${month}-${year}`;
+            }
+            return dateStr;
+      }
+
       // ---- Reset Select2 inputs ----
       function resetSelect2Inputs() {
             // 1) Reset Select2 value + UI + borders
@@ -212,6 +243,18 @@ var KTCreateReportForm = function () {
                                     submitButton.setAttribute('data-kt-indicator', 'on');
                                     submitButton.disabled = true;
 
+                                    // ✅ Normalize date/time before creating FormData
+                                    const timeInput = form.querySelector('input[name="program_time"]');
+                                    const dateInput = form.querySelector('input[name="program_date"]');
+
+                                    if (timeInput && timeInput.value) {
+                                          timeInput.value = normalizeTimeFormat(timeInput.value);
+                                    }
+
+                                    if (dateInput && dateInput.value) {
+                                          dateInput.value = normalizeDateFormat(dateInput.value);
+                                    }
+
                                     const formData = new FormData(form);
                                     formData.append('_token', document.querySelector('meta[name="csrf-token"]').content);
 
@@ -324,12 +367,28 @@ var KTCreateReportForm = function () {
             });
 
             // Time picker - Format: hh:mm AM/PM (e.g., 03:12 PM)
+            // Using formatDate to ensure consistent padding
             initFlatpickrWithClear("#program_time_wrapper", {
                   noCalendar: true,
                   enableTime: true,
-                  dateFormat: "h:i K", // 12-hour format with AM/PM
+                  dateFormat: "h:i K", // Flatpickr format
                   time_24hr: false,    // Ensure 12-hour format
-                  minuteIncrement: 1   // Allow minute-by-minute selection
+                  minuteIncrement: 1,  // Allow minute-by-minute selection
+                  // ✅ Custom formatter to ensure leading zeros
+                  formatDate: function (date, format, locale) {
+                        let hours = date.getHours();
+                        const minutes = date.getMinutes();
+                        const ampm = hours >= 12 ? 'PM' : 'AM';
+
+                        hours = hours % 12;
+                        hours = hours ? hours : 12; // the hour '0' should be '12'
+
+                        // Pad with leading zeros
+                        const hoursStr = hours.toString().padStart(2, '0');
+                        const minutesStr = minutes.toString().padStart(2, '0');
+
+                        return `${hoursStr}:${minutesStr} ${ampm}`;
+                  }
             });
       }
 

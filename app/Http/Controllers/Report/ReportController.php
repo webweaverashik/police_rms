@@ -15,11 +15,52 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use PDF;
 use Rakibhstu\Banglanumber\NumberToBangla;
 
 class ReportController extends Controller
 {
+    /**
+     * Normalize time format to ensure leading zeros (e.g., "4:20 PM" -> "04:20 PM")
+     */
+    private function normalizeTimeFormat(?string $time): ?string
+    {
+        if (empty($time)) {
+            return null;
+        }
+
+        // Match pattern like "4:20 PM" or "04:20 PM"
+        if (preg_match('/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i', trim($time), $matches)) {
+            $hours    = str_pad($matches[1], 2, '0', STR_PAD_LEFT);
+            $minutes  = $matches[2];
+            $meridiem = strtoupper($matches[3]);
+            return "{$hours}:{$minutes} {$meridiem}";
+        }
+
+        return $time;
+    }
+
+    /**
+     * Normalize date format to ensure leading zeros (e.g., "4-1-2025" -> "04-01-2025")
+     */
+    private function normalizeDateFormat(?string $date): ?string
+    {
+        if (empty($date)) {
+            return null;
+        }
+
+        // Match pattern like "4-1-2025" or "04-01-2025"
+        if (preg_match('/^(\d{1,2})-(\d{1,2})-(\d{4})$/', trim($date), $matches)) {
+            $day   = str_pad($matches[1], 2, '0', STR_PAD_LEFT);
+            $month = str_pad($matches[2], 2, '0', STR_PAD_LEFT);
+            $year  = $matches[3];
+            return "{$day}-{$month}-{$year}";
+        }
+
+        return $date;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -88,6 +129,15 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {
+        // ✅ Normalize date/time formats before validation
+        if ($request->filled('program_time')) {
+            $request->merge(['program_time' => $this->normalizeTimeFormat($request->program_time)]);
+        }
+
+        if ($request->filled('program_date')) {
+            $request->merge(['program_date' => $this->normalizeDateFormat($request->program_date)]);
+        }
+
         // Validate the request
         $validated = $request->validate(
             [
@@ -302,6 +352,15 @@ class ReportController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // ✅ Normalize date/time formats before processing
+        if ($request->filled('program_time')) {
+            $request->merge(['program_time' => $this->normalizeTimeFormat($request->program_time)]);
+        }
+
+        if ($request->filled('program_date')) {
+            $request->merge(['program_date' => $this->normalizeDateFormat($request->program_date)]);
+        }
+
         DB::beginTransaction();
 
         try {
@@ -358,7 +417,7 @@ class ReportController extends Controller
 
             return response()->json([
                 'success'  => true,
-                'message'  => 'প্রতিবেদন সফলভাবে আপডেট হয়েছে',
+                'message'  => 'প্রতিবেদন সফলভাবে আপডেট হয়েছে',
                 'redirect' => route('reports.index'),
             ]);
         } catch (\Throwable $e) {
@@ -367,7 +426,7 @@ class ReportController extends Controller
             return response()->json(
                 [
                     'success' => false,
-                    'message' => config('app.debug') ? $e->getMessage() : 'প্রতিবেদন আপডেট করা যায়নি',
+                    'message' => config('app.debug') ? $e->getMessage() : 'প্রতিবেদন আপডেট করা যায়নি',
                 ],
                 500,
             );
@@ -389,7 +448,7 @@ class ReportController extends Controller
             ],
             [
                 'program_status.required'        => 'প্রোগ্রামের অবস্থা নির্বাচন করুন।',
-                'program_status.in'              => 'প্রোগ্রামের অবস্থা সঠিক নয়।',
+                'program_status.in'              => 'প্রোগ্রামের অবস্থা সঠিক নয়।',
                 'actual_attendee_count.required' => 'মোট উপস্থিতির সংখ্যা লিখুন।',
                 'actual_attendee_count.integer'  => 'উপস্থিতির সংখ্যা অবশ্যই সংখ্যা হতে হবে।',
                 'actual_attendee_count.min'      => 'ন্যূনতম ১০ জন উপস্থিতি হতে হবে।',
@@ -421,7 +480,7 @@ class ReportController extends Controller
 
             return response()->json([
                 'success'  => true,
-                'message'  => 'প্রতিবেদন সফলভাবে আপডেট হয়েছে',
+                'message'  => 'প্রতিবেদন সফলভাবে আপডেট হয়েছে',
                 'redirect' => route('reports.index'),
             ]);
         } catch (\Throwable $e) {
@@ -430,7 +489,7 @@ class ReportController extends Controller
             return response()->json(
                 [
                     'success' => false,
-                    'message' => config('app.debug') ? $e->getMessage() : 'প্রতিবেদন আপডেট করা যায়নি',
+                    'message' => config('app.debug') ? $e->getMessage() : 'প্রতিবেদন আপডেট করা যায়নি',
                 ],
                 500,
             );
@@ -535,7 +594,7 @@ class ReportController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'ম্যাজিস্ট্রেট সফলভাবে নির্ধারণ করা হয়েছে।',
+            'message' => 'ম্যাজিস্ট্রেট সফলভাবে নির্ধারণ করা হয়েছে।',
         ]);
     }
 }
